@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/view/auth.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({
@@ -74,18 +75,22 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.verified_user),
-            title: Text("Feed"),
+            title: Text("Materi"),
             onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.verified_user),
-            title: Text("Feed"),
+            title: Text("Chat"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text("Feed"),
-            onTap: () {},
+            leading: Icon(Icons.exit_to_app_rounded),
+            title: Text("Logout"),
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => AuthPage()));
+            },
           ),
         ],
       ),
