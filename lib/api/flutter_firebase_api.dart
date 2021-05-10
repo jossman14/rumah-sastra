@@ -11,30 +11,23 @@ import 'package:translator/translator.dart';
 
 Future<bool> loginSiswaAPI(BuildContext context, UserRusa user) async {
   try {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Loading..."),
-      ),
-    );
-
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: user.emailSiswa,
       password: user.password,
     );
-
-    cekAkun();
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.message)),
+        content: Text(await translateText(context, e.message)),
       ),
     );
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.toString())),
+        content: Text(await translateText(context, e.toString())),
       ),
     );
     return false;
@@ -43,29 +36,23 @@ Future<bool> loginSiswaAPI(BuildContext context, UserRusa user) async {
 
 Future<bool> loginGuruAPI(BuildContext context, UserRusa user) async {
   try {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Loading..."),
-      ),
-    );
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: user.emailGuru,
       password: user.password,
     );
-
-    cekAkun();
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.message)),
+        content: Text(await translateText(context, e.message)),
       ),
     );
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.toString())),
+        content: Text(await translateText(context, e.toString())),
       ),
     );
     return false;
@@ -74,11 +61,6 @@ Future<bool> loginGuruAPI(BuildContext context, UserRusa user) async {
 
 Future<bool> createAccountSiswaAPI(BuildContext context, UserRusa user) async {
   try {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Loading..."),
-      ),
-    );
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: user.emailSiswa,
       password: user.password,
@@ -87,19 +69,19 @@ Future<bool> createAccountSiswaAPI(BuildContext context, UserRusa user) async {
         .collection('Users')
         .doc(user.emailSiswa)
         .set(user.toJson("Siswa", user.username));
-    cekAkun();
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.message)),
+        content: Text(await translateText(context, e.message)),
       ),
     );
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.toString())),
+        content: Text(await translateText(context, e.toString())),
       ),
     );
     return false;
@@ -108,11 +90,6 @@ Future<bool> createAccountSiswaAPI(BuildContext context, UserRusa user) async {
 
 Future<bool> createAccountGuruAPI(BuildContext context, UserRusa user) async {
   try {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Loading..."),
-      ),
-    );
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: user.emailGuru,
       password: user.password,
@@ -121,57 +98,59 @@ Future<bool> createAccountGuruAPI(BuildContext context, UserRusa user) async {
         .collection('Users')
         .doc(user.emailGuru)
         .set(user.toJson("Guru", user.username));
-    cekAkun();
-
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.message)),
+        content: Text(await translateText(context, e.message)),
       ),
     );
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.toString())),
+        content: Text(await translateText(context, e.toString())),
       ),
     );
     return false;
   }
 }
 
-Future translateText(String text) async {
-  final translator = GoogleTranslator();
+Future translateText(BuildContext context, String text) async {
+  try {
+    final translator = GoogleTranslator();
 
-  var translation = await translator.translate(text, to: 'id');
-  // Constants.prefs.setString('translateResult', translation);
-  return translation.toString();
+    var translation = await translator.translate(text, to: 'id');
+    // Constants.prefs.setString('translateResult', translation);
+    return translation.toString();
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Mohon cek koneksi internet anda'),
+      ),
+    );
+  }
 }
 
 Future<bool> logout(BuildContext context) async {
   try {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Loading..."),
-      ),
-    );
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => AuthPage()));
-
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.message)),
+        content: Text(await translateText(context, e.message)),
       ),
     );
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.toString())),
+        content: Text(await translateText(context, e.toString())),
       ),
     );
     return false;
@@ -189,14 +168,14 @@ Future<UserRusa> getAccount(BuildContext context) async {
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.message)),
+        content: Text(await translateText(context, e.message)),
       ),
     );
     // return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(await translateText(e.toString())),
+        content: Text(await translateText(context, e.toString())),
       ),
     );
     // return false;

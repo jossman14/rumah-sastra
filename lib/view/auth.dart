@@ -645,9 +645,15 @@ class _AuthPageState extends State<AuthPage> {
 
   ElevatedButton submitBtn(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context);
+
     return ElevatedButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Loading..."),
+            ),
+          );
           //provider state
           // _formKey.currentState.save();
 

@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^0.5.11
   dropdown_below: ^0.0.4
   flutter_svg: ^0.19.1
+  connectivity: ^2.0.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.0"
