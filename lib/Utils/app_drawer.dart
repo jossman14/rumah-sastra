@@ -69,18 +69,23 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.verified_user),
+            leading: Icon(Icons.star),
             title: Text("Feed"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.verified_user),
+            leading: Icon(Icons.face),
             title: Text("Materi"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.verified_user),
+            leading: Icon(Icons.mail),
             title: Text("Chat"),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.settings_applications),
+            title: Text("Pengaturan Profil"),
             onTap: () {},
           ),
           ListTile(

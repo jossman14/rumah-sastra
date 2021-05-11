@@ -34,10 +34,10 @@ class _PageGuruState extends State<PageGuru> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             Text(
               "Menu Data Guru",

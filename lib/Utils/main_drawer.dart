@@ -68,6 +68,11 @@ class _DrawerAppState extends State<DrawerApp> {
                 )),
           ),
           ListTile(
+            leading: Icon(Icons.settings_applications),
+            title: Text("Pengaturan Profil"),
+            onTap: () {},
+          ),
+          ListTile(
             leading: Icon(Icons.exit_to_app_rounded),
             title: Text("Logout"),
             onTap: () {
