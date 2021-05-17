@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/auth.dart';
+import 'package:rusa4/view/user_setting/user_setting.dart';
 
 class DrawerApp extends StatefulWidget {
   const DrawerApp({
@@ -70,7 +71,12 @@ class _DrawerAppState extends State<DrawerApp> {
           ListTile(
             leading: Icon(Icons.settings_applications),
             title: Text("Pengaturan Profil"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserSetting(pengguna: user)));
+            },
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app_rounded),

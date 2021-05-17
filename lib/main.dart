@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/provider/user_new.dart';
 import 'package:rusa4/view/auth.dart';
 
 Future main() async {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EmailSignInProvider()),
         ChangeNotifierProvider(create: (context) => MateriProvider()),
         ChangeNotifierProvider(create: (context) => FeedMenulisProvider()),
+        ChangeNotifierProvider(create: (context) => UserRusaNewProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

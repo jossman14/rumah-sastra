@@ -12,60 +12,90 @@ import 'package:rusa4/view/feed_menulis/view_feed_menulis.dart';
 import 'package:rusa4/view/page_guru.dart';
 import 'package:rusa4/view/page_siswa.dart';
 import 'package:rusa4/view/pilih_kelas.dart';
+import 'package:rusa4/view/user_setting/user_setting.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/HomePage";
+
+  final int selectedPage;
+
+  const HomePage({
+    @required this.selectedPage,
+    Key key,
+  }) : super(key: key);
+
+  // HomePage(int i);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String emailLogin = FirebaseAuth.instance.currentUser.email;
+  String emailLogin = FirebaseAuth.instance.currentUser.uid;
   // UserRusa user;
   var user = [];
+  int select;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      select = widget.selectedPage;
+      // print(select);
+    });
+  }
 
   // set user(UserRusa user) {}
 
   @override
-  Widget build(BuildContext context) => DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          drawer: DrawerApp(),
-          appBar: AppBar(
-            title: Text("RuSa"),
+  Widget build(BuildContext context) {
+    print('home indek');
+    print(select);
+    return DefaultTabController(
+      initialIndex: widget.selectedPage,
+      length: 3,
+      child: Scaffold(
+        drawer: DrawerApp(),
+        appBar: AppBar(
+          title: Text("RuSa"),
 
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
-                ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
               ),
             ),
-            bottom: TabBar(
-              //isScrollable: true,
-              indicatorColor: Colors.white,
-              indicatorWeight: 5,
-              tabs: [
-                Tab(icon: Icon(Icons.star), text: 'Feed'),
-                Tab(icon: Icon(Icons.face), text: 'Siswa'),
-                Tab(icon: Icon(Icons.mail), text: 'Pesan'),
-              ],
-            ),
-            // elevation: 1,
-            titleSpacing: 20,
           ),
-          body: TabBarView(
-            children: [
-              ViewFeedMenulis(),
-              cekAkun(),
-              Container(),
+          bottom: TabBar(
+            //isScrollable: true,
+
+            indicatorColor: Colors.white,
+            indicatorWeight: 5,
+            tabs: [
+              Tab(icon: Icon(Icons.star), text: 'Feed'),
+              Tab(icon: Icon(Icons.face), text: 'Siswa'),
+              Tab(icon: Icon(Icons.mail), text: 'Pesan'),
             ],
           ),
+          // elevation: 1,
+          titleSpacing: 20,
         ),
-      );
+        body: TabBarView(
+          children: [
+            ViewFeedMenulis(),
+            cekAkun(),
+            Container(
+              child: Center(
+                child: Text('Halaman chat'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   PilihKelas pilihKelasCall() => PilihKelas();
 
@@ -88,6 +118,8 @@ class _HomePageState extends State<HomePage> {
                 QuerySnapshot documents = snapshot.data;
                 List<DocumentSnapshot> docs = documents.docs;
                 docs.forEach((data) {
+                  print('check login gaaan');
+                  print(data.id);
                   if (data.id == emailLogin) {
                     user.clear();
                     user.add(data.get('emailSiswa'));

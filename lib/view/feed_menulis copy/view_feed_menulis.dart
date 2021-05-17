@@ -22,7 +22,7 @@ class ViewFeedMenulis extends StatefulWidget {
 
 class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
   List user;
-  String emailLogin = FirebaseAuth.instance.currentUser.email;
+  String emailLogin = FirebaseAuth.instance.currentUser.uid;
 
   @override
   Widget build(BuildContext context) {

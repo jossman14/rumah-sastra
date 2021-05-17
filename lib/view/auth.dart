@@ -711,8 +711,8 @@ class _AuthPageState extends State<AuthPage> {
 
     //redirect
     if (checkLogin) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
     }
   }
 
@@ -722,8 +722,8 @@ class _AuthPageState extends State<AuthPage> {
 
     //redirect
     if (checkLogin) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
     }
   }
 
@@ -733,8 +733,8 @@ class _AuthPageState extends State<AuthPage> {
 
     //redirect
     if (checkLogin) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
     }
   }
 
@@ -744,8 +744,8 @@ class _AuthPageState extends State<AuthPage> {
 
     //redirect
     if (checkLogin) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
     }
   }
 

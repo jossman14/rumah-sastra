@@ -26,7 +26,7 @@ class ViewUjiPemahaman extends StatefulWidget {
 
 class _ViewUjiPemahamanState extends State<ViewUjiPemahaman> {
   List user;
-  String emailLogin = FirebaseAuth.instance.currentUser.email;
+  String emailLogin = FirebaseAuth.instance.currentUser.uid;
 
   @override
   Widget build(BuildContext context) {
