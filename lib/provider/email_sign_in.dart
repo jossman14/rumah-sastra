@@ -9,12 +9,15 @@ class EmailSignInProvider extends ChangeNotifier {
   String _username;
   String _emailSiswa;
   String _password;
+  String _id;
   String _passwordConfirm;
   String _kelas;
   DateTime _akunDibuat;
   List _akun;
+  UserRusa _akunRusa;
 
   EmailSignInProvider() {
+    _id = '';
     _emailGuru = '';
     _username = '';
     _emailSiswa = '';
@@ -22,6 +25,13 @@ class EmailSignInProvider extends ChangeNotifier {
     _passwordConfirm = '';
     _kelas = '';
     _akunDibuat = DateTime.now();
+  }
+
+  UserRusa get akunRusa => _akunRusa;
+
+  set akunRusa(UserRusa value) {
+    _akunRusa = value;
+    notifyListeners();
   }
 
   String get emailGuru => _emailGuru;
@@ -35,6 +45,13 @@ class EmailSignInProvider extends ChangeNotifier {
 
   set username(String value) {
     _username = value;
+    notifyListeners();
+  }
+
+  String get id => _id;
+
+  set id(String value) {
+    _id = value;
     notifyListeners();
   }
 

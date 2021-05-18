@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EmailSignInProvider()),
         ChangeNotifierProvider(create: (context) => MateriProvider()),
         ChangeNotifierProvider(create: (context) => FeedMenulisProvider()),
-        ChangeNotifierProvider(create: (context) => UserRusaNewProvider()),
+        ChangeNotifierProvider(create: (context) => UserRusaProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

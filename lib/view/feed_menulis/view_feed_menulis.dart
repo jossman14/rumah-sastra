@@ -62,6 +62,7 @@ class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
                     user.add(data.get('passwordConfirm'));
                     user.add(data.get('jenisAkun'));
                     user.add(data.get('pic'));
+                    user.add(data.get('id'));
 
                     final provider = Provider.of<EmailSignInProvider>(context);
 

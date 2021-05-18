@@ -26,6 +26,7 @@ class UserRusaNew {
       @required this.password,
       @required this.passwordConfirm,
       @required this.kelas,
+      id,
       akunDibuat,
       jenisAkun,
       pic});

@@ -17,17 +17,18 @@ class UserRusa {
   DateTime akunDibuat;
   String jenisAkun = '';
   String pic = '';
-  UserRusa(
-      {@required this.emailGuru,
-      @required this.username,
-      @required this.emailSiswa,
-      @required this.password,
-      @required this.passwordConfirm,
-      @required this.kelas,
-      @required this.akunDibuat,
-      @required this.id,
-      jenisAkun,
-      pic});
+  UserRusa({
+    @required this.emailGuru,
+    @required this.username,
+    @required this.emailSiswa,
+    @required this.password,
+    @required this.passwordConfirm,
+    @required this.kelas,
+    @required this.akunDibuat,
+    @required this.id,
+    @required this.jenisAkun,
+    pic,
+  });
 
   UserRusa.fromSnapshot(DocumentSnapshot snapshot)
       : akunDibuat = snapshot['akunDibuat'],

@@ -669,6 +669,7 @@ class _AuthPageState extends State<AuthPage> {
 
           //insert to provider
           final user = UserRusa(
+              id: provider.id,
               akunDibuat: provider.akunDibuat,
               emailSiswa: provider.emailSiswa,
               password: provider.password,
@@ -712,7 +713,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
     }
   }
 
@@ -723,7 +724,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
     }
   }
 
@@ -734,7 +735,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
     }
   }
 
@@ -745,7 +746,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 0)));
+          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
     }
   }
 

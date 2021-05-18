@@ -6,6 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/Utils/utils.dart';
+import 'package:rusa4/model/user.dart';
 import 'package:rusa4/model/user_new.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/user_new.dart';
@@ -23,11 +24,11 @@ class UserSetting extends StatefulWidget {
 class _UserSettingState extends State<UserSetting> {
   String emailLogin = FirebaseAuth.instance.currentUser.uid;
 
-  TextEditingController _penggunaname = TextEditingController();
+  TextEditingController _penggunaname;
 
-  TextEditingController _emailGuru = TextEditingController();
-  TextEditingController _kelas = TextEditingController();
-  TextEditingController _emailSiswa = TextEditingController();
+  TextEditingController _emailGuru;
+  TextEditingController _kelas;
+  TextEditingController _emailSiswa;
   TextEditingController _password = TextEditingController();
   TextEditingController _passwordNew = TextEditingController();
   TextEditingController _passwordConfirm = TextEditingController();
@@ -37,16 +38,14 @@ class _UserSettingState extends State<UserSetting> {
   bool isGanti = false;
   bool _passwordVisible = true;
 
-  UserRusaNew hasil;
+  List penggunaLocal;
+  List userLocal;
+
+  UserRusa hasil;
   // var pengguna = [];
 
   @override
   Widget build(BuildContext context) {
-    _penggunaname.text = widget.pengguna[3];
-    _emailGuru.text = widget.pengguna[1];
-    _emailSiswa.text = widget.pengguna[0];
-    _kelas.text = widget.pengguna[2];
-    _password.text = widget.pengguna[5];
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -72,11 +71,18 @@ class _UserSettingState extends State<UserSetting> {
           ),
         ),
       ),
-      body: contentSetting(context),
+      body: cekAkun(context),
     );
   }
 
   SafeArea contentSetting(BuildContext context) {
+    penggunaLocal = userLocal;
+    _emailGuru = TextEditingController(text: penggunaLocal[1]);
+    _emailSiswa = TextEditingController(text: penggunaLocal[0]);
+    _penggunaname = TextEditingController(text: penggunaLocal[3]);
+    _kelas = TextEditingController(text: penggunaLocal[2]);
+
+    _password.text = penggunaLocal[5];
     return SafeArea(
       child: Center(
         child: SingleChildScrollView(
@@ -105,7 +111,7 @@ class _UserSettingState extends State<UserSetting> {
                     padding: EdgeInsets.all(8),
                     color: HexColor('#FF3A00'),
                     child: Text(
-                      widget.pengguna[7],
+                      penggunaLocal[7],
                       style: GoogleFonts.firaSans(
                           fontSize: 20,
                           color: HexColor('#FFFFFF'),
@@ -173,10 +179,11 @@ class _UserSettingState extends State<UserSetting> {
                                 fontWeight: FontWeight.w700),
                           ),
                           TextFormField(
+                            // initialValue: 'ss',
                             enabled: isEdit,
                             controller: _penggunaname,
                             decoration: InputDecoration(
-                              hintText: widget.pengguna[3],
+                              hintText: penggunaLocal[3],
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 18),
                             ),
@@ -199,12 +206,13 @@ class _UserSettingState extends State<UserSetting> {
                                 fontWeight: FontWeight.w700),
                           ),
                           TextFormField(
+                            // initialValue: formEmailSiswa,
                             enabled: isEdit,
                             controller: _emailSiswa,
                             decoration: InputDecoration(
-                              hintText: widget.pengguna[0] == ''
+                              hintText: penggunaLocal[0] == ''
                                   ? '-'
-                                  : widget.pengguna[0],
+                                  : penggunaLocal[0],
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 18),
                             ),
@@ -232,10 +240,11 @@ class _UserSettingState extends State<UserSetting> {
                                 fontWeight: FontWeight.w700),
                           ),
                           TextFormField(
+                            // initialValue: formEmailGuru,
                             enabled: isEdit,
                             controller: _emailGuru,
                             decoration: InputDecoration(
-                              hintText: widget.pengguna[1],
+                              hintText: penggunaLocal[1],
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 18),
                             ),
@@ -263,10 +272,11 @@ class _UserSettingState extends State<UserSetting> {
                                 fontWeight: FontWeight.w700),
                           ),
                           TextFormField(
+                            // initialValue: formKelas,
                             enabled: isEdit,
                             controller: _kelas,
                             decoration: InputDecoration(
-                              hintText: widget.pengguna[2],
+                              hintText: penggunaLocal[2],
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 18),
                             ),
@@ -301,27 +311,26 @@ class _UserSettingState extends State<UserSetting> {
                                   onPressed: () {
                                     setState(() {
                                       final provider =
-                                          Provider.of<UserRusaNewProvider>(
-                                              context,
+                                          Provider.of<UserRusaProvider>(context,
                                               listen: false);
 
-                                      hasil = UserRusaNew(
-                                          emailGuru: _emailGuru.text,
-                                          username: _penggunaname.text,
-                                          emailSiswa: _emailSiswa.text,
-                                          password: _password.text,
-                                          passwordConfirm: _password.text,
-                                          kelas: _kelas.text,
-                                          jenisAkun: widget.pengguna[7],
-                                          pic: widget.pengguna[8],
-                                          akunDibuat: widget.pengguna[7]);
+                                      hasil = UserRusa(
+                                        akunDibuat: penggunaLocal[4],
+                                        id: penggunaLocal[9],
+                                        emailGuru: _emailGuru.text,
+                                        username: _penggunaname.text,
+                                        emailSiswa: _emailSiswa.text,
+                                        password: _password.text,
+                                        passwordConfirm: _password.text,
+                                        kelas: _kelas.text,
+                                        jenisAkun: penggunaLocal[7],
+                                        pic: penggunaLocal[8],
+                                      );
 
-                                      print('halaman setting');
-                                      print(hasil.jenisAkun);
-                                      if (widget.pengguna[7] == "Guru") {
-                                        provider.updateUserRusaNewGuru(hasil);
+                                      if (penggunaLocal[7] == "Guru") {
+                                        provider.updateUserRusaGuru(hasil);
                                       } else {
-                                        provider.updateUserRusaNew(hasil);
+                                        provider.updateUserRusa(hasil);
                                       }
                                       isEdit = !isEdit;
                                     });
@@ -521,56 +530,71 @@ class _UserSettingState extends State<UserSetting> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (_passwordCek.text ==
-                                                _password.text) {
-                                              isCorrect = !isCorrect;
-                                              ScaffoldMessenger.of(context)
-                                                  .removeCurrentSnackBar();
-                                            } else {
+                                    Visibility(
+                                      visible: !isCorrect,
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if (_passwordCek.text ==
+                                                  _password.text) {
+                                                isCorrect = !isCorrect;
+                                                ScaffoldMessenger.of(context)
+                                                    .removeCurrentSnackBar();
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                      content: Text(
+                                                          'Password lama salah!')),
+                                                );
+                                              }
+                                            });
+                                          },
+                                          child: Text('Cek Password')),
+                                    ),
+                                    Visibility(
+                                      visible: isCorrect,
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            if (isCorrect) {
+                                              final provider =
+                                                  Provider.of<UserRusaProvider>(
+                                                      context,
+                                                      listen: false);
+
+                                              hasil = UserRusa(
+                                                id: penggunaLocal[9],
+                                                emailGuru: _emailGuru.text,
+                                                username: _penggunaname.text,
+                                                emailSiswa: _emailSiswa.text,
+                                                password: _passwordNew.text,
+                                                passwordConfirm:
+                                                    _passwordConfirm.text,
+                                                kelas: _kelas.text,
+                                                akunDibuat: penggunaLocal[4],
+                                                jenisAkun: penggunaLocal[7],
+                                                pic: penggunaLocal[8],
+                                              );
+
+                                              provider.updateUserRusa(hasil);
+
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
                                                     content: Text(
-                                                        'Password lama salah!')),
+                                                        'Ganti Password Berhasil!')),
                                               );
+
+                                              isCorrect = !isCorrect;
+                                              _password.clear();
+                                              _passwordNew.clear();
+                                              _passwordConfirm.clear();
                                             }
-                                          });
 
-                                          if (isCorrect) {
-                                            final provider = Provider.of<
-                                                    UserRusaNewProvider>(
-                                                context,
-                                                listen: false);
-
-                                            hasil = UserRusaNew(
-                                              emailGuru: _emailGuru.text,
-                                              username: _penggunaname.text,
-                                              emailSiswa: _emailSiswa.text,
-                                              password: _passwordNew.text,
-                                              passwordConfirm:
-                                                  _passwordConfirm.text,
-                                              kelas: _kelas.text,
-                                            );
-                                            provider.updateUserRusaNew(hasil);
-
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      'Ganti Password Berhasil!')),
-                                            );
-
-                                            isCorrect = !isCorrect;
-                                          }
-
-                                          setState(() {});
-                                        },
-                                        child: Text(!isCorrect
-                                            ? 'Cek Password'
-                                            : 'Simpan Password')),
+                                            setState(() {});
+                                          },
+                                          child: Text('Simpan Password')),
+                                    ),
                                     TextButton(
                                         onPressed: () {
                                           setState(() {
@@ -594,5 +618,52 @@ class _UserSettingState extends State<UserSetting> {
         ),
       ),
     );
+  }
+
+  FutureBuilder<QuerySnapshot> cekAkun(BuildContext context) {
+    return FutureBuilder(
+        future: FirebaseFirestore.instance.collection("Users").get(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Center(
+                child: Text("hasilnya none"),
+              );
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                QuerySnapshot documents = snapshot.data;
+                List<DocumentSnapshot> docs = documents.docs;
+                docs.forEach((data) {
+                  if (data.id == emailLogin) {
+                    userLocal != null ? userLocal.clear() : userLocal = [];
+
+                    userLocal.add(data.get('emailSiswa'));
+                    userLocal.add(data.get('emailGuru'));
+                    userLocal.add(data.get('kelas'));
+                    userLocal.add(data.get('username'));
+                    userLocal.add(data.get('akunDibuat').toDate());
+                    userLocal.add(data.get('password'));
+                    userLocal.add(data.get('passwordConfirm'));
+                    userLocal.add(data.get('jenisAkun'));
+                    userLocal.add(data.get('pic'));
+                    userLocal.add(data.get('id'));
+                  } else {
+                    print('data tidak sama');
+                  }
+                });
+              } else {
+                print('data tidak ditemukan');
+              }
+          }
+          print('cek akuuunn');
+          print(userLocal);
+          return contentSetting(context);
+          // return Container();
+        });
   }
 }

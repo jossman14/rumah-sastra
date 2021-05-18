@@ -1,22 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/main_drawer.dart';
-import 'package:rusa4/api/flutter_firebase_api.dart';
-import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/feed_menulis/view_feed_menulis.dart';
 import 'package:rusa4/view/page_guru.dart';
 import 'package:rusa4/view/page_siswa.dart';
 import 'package:rusa4/view/pilih_kelas.dart';
-import 'package:rusa4/view/user_setting/user_setting.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/HomePage";
-
   final int selectedPage;
 
   const HomePage({
@@ -118,8 +113,6 @@ class _HomePageState extends State<HomePage> {
                 QuerySnapshot documents = snapshot.data;
                 List<DocumentSnapshot> docs = documents.docs;
                 docs.forEach((data) {
-                  print('check login gaaan');
-                  print(data.id);
                   if (data.id == emailLogin) {
                     user.clear();
                     user.add(data.get('emailSiswa'));
@@ -131,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                     user.add(data.get('passwordConfirm'));
                     user.add(data.get('jenisAkun'));
                     user.add(data.get('pic'));
+                    user.add(data.get('id'));
 
                     final provider = Provider.of<EmailSignInProvider>(context);
 

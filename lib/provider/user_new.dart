@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:rusa4/api/user_firebase_api.dart';
-// import 'package:rusa4/api/userRusaNew_firebase_api.dart';
-// import 'package:rusa4/model/userRusaNew.dart';
+import 'package:rusa4/model/user.dart';
 import 'package:rusa4/model/user_new.dart';
 
-class UserRusaNewProvider extends ChangeNotifier {
-  void removeUserRusaNew(UserRusaNew userRusaNew) =>
-      UserRusaNewFirebaseApi.deleteUserRusaNew(userRusaNew);
+class UserRusaProvider extends ChangeNotifier {
+  void removeUserRusa(UserRusa userRusa) =>
+      UserRusaFirebaseApi.deleteUserRusa(userRusa);
 
-  void updateUserRusaNew(UserRusaNew userRusaNew) {
-    UserRusaNewFirebaseApi.updateUserRusaNew(userRusaNew);
+  void updateUserRusa(UserRusa userRusa) {
+    UserRusaFirebaseApi.updateUserRusa(userRusa);
   }
 
-  void removeUserRusaNewGuru(UserRusaNew userRusaNew) =>
-      UserRusaNewFirebaseApi.deleteUserRusaNew(userRusaNew);
+  void removeUserRusaGuru(UserRusa userRusa) =>
+      UserRusaFirebaseApi.deleteUserRusa(userRusa);
 
-  void updateUserRusaNewGuru(UserRusaNew userRusaNew) {
-    UserRusaNewFirebaseApi.updateUserRusaNew(userRusaNew);
+  void updateUserRusaGuru(UserRusa userRusa) {
+    UserRusaFirebaseApi.updateUserRusa(userRusa);
   }
 }

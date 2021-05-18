@@ -1,38 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rusa4/Utils/utils.dart';
-// import 'package:rusa4/model/UserRusaNew.dart';
+import 'package:rusa4/model/user.dart';
+// import 'package:rusa4/model/UserRusa.dart';
 import 'package:rusa4/model/user_new.dart';
 
-class UserRusaNewFirebaseApi {
-  static Future updateUserRusaNew(UserRusaNew userRusaNew) async {
-    final docUserRusaNew = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userRusaNew.emailSiswa);
+class UserRusaFirebaseApi {
+  static Future updateUserRusa(UserRusa userRusa) async {
+    final docUserRusa =
+        FirebaseFirestore.instance.collection('Users').doc(userRusa.id);
 
-    await docUserRusaNew.update(userRusaNew.toJson());
+    await docUserRusa.update(userRusa.toJson(userRusa.jenisAkun, userRusa.pic));
   }
 
-  static Future deleteUserRusaNewGuru(UserRusaNew userRusaNew) async {
-    final docUserRusaNew = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userRusaNew.emailGuru);
+  static Future deleteUserRusaGuru(UserRusa userRusa) async {
+    final docUserRusa =
+        FirebaseFirestore.instance.collection('Users').doc(userRusa.id);
 
-    await docUserRusaNew.delete();
+    await docUserRusa.delete();
   }
 
-  static Future updateUserRusaNewGuru(UserRusaNew userRusaNew) async {
-    final docUserRusaNew = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userRusaNew.emailGuru);
+  static Future updateUserRusaGuru(UserRusa userRusa) async {
+    final docUserRusa =
+        FirebaseFirestore.instance.collection('Users').doc(userRusa.id);
 
-    await docUserRusaNew.update(userRusaNew.toJson());
+    await docUserRusa.update(userRusa.toJson(userRusa.jenisAkun, userRusa.pic));
   }
 
-  static Future deleteUserRusaNew(UserRusaNew userRusaNew) async {
-    final docUserRusaNew = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userRusaNew.emailSiswa);
+  static Future deleteUserRusa(UserRusa userRusa) async {
+    final docUserRusa =
+        FirebaseFirestore.instance.collection('Users').doc(userRusa.id);
 
-    await docUserRusaNew.delete();
+    await docUserRusa.delete();
   }
 }
