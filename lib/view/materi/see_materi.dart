@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/model/materi.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 
 import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/view/materi/edit_materi.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class SeeMateriPage extends StatefulWidget {
   final Materi materi;
@@ -16,6 +18,7 @@ class SeeMateriPage extends StatefulWidget {
 
 class _SeeMateriPageState extends State<SeeMateriPage> {
   String title;
+  String linkVideo;
   String description;
 
   @override
@@ -23,6 +26,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     super.initState();
 
     title = widget.materi.title;
+    linkVideo = widget.materi.linkVideo;
     description = widget.materi.description;
   }
 
@@ -80,6 +84,8 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                     ),
                   ),
                   SizedBox(height: 15),
+                  buildYoutube(),
+                  SizedBox(height: 15),
                   Text(
                     description,
                     textAlign: TextAlign.justify,
@@ -95,5 +101,39 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
         ),
       ),
     );
+  }
+
+  Widget buildYoutube() {
+    String videoID = cekIdYT();
+    bool cekVideoID = videoID != null ? true : false;
+    return Visibility(
+      visible: cekVideoID,
+      child: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoID == null ? 'OqP2eWmOsw0' : videoID,
+          flags: YoutubePlayerFlags(
+            hideControls: false,
+            controlsVisibleAtStart: true,
+            autoPlay: false,
+            mute: false,
+          ),
+        ),
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: HexColor('#d35400'),
+      ),
+    );
+  }
+
+  cekIdYT() {
+    try {
+      String videoID = YoutubePlayer.convertUrlToId(linkVideo);
+      return videoID;
+    } on Exception catch (exception) {
+      print(exception);
+      return null;
+    } catch (error) {
+      print(error);
+      return null;
+    }
   }
 }

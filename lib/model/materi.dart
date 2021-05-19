@@ -9,6 +9,7 @@ class Materi {
   DateTime createdTime;
   DateTime modifTime;
   String title;
+  String linkVideo;
   String id;
   String description;
   String writer;
@@ -17,6 +18,7 @@ class Materi {
   Materi({
     @required this.createdTime,
     @required this.modifTime,
+    @required this.linkVideo,
     @required this.title,
     @required this.description,
     @required this.id,
@@ -32,6 +34,7 @@ class Materi {
         id: json['id'],
         writer: json['writer'],
         kelas: json['kelas'],
+        linkVideo: json['linkVideo'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,5 +45,6 @@ class Materi {
         'id': id,
         'writer': writer,
         'kelas': kelas,
+        'linkVideo': linkVideo,
       };
 }

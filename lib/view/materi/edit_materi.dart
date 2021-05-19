@@ -18,6 +18,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
   final _formKey = GlobalKey<FormState>();
 
   String title;
+  String linkVideo;
   String description;
 
   @override
@@ -54,8 +55,11 @@ class _EditMateriPageState extends State<EditMateriPage> {
                 key: _formKey,
                 child: MateriFormWidget(
                   title: title,
+                  linkVideo: linkVideo,
                   description: description,
                   onChangedTitle: (title) => setState(() => this.title = title),
+                  onChangedlinkVideo: (linkVideo) =>
+                      setState(() => this.linkVideo = linkVideo),
                   onChangedDescription: (description) =>
                       setState(() => this.description = description),
                   onSavedMateri: saveMateri,

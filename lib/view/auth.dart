@@ -669,6 +669,8 @@ class _AuthPageState extends State<AuthPage> {
 
           //insert to provider
           final user = UserRusa(
+              jenisAkun: _pilihAkun,
+              pic: provider.username,
               id: provider.id,
               akunDibuat: provider.akunDibuat,
               emailSiswa: provider.emailSiswa,

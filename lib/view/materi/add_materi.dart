@@ -13,6 +13,7 @@ class AddMateriDialogWidget extends StatefulWidget {
 class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
   final _formKey = GlobalKey<FormState>();
   String title = '';
+  String linkVideo = '';
   String description = '';
 
   @override
@@ -20,18 +21,6 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tambah Materi'),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.delete),
-        //     onPressed: () {
-        //       final provider =
-        //           Provider.of<MateriProvider>(context, listen: false);
-        //       provider.removeMateri(widget.materi);
-
-        //       Navigator.of(context).pop();
-        //     },
-        //   )
-        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,8 +31,11 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
               key: _formKey,
               child: MateriFormWidget(
                 title: title,
+                linkVideo: linkVideo,
                 description: description,
                 onChangedTitle: (title) => setState(() => this.title = title),
+                onChangedlinkVideo: (linkVideo) =>
+                    setState(() => this.linkVideo = linkVideo),
                 onChangedDescription: (description) =>
                     setState(() => this.description = description),
                 onSavedMateri: addMateri,
@@ -67,6 +59,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
     } else {
       final materi = Materi(
         id: DateTime.now().toString(),
+        linkVideo: linkVideo,
         title: title,
         description: description,
         createdTime: DateTime.now(),
