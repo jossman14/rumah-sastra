@@ -15,6 +15,7 @@ class EmailSignInProvider extends ChangeNotifier {
   DateTime _akunDibuat;
   List _akun;
   UserRusa _akunRusa;
+  List _daftarEmailGuru;
 
   EmailSignInProvider() {
     _id = '';
@@ -31,7 +32,7 @@ class EmailSignInProvider extends ChangeNotifier {
 
   set akunRusa(UserRusa value) {
     _akunRusa = value;
-    notifyListeners();
+    // notifyListeners();
   }
 
   String get emailGuru => _emailGuru;
@@ -87,6 +88,13 @@ class EmailSignInProvider extends ChangeNotifier {
 
   set akun(List value) {
     _akun = value;
+    // notifyListeners();
+  }
+
+  List get daftarEmailGuru => _daftarEmailGuru;
+
+  set daftarEmailGuru(List value) {
+    _daftarEmailGuru = value;
     // notifyListeners();
   }
 

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
+import 'package:rusa4/provider/get_image.dart';
 import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/provider/user_new.dart';
 import 'package:rusa4/view/auth.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => MateriProvider()),
         ChangeNotifierProvider(create: (context) => FeedMenulisProvider()),
         ChangeNotifierProvider(create: (context) => UserRusaProvider()),
+        ChangeNotifierProvider(create: (context) => GetImageProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

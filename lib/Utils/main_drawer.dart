@@ -58,14 +58,28 @@ class _DrawerAppState extends State<DrawerApp> {
                 backgroundColor: Colors.white,
                 // backgroundImage: AssetImage('./assets/images/Logo.png'),
                 child: Container(
-                  padding: EdgeInsets.all(12),
-                  child: SvgPicture.network(
-                    user[8],
-                    semanticsLabel: 'Profil Pic',
-                    placeholderBuilder: (BuildContext context) => Container(
-                        padding: const EdgeInsets.all(10.0),
-                        child: const CircularProgressIndicator()),
-                  ),
+                  padding: user[8][8] != "f"
+                      ? EdgeInsets.all(12)
+                      : EdgeInsets.all(4),
+                  child: user[8][8] != "f"
+                      ? SvgPicture.network(
+                          user[8],
+                          semanticsLabel: 'Profil Pic',
+                          placeholderBuilder: (BuildContext context) =>
+                              Container(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: const CircularProgressIndicator()),
+                        )
+                      : Container(
+                          width: 140.0,
+                          height: 140.0,
+                          decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                              image: NetworkImage(user[8]),
+                              fit: BoxFit.cover,
+                            ),
+                          )),
                 )),
           ),
           ListTile(

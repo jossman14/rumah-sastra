@@ -20,6 +20,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
   String title;
   String linkVideo;
   String description;
+  String imagegan;
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     title = widget.materi.title;
     linkVideo = widget.materi.linkVideo;
     description = widget.materi.description;
+    imagegan = widget.materi.imagegan;
   }
 
   @override
@@ -85,6 +87,8 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                   ),
                   SizedBox(height: 15),
                   buildYoutube(),
+                  SizedBox(height: 15),
+                  Image.network(imagegan),
                   SizedBox(height: 15),
                   Text(
                     description,

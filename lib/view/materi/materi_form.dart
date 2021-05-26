@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
+import 'package:rusa4/Utils/upload_file.dart';
+import 'package:rusa4/provider/get_image.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MateriFormWidget extends StatelessWidget {
   final String title;
   final String linkVideo;
   final String description;
+  final String imagegan;
   final ValueChanged<String> onChangedTitle;
   final ValueChanged<String> onChangedlinkVideo;
   final ValueChanged<String> onChangedDescription;
+  final ValueChanged<String> onChangedimagegan;
   final VoidCallback onSavedMateri;
 
   const MateriFormWidget({
@@ -16,9 +21,11 @@ class MateriFormWidget extends StatelessWidget {
     this.title = '',
     this.linkVideo = '',
     this.description = '',
+    this.imagegan = '',
     @required this.onChangedTitle,
     @required this.onChangedlinkVideo,
     @required this.onChangedDescription,
+    @required this.onChangedimagegan,
     @required this.onSavedMateri,
   }) : super(key: key);
 
@@ -31,6 +38,9 @@ class MateriFormWidget extends StatelessWidget {
             SizedBox(height: 8),
             buildYoutube(),
             SizedBox(height: 8),
+            UploadPage(),
+            buildImage(context),
+            SizedBox(height: 16),
             buildDescription(),
             SizedBox(height: 16),
             buildButton(),
@@ -74,6 +84,7 @@ class MateriFormWidget extends StatelessWidget {
             labelText: 'Link Video Youtube',
           ),
         ),
+        SizedBox(height: 8),
         Visibility(
           visible: cekVideoID,
           child: YoutubePlayer(
@@ -116,6 +127,28 @@ class MateriFormWidget extends StatelessWidget {
           labelText: 'Description',
         ),
       );
+
+  Widget buildImage(BuildContext context) {
+    TextEditingController _imageganController = TextEditingController();
+    final provider = Provider.of<GetImageProvider>(context, listen: false);
+
+    // provider.getImage = urlDownload;
+    _imageganController.text = provider.getImage;
+    // imagegan = provider.getImage;
+
+    return Visibility(
+      visible: false,
+      child: TextFormField(
+        maxLines: 1,
+        onChanged: onChangedimagegan,
+        controller: _imageganController,
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          labelText: 'Image',
+        ),
+      ),
+    );
+  }
 
   Widget buildButton() => SizedBox(
         width: double.infinity,

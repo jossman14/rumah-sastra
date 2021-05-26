@@ -70,7 +70,7 @@ Future<bool> createAccountSiswaAPI(BuildContext context, UserRusa user) async {
     final buatAkun = FirebaseFirestore.instance.collection('Users').doc(idGan);
 
     user.id = idGan;
-    await buatAkun.set(user.toJson("Siswa", user.username));
+    await buatAkun.set(user.toJson("Siswa"));
 
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;
@@ -103,7 +103,7 @@ Future<bool> createAccountGuruAPI(BuildContext context, UserRusa user) async {
     final buatAkun = FirebaseFirestore.instance.collection('Users').doc(idGan);
 
     user.id = idGan;
-    await buatAkun.set(user.toJson("Siswa", user.username));
+    await buatAkun.set(user.toJson("Siswa"));
 
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return true;

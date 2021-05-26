@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/model/materi.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/provider/get_image.dart';
 import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/view/materi/materi_form.dart';
 
@@ -15,9 +16,14 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
   String title = '';
   String linkVideo = '';
   String description = '';
+  String imagegan = '';
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<GetImageProvider>(context, listen: false);
+    print('tambah materi gaan');
+    print(provider.getImage);
+    imagegan = provider.getImage;
     return Scaffold(
       appBar: AppBar(
         title: Text('Tambah Materi'),
@@ -33,11 +39,14 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
                 title: title,
                 linkVideo: linkVideo,
                 description: description,
+                imagegan: imagegan,
                 onChangedTitle: (title) => setState(() => this.title = title),
                 onChangedlinkVideo: (linkVideo) =>
                     setState(() => this.linkVideo = linkVideo),
                 onChangedDescription: (description) =>
                     setState(() => this.description = description),
+                onChangedimagegan: (imagegan) =>
+                    setState(() => this.imagegan = imagegan),
                 onSavedMateri: addMateri,
               ),
             ),
@@ -66,6 +75,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
         modifTime: DateTime.now(),
         writer: user[3],
         kelas: user[2],
+        imagegan: imagegan,
       );
 
       final provider = Provider.of<MateriProvider>(context, listen: false);

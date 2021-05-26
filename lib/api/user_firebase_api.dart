@@ -9,7 +9,7 @@ class UserRusaFirebaseApi {
     final docUserRusa =
         FirebaseFirestore.instance.collection('Users').doc(userRusa.id);
 
-    await docUserRusa.update(userRusa.toJson(userRusa.jenisAkun, userRusa.pic));
+    await docUserRusa.update(userRusa.toJson(userRusa.jenisAkun));
   }
 
   static Future deleteUserRusaGuru(UserRusa userRusa) async {
@@ -23,7 +23,7 @@ class UserRusaFirebaseApi {
     final docUserRusa =
         FirebaseFirestore.instance.collection('Users').doc(userRusa.id);
 
-    await docUserRusa.update(userRusa.toJson(userRusa.jenisAkun, userRusa.pic));
+    await docUserRusa.update(userRusa.toJson(userRusa.jenisAkun));
   }
 
   static Future deleteUserRusa(UserRusa userRusa) async {

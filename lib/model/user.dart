@@ -27,7 +27,7 @@ class UserRusa {
     @required this.akunDibuat,
     @required this.id,
     @required this.jenisAkun,
-    pic,
+    @required this.pic,
   });
 
   UserRusa.fromSnapshot(DocumentSnapshot snapshot)
@@ -55,7 +55,7 @@ class UserRusa {
         pic: json['pic'],
       );
 
-  Map<String, dynamic> toJson(String jenisAkun, String pic) => {
+  Map<String, dynamic> toJson(String jenisAkun) => {
         'akunDibuat': Utils.fromDateTimeToJson(akunDibuat),
         'username': username,
         'emailSiswa': emailSiswa,
@@ -65,6 +65,6 @@ class UserRusa {
         'passwordConfirm': passwordConfirm,
         'kelas': kelas,
         'jenisAkun': jenisAkun,
-        'pic': 'https://avatars.dicebear.com/api/bottts/' + pic + '.svg'
+        'pic': pic,
       };
 }

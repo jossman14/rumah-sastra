@@ -7,6 +7,7 @@ import 'package:rusa4/api/flutter_firebase_api.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthPage extends StatefulWidget {
   static const String routeName = '/auth';
@@ -142,10 +143,7 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Navigator.pushReplacementNamed(context, BuatAkun.routeName);
-                              // setState() {
-                              //   loginGuru = !loginGuru;
-                              // }
+                            
                               setState(() {
                                 loginGuru = !loginGuru;
                                 loginSiswa = !loginSiswa;
@@ -670,7 +668,9 @@ class _AuthPageState extends State<AuthPage> {
           //insert to provider
           final user = UserRusa(
               jenisAkun: _pilihAkun,
-              pic: provider.username,
+              pic: 'https://avatars.dicebear.com/api/bottts/' +
+                  provider.username +
+                  '.svg',
               id: provider.id,
               akunDibuat: provider.akunDibuat,
               emailSiswa: provider.emailSiswa,
@@ -715,7 +715,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
+          MaterialPageRoute(builder: (context) => cekPengguna(context)));
     }
   }
 
@@ -726,7 +726,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
+          MaterialPageRoute(builder: (context) => cekPengguna(context)));
     }
   }
 
@@ -737,7 +737,7 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
+          MaterialPageRoute(builder: (context) => cekPengguna(context)));
     }
   }
 
@@ -748,11 +748,13 @@ class _AuthPageState extends State<AuthPage> {
     //redirect
     if (checkLogin) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => HomePage(selectedPage: 1)));
+          MaterialPageRoute(builder: (context) => cekPengguna(context)));
     }
   }
 
   cekAkun(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context);
+
     user != null ? user.clear() : user = [];
     return FutureBuilder(
         future: FirebaseFirestore.instance.collection("Users").get(),
@@ -772,24 +774,8 @@ class _AuthPageState extends State<AuthPage> {
                 docs.forEach((data) {
                   if (data.get('jenisAkun') == "Guru") {
                     user.add(data.get('emailGuru'));
-                    print(data.get('emailGuru'));
                     print(user);
                   }
-
-                  // user.add(data.get('emailSiswa'));
-                  // user.add(data.get('emailGuru'));
-                  // user.add(data.get('kelas'));
-                  // user.add(data.get('username'));
-                  // user.add(data.get('akunDibuat').toDate());
-                  // user.add(data.get('password'));
-                  // user.add(data.get('passwordConfirm'));
-                  // user.add(data.get('jenisAkun'));
-                  // user.add(data.get('pic'));
-
-                  // final provider = Provider.of<EmailSignInProvider>(context);
-
-                  // provider.akun = user;
-                  // provider.setAkun(user);
                 });
               } else {
                 print('data tidak ditemukan');
@@ -797,8 +783,109 @@ class _AuthPageState extends State<AuthPage> {
           }
 
           userFinal = user;
-
+          provider.daftarEmailGuru = user;
           return registerSiswaHome(context);
+          // return Container();
+        });
+  }
+
+  cekEmailGuru(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context);
+
+    user != null ? user.clear() : user = [];
+    return FutureBuilder(
+        future: FirebaseFirestore.instance.collection("Users").get(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                QuerySnapshot documents = snapshot.data;
+                List<DocumentSnapshot> docs = documents.docs;
+                user != null ? user.clear() : user = [];
+                docs.forEach((data) {
+                  if (data.get('jenisAkun') == "Guru") {
+                    user.add(data.get('emailGuru'));
+                    print(user);
+                  }
+                });
+              } else {
+                print('data tidak ditemukan');
+              }
+          }
+
+          userFinal = user;
+          provider.daftarEmailGuru = user;
+          return HomePage(selectedPage: 1);
+
+          // return Container();
+        });
+  }
+
+  FutureBuilder<QuerySnapshot> cekPengguna(BuildContext context) {
+    String emailLogin = FirebaseAuth.instance.currentUser.uid;
+    final provider = Provider.of<EmailSignInProvider>(context);
+    List userLocal;
+    return FutureBuilder(
+        future: FirebaseFirestore.instance.collection("Users").get(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Center(
+                child: Text("hasilnya none"),
+              );
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                QuerySnapshot documents = snapshot.data;
+                List<DocumentSnapshot> docs = documents.docs;
+                docs.forEach((data) {
+                  if (data.id == emailLogin) {
+                    userLocal != null ? userLocal.clear() : userLocal = [];
+                    userLocal.add(data.get('emailSiswa'));
+                    userLocal.add(data.get('emailGuru'));
+                    userLocal.add(data.get('kelas'));
+                    userLocal.add(data.get('username'));
+                    userLocal.add(data.get('akunDibuat').toDate());
+                    userLocal.add(data.get('password'));
+                    userLocal.add(data.get('passwordConfirm'));
+                    userLocal.add(data.get('jenisAkun'));
+                    userLocal.add(data.get('pic'));
+                    userLocal.add(data.get('id'));
+
+                    provider.akun = userLocal;
+                    provider.setAkun(userLocal);
+                    final user = UserRusa(
+                        jenisAkun: data.get('jenisAkun'),
+                        pic: data.get('pic'),
+                        id: data.get('id'),
+                        akunDibuat: data.get('akunDibuat').toDate(),
+                        emailSiswa: data.get('emailSiswa'),
+                        password: data.get('password'),
+                        emailGuru: data.get('emailGuru'),
+                        kelas: data.get('kelas'),
+                        passwordConfirm: data.get('passwordConfirm'),
+                        username: data.get('username'));
+
+                    provider.akunRusa = user;
+                  } else {
+                    print('data tidak sama');
+                  }
+                });
+              } else {
+                print('data tidak ditemukan');
+              }
+          }
+          return cekEmailGuru(context);
           // return Container();
         });
   }

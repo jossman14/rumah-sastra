@@ -24,8 +24,6 @@ class _ViewMateriState extends State<ViewMateri> {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
-    print("halaman view");
-    print(user[2]);
 
     return Scaffold(
       drawer: AppDrawer(),
@@ -33,14 +31,15 @@ class _ViewMateriState extends State<ViewMateri> {
         title: Text("RuSa"),
         actions: [
           IconButton(
-              icon: Icon(Icons.exit_to_app_rounded),
-              onPressed: () {
-                // Constants.prefs.setBool("loggedIn", false);
-                FirebaseAuth.instance.signOut();
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => AuthPage()));
-                //
-              })
+            icon: Icon(Icons.exit_to_app_rounded),
+            onPressed: () {
+              // Constants.prefs.setBool("loggedIn", false);
+              FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => AuthPage()));
+              //
+            },
+          )
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(

@@ -12,6 +12,7 @@ class Materi {
   String linkVideo;
   String id;
   String description;
+  String imagegan;
   String writer;
   String kelas;
 
@@ -21,6 +22,7 @@ class Materi {
     @required this.linkVideo,
     @required this.title,
     @required this.description,
+    @required this.imagegan,
     @required this.id,
     @required this.writer,
     @required this.kelas,
@@ -35,6 +37,7 @@ class Materi {
         writer: json['writer'],
         kelas: json['kelas'],
         linkVideo: json['linkVideo'],
+        imagegan: json['imagegan'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,5 +49,6 @@ class Materi {
         'writer': writer,
         'kelas': kelas,
         'linkVideo': linkVideo,
+        'imagegan': imagegan,
       };
 }

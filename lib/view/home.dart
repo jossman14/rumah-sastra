@@ -34,18 +34,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      select = widget.selectedPage;
-      // print(select);
-    });
+    select = widget.selectedPage;
   }
 
   // set user(UserRusa user) {}
 
   @override
   Widget build(BuildContext context) {
-    print('home indek');
-    print(select);
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    user = provider.akun;
+    print(provider.daftarEmailGuru);
     return DefaultTabController(
       initialIndex: widget.selectedPage,
       length: 3,
@@ -94,53 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   PilihKelas pilihKelasCall() => PilihKelas();
 
-  FutureBuilder<QuerySnapshot> cekAkun() {
-    return FutureBuilder(
-        future: FirebaseFirestore.instance.collection("Users").get(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return Center(
-                child: Text("hasilnya none"),
-              );
-            case ConnectionState.active:
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                QuerySnapshot documents = snapshot.data;
-                List<DocumentSnapshot> docs = documents.docs;
-                docs.forEach((data) {
-                  if (data.id == emailLogin) {
-                    user.clear();
-                    user.add(data.get('emailSiswa'));
-                    user.add(data.get('emailGuru'));
-                    user.add(data.get('kelas'));
-                    user.add(data.get('username'));
-                    user.add(data.get('akunDibuat').toDate());
-                    user.add(data.get('password'));
-                    user.add(data.get('passwordConfirm'));
-                    user.add(data.get('jenisAkun'));
-                    user.add(data.get('pic'));
-                    user.add(data.get('id'));
-
-                    final provider = Provider.of<EmailSignInProvider>(context);
-
-                    provider.akun = user;
-                    provider.setAkun(user);
-                  } else {
-                    print('data tidak sama');
-                  }
-                });
-              } else {
-                print('data tidak ditemukan');
-              }
-          }
-
-          return user[7] == "Guru" ? PageGuru() : PageSiswa();
-          // return Container();
-        });
+  cekAkun() {
+    return user[7] == "Guru" ? PageGuru() : PageSiswa();
   }
 }
