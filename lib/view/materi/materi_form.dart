@@ -40,6 +40,8 @@ class MateriFormWidget extends StatelessWidget {
             SizedBox(height: 8),
             UploadPage(),
             buildImage(context),
+            SizedBox(height: 8),
+            imagegan.length > 1 ? showImage(context, imagegan) : Container(),
             SizedBox(height: 16),
             buildDescription(),
             SizedBox(height: 16),
@@ -127,6 +129,17 @@ class MateriFormWidget extends StatelessWidget {
           labelText: 'Description',
         ),
       );
+
+  showImage(BuildContext context, file) {
+    Text(
+      'Gambar Asli',
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    );
+    return Image.network(
+      file,
+      fit: BoxFit.cover,
+    );
+  }
 
   Widget buildImage(BuildContext context) {
     TextEditingController _imageganController = TextEditingController();

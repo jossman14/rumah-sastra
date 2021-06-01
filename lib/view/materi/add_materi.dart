@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rusa4/Utils/upload_func.dart';
 import 'package:rusa4/model/materi.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/get_image.dart';
@@ -17,12 +20,12 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
   String linkVideo = '';
   String description = '';
   String imagegan = '';
+  List url;
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GetImageProvider>(context, listen: false);
-    print('tambah materi gaan');
-    print(provider.getImage);
+
     imagegan = provider.getImage;
     return Scaffold(
       appBar: AppBar(

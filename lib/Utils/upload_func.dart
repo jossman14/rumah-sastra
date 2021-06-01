@@ -53,11 +53,9 @@ class UploadHelper {
     final urlDownload = await snapshot.ref.getDownloadURL();
 
     print('Download-Link: $urlDownload');
-    final provider = Provider.of<GetImageProvider>(context, listen: false);
+    var hasil = [urlDownload, task, file];
 
-    provider.getImage = urlDownload;
-
-    return [urlDownload, task];
+    return hasil;
   }
 
   static buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

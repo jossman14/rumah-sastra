@@ -37,6 +37,8 @@ class _UserSettingState extends State<UserSetting> {
   TextEditingController _kelas;
   TextEditingController _emailSiswa;
   TextEditingController _password = TextEditingController();
+  TextEditingController _emailSiswaNew = TextEditingController();
+  TextEditingController _emailGuruNew = TextEditingController();
   TextEditingController _passwordNew = TextEditingController();
   TextEditingController _passwordCek = TextEditingController();
   TextEditingController _passwordConfirm = TextEditingController();
@@ -55,7 +57,14 @@ class _UserSettingState extends State<UserSetting> {
   String _pilihKelasSiswa;
 
   UserRusa hasil;
-  // var pengguna = [];
+  var providerAkun;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,14 +101,13 @@ class _UserSettingState extends State<UserSetting> {
     final providerAkun = Provider.of<EmailSignInProvider>(context);
     penggunaLocal = providerAkun.akun;
     user = providerAkun.daftarEmailGuru;
+
     _emailGuru = TextEditingController(text: penggunaLocal[1]);
     _emailSiswa = TextEditingController(text: penggunaLocal[0]);
     _penggunaname = TextEditingController(text: penggunaLocal[3]);
     _kelas = TextEditingController(text: penggunaLocal[2]);
     // _passwordConfirm = TextEditingController(text: penggunaLocal[6]);
-
     _password.text = penggunaLocal[5];
-
     return SafeArea(
       child: Center(
         child: SingleChildScrollView(
@@ -176,7 +184,8 @@ class _UserSettingState extends State<UserSetting> {
                                       image: FileImage(imageFile),
                                       fit: BoxFit.cover,
                                     ),
-                                  )),
+                                  ),
+                                ),
                         ],
                       ),
                       Padding(
@@ -185,17 +194,18 @@ class _UserSettingState extends State<UserSetting> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               new CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 25.0,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      munculDialog();
-                                    },
-                                  ))
+                                backgroundColor: Colors.red,
+                                radius: 25.0,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    munculDialog();
+                                  },
+                                ),
+                              ),
                             ],
                           )),
                     ],
@@ -209,7 +219,7 @@ class _UserSettingState extends State<UserSetting> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          //////batas kotak
+                          /////batas kotak
                           SizedBox(
                             height: 16,
                           ),
@@ -221,7 +231,6 @@ class _UserSettingState extends State<UserSetting> {
                                 fontWeight: FontWeight.w700),
                           ),
                           TextFormField(
-                            // initialValue: 'ss',
                             enabled: isEdit,
                             controller: _penggunaname,
                             decoration: InputDecoration(
@@ -233,6 +242,10 @@ class _UserSettingState extends State<UserSetting> {
                               if (value == null || value.isEmpty) {
                                 return 'Form harus diisi';
                               }
+                              setState(() {
+                                _penggunaname.text = value;
+                                penggunaLocal[3] = value;
+                              });
                               return null;
                             },
                           ),
@@ -293,7 +306,7 @@ class _UserSettingState extends State<UserSetting> {
                           ),
 
                           akunGuru(context),
-                          //////batas kotak
+                          ////batas kotak
                           SizedBox(
                             height: 16,
                           ),
@@ -351,58 +364,69 @@ class _UserSettingState extends State<UserSetting> {
                                       UploadHelper.buildUploadStatus(url[1]);
                                     }
 
-                                    setState(() {
-                                      final provider =
-                                          Provider.of<UserRusaProvider>(context,
-                                              listen: false);
-
-                                      penggunaLocal[0] = _emailSiswa.text;
-                                      penggunaLocal[1] = _pilihGuru == null
-                                          ? _emailGuru.text
-                                          : _pilihGuru;
-                                      penggunaLocal[2] =
-                                          _pilihKelasSiswa == null
-                                              ? _kelas.text
-                                              : _pilihKelasSiswa;
-                                      penggunaLocal[3] = _penggunaname.text;
-                                      penggunaLocal[4] = penggunaLocal[4];
-                                      penggunaLocal[5] = _password.text;
-                                      penggunaLocal[6] = penggunaLocal[6];
-                                      penggunaLocal[7] = penggunaLocal[7];
-                                      penggunaLocal[8] = imageFile == null
-                                          ? penggunaLocal[8]
-                                          : url[0];
-
-                                      providerAkun.akun = penggunaLocal;
-                                      providerAkun.setAkun(penggunaLocal);
-
-                                      hasil = UserRusa(
-                                        akunDibuat: penggunaLocal[4],
-                                        id: penggunaLocal[9],
-                                        emailGuru: _pilihGuru == null
-                                            ? _emailGuru.text
-                                            : _pilihGuru,
-                                        username: _penggunaname.text,
-                                        emailSiswa: _emailSiswa.text,
-                                        password: _password.text,
-                                        passwordConfirm: penggunaLocal[6],
-                                        kelas: _pilihKelasSiswa == null
-                                            ? _kelas.text
-                                            : _pilihKelasSiswa,
-                                        jenisAkun: penggunaLocal[7],
-                                        pic: imageFile == null
-                                            ? penggunaLocal[8]
-                                            : url[0],
-                                      );
-
-                                      providerAkun.akunRusa = hasil;
-
-                                      if (penggunaLocal[7] == "Guru") {
-                                        provider.updateUserRusaGuru(hasil);
-                                      } else {
-                                        provider.updateUserRusa(hasil);
+                                    if (penggunaLocal[7] == "Guru") {
+                                      if (_emailGuru.text != penggunaLocal[1]) {
+                                        updateEmail(_passwordConfirm.text,
+                                            _emailGuru.text);
                                       }
+                                    } else {
+                                      if (_emailSiswa.text !=
+                                          penggunaLocal[0]) {
+                                        updateEmail(_passwordConfirm.text,
+                                            _emailSiswa.text);
+                                      }
+                                    }
 
+                                    final provider =
+                                        Provider.of<UserRusaProvider>(context,
+                                            listen: false);
+
+                                    penggunaLocal[0] = _emailSiswa.text;
+                                    penggunaLocal[1] = _pilihGuru == null
+                                        ? _emailGuru.text
+                                        : _pilihGuru;
+                                    penggunaLocal[2] = _pilihKelasSiswa == null
+                                        ? _kelas.text
+                                        : _pilihKelasSiswa;
+                                    penggunaLocal[3] = _penggunaname.text;
+                                    penggunaLocal[4] = penggunaLocal[4];
+                                    penggunaLocal[5] = _password.text;
+                                    penggunaLocal[6] = penggunaLocal[6];
+                                    penggunaLocal[7] = penggunaLocal[7];
+                                    penggunaLocal[8] = imageFile == null
+                                        ? penggunaLocal[8]
+                                        : url[0];
+
+                                    providerAkun.akun = penggunaLocal;
+                                    providerAkun.setAkun(penggunaLocal);
+
+                                    hasil = UserRusa(
+                                      akunDibuat: penggunaLocal[4],
+                                      id: penggunaLocal[9],
+                                      emailGuru: _pilihGuru == null
+                                          ? _emailGuru.text
+                                          : _pilihGuru,
+                                      username: _penggunaname.text,
+                                      emailSiswa: _emailSiswa.text,
+                                      password: _password.text,
+                                      passwordConfirm: penggunaLocal[6],
+                                      kelas: _pilihKelasSiswa == null
+                                          ? _kelas.text
+                                          : _pilihKelasSiswa,
+                                      jenisAkun: penggunaLocal[7],
+                                      pic: imageFile == null
+                                          ? penggunaLocal[8]
+                                          : url[0],
+                                    );
+
+                                    providerAkun.akunRusa = hasil;
+
+                                    if (penggunaLocal[7] == "Guru") {
+                                      provider.updateUserRusaGuru(hasil);
+                                    } else {
+                                      provider.updateUserRusa(hasil);
+                                    }
+                                    setState(() {
                                       isEdit = !isEdit;
                                     });
                                   },
@@ -787,13 +811,24 @@ class _UserSettingState extends State<UserSetting> {
   }
 
   updatePassword(oldpass, newpass) {
-    print('ganti password');
     var userChangePassword = FirebaseAuth.instance.currentUser;
     final String email = userChangePassword.email;
 
     userChangePassword.updatePassword(newpass);
     AuthCredential credential =
         EmailAuthProvider.credential(email: email, password: oldpass);
+    userChangePassword.reauthenticateWithCredential(credential);
+  }
+
+  updateEmail(oldEmail, newEmail) {
+    var userChangePassword = FirebaseAuth.instance.currentUser;
+    // final String email = userChangePassword.email;
+
+    // userChangePassword.updatePassword(newEmail);
+    userChangePassword.updateEmail(newEmail);
+
+    AuthCredential credential =
+        EmailAuthProvider.credential(email: newEmail, password: oldEmail);
     userChangePassword.reauthenticateWithCredential(credential);
   }
 }

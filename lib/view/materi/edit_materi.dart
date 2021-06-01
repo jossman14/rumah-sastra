@@ -20,6 +20,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
   String title;
   String linkVideo;
   String description;
+  String imagegan;
 
   @override
   void initState() {
@@ -27,6 +28,8 @@ class _EditMateriPageState extends State<EditMateriPage> {
 
     title = widget.materi.title;
     description = widget.materi.description;
+    linkVideo = widget.materi.linkVideo;
+    imagegan = widget.materi.imagegan;
   }
 
   @override
@@ -57,11 +60,14 @@ class _EditMateriPageState extends State<EditMateriPage> {
                   title: title,
                   linkVideo: linkVideo,
                   description: description,
+                  imagegan: imagegan,
                   onChangedTitle: (title) => setState(() => this.title = title),
                   onChangedlinkVideo: (linkVideo) =>
                       setState(() => this.linkVideo = linkVideo),
                   onChangedDescription: (description) =>
                       setState(() => this.description = description),
+                  onChangedimagegan: (imagegan) =>
+                      setState(() => this.imagegan = imagegan),
                   onSavedMateri: saveMateri,
                 ),
               ),
@@ -77,7 +83,13 @@ class _EditMateriPageState extends State<EditMateriPage> {
       return;
     } else {
       final provider = Provider.of<MateriProvider>(context, listen: false);
-      provider.updateMateri(widget.materi, title, description);
+      provider.updateMateri(
+        widget.materi,
+        title,
+        description,
+        imagegan,
+        linkVideo,
+      );
       // ubah == "edit"
       //     ? provider.updateMateri(widget.materi, title, description)
       //     : provider.addMateri(widget.materi);

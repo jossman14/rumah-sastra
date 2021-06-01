@@ -66,39 +66,41 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
               ]
             : null,
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 18,
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 15),
-                  buildYoutube(),
-                  SizedBox(height: 15),
-                  Image.network(imagegan),
-                  SizedBox(height: 15),
-                  Text(
-                    description,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
+                    SizedBox(height: 15),
+                    buildYoutube(),
+                    SizedBox(height: 15),
+                    Image.network(imagegan),
+                    SizedBox(height: 15),
+                    Text(
+                      description,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

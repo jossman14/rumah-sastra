@@ -21,9 +21,12 @@ class MateriProvider extends ChangeNotifier {
 
   void removeMateri(Materi materi) => MateriFirebaseApi.deleteMateri(materi);
 
-  void updateMateri(Materi materi, String title, String description) {
+  void updateMateri(Materi materi, String title, String description,
+      String imagegan, String linkVideo) {
     materi.title = title;
     materi.description = description;
+    materi.linkVideo = linkVideo;
+    materi.imagegan = imagegan;
 
     MateriFirebaseApi.updateMateri(materi);
   }
