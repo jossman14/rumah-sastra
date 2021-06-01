@@ -41,7 +41,7 @@ class MateriFormWidget extends StatelessWidget {
             UploadPage(),
             buildImage(context),
             SizedBox(height: 8),
-            imagegan.length > 1 ? showImage(context, imagegan) : Container(),
+            imagegan[8] == "f" ? showImage(context, imagegan) : Container(),
             SizedBox(height: 16),
             buildDescription(),
             SizedBox(height: 16),
