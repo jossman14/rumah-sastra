@@ -1,5 +1,5 @@
-import '../model/option.dart';
-import '../model/question.dart';
+import 'package:rusa4/quiz/model/option.dart';
+import 'package:rusa4/quiz/model/question.dart';
 
 final questions = [
   Question(

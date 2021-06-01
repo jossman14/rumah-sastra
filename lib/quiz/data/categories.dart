@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quiz_app_example/data/questions.dart';
-import 'package:quiz_app_example/model/category.dart';
+import 'package:rusa4/quiz/data/questions.dart';
+import 'package:rusa4/quiz/model/category.dart';
 
 final categories = <Category>[
   Category(

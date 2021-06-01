@@ -4,6 +4,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/quiz/data/categories.dart';
+import 'package:rusa4/quiz/page/category_page.dart';
 import 'package:rusa4/view/home.dart';
 import 'package:rusa4/view/pilih_kelas.dart';
 
@@ -113,6 +115,11 @@ class _PageGuruState extends State<PageGuru> {
                 ),
                 onPressed: () {
                   // Navigator.pushNamed(context, LoginSiswa.routeName);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) =>
+                              CategoryPage(category: categories.first))));
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app_example/model/category.dart';
-import 'package:quiz_app_example/model/option.dart';
-import 'package:quiz_app_example/model/question.dart';
-import 'package:quiz_app_example/widget/questions_widget.dart';
+import 'package:rusa4/quiz/model/category.dart';
+import 'package:rusa4/quiz/model/option.dart';
+import 'package:rusa4/quiz/model/question.dart';
+import 'package:rusa4/quiz/widget/questions_widget.dart';
 
 class CategoryPage extends StatefulWidget {
   final Category category;
