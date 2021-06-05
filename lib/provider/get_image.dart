@@ -14,7 +14,7 @@ class GetImageProvider extends ChangeNotifier {
   GetImageProvider() {
     _getImage = '';
     _uploadImage = false;
-    _imageOperation = [];
+    _imageOperation = ["", "", ""];
   }
 
   String get getImage => _getImage;

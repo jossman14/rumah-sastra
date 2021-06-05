@@ -33,8 +33,7 @@ class UploadHelper {
     );
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
-      print('check path gambar camera');
-      print(imageFile);
+     
       return imageFile;
     }
   }
