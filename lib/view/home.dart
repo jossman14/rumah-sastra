@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/main_drawer.dart';
+import 'package:rusa4/chat/page/chats_page.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/feed_menulis/view_feed_menulis.dart';
 import 'package:rusa4/view/page_guru.dart';
@@ -79,11 +80,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             ViewFeedMenulis(),
             cekAkun(),
-            Container(
-              child: Center(
-                child: Text('Halaman chat'),
-              ),
-            ),
+            ChatsPage(),
           ],
         ),
       ),
