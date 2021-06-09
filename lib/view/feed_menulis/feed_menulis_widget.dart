@@ -92,26 +92,51 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                       ),
                       subtitle: Row(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            // backgroundImage: AssetImage('./assets/images/Logo.png'),
-                            child: Container(
-                              padding: EdgeInsets.all(6),
-                              child: SvgPicture.network(
-                                user[8],
-                                semanticsLabel: 'Profil Pic',
-                                placeholderBuilder: (BuildContext context) =>
-                                    Container(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child:
-                                            const CircularProgressIndicator()),
-                              ),
-                            ),
-                          ),
+                          // CircleAvatar(
+                          //   backgroundColor: Colors.white,
+                          //   // backgroundImage: AssetImage('./assets/images/Logo.png'),
+                          //   child: Container(
+                          //     padding: EdgeInsets.all(6),
+                          //     child: SvgPicture.network(
+                          //       user[8],
+                          //       semanticsLabel: 'Profil Pic',
+                          //       placeholderBuilder: (BuildContext context) =>
+                          //           Container(
+                          //               padding: const EdgeInsets.all(10.0),
+                          //               child:
+                          //                   const CircularProgressIndicator()),
+                          //     ),
+                          //   ),
+                          // ),
+                          Container(
+                              padding: user[8][8] != "f"
+                                  ? EdgeInsets.all(12)
+                                  : EdgeInsets.all(4),
+                              child: user[8][8] != "f"
+                                  ? SvgPicture.network(
+                                      user[8],
+                                      semanticsLabel: 'Profil Pic',
+                                      placeholderBuilder:
+                                          (BuildContext context) => Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child:
+                                                  const CircularProgressIndicator()),
+                                    )
+                                  : Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                          image: NetworkImage(user[8]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ))),
                           SizedBox(
                             width: 8,
                           ),
-                          Text(user[3],
+                          Text(widget.feedMenulis.writer,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500)),
@@ -131,8 +156,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                             final provider = Provider.of<FeedMenulisProvider>(
                                 context,
                                 listen: false);
-                            print('hehe');
-                            print(widget.feedMenulis.isLike);
+
                             widget.feedMenulis.isLike == false
                                 ? provider.likeFeed(widget.feedMenulis, user[3])
                                 : provider.removeLikeFeed(
@@ -148,7 +172,6 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                               ? Colors.blue
                               : Colors.black,
                           onPressed: () {
-                            print("cetaakk");
                             buildAlertDialog();
                           },
                         ),

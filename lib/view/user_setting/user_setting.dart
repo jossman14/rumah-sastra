@@ -19,10 +19,6 @@ import 'package:rusa4/provider/user_new.dart';
 import 'package:rusa4/view/auth.dart';
 
 class UserSetting extends StatefulWidget {
-  final List pengguna;
-
-  const UserSetting({Key key, @required this.pengguna}) : super(key: key);
-
   @override
   _UserSettingState createState() => _UserSettingState();
 }
@@ -68,6 +64,10 @@ class _UserSettingState extends State<UserSetting> {
 
   @override
   Widget build(BuildContext context) {
+    final providerAkun = Provider.of<EmailSignInProvider>(context);
+    penggunaLocal = providerAkun.akun;
+    _penggunaname = TextEditingController(text: penggunaLocal[3]);
+
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -99,12 +99,11 @@ class _UserSettingState extends State<UserSetting> {
 
   SafeArea contentSetting(BuildContext context) {
     final providerAkun = Provider.of<EmailSignInProvider>(context);
-    penggunaLocal = providerAkun.akun;
     user = providerAkun.daftarEmailGuru;
 
     _emailGuru = TextEditingController(text: penggunaLocal[1]);
     _emailSiswa = TextEditingController(text: penggunaLocal[0]);
-    _penggunaname = TextEditingController(text: penggunaLocal[3]);
+    // _penggunaname = TextEditingController(text: penggunaLocal[3]);
     _kelas = TextEditingController(text: penggunaLocal[2]);
     // _passwordConfirm = TextEditingController(text: penggunaLocal[6]);
     _password.text = penggunaLocal[5];

@@ -25,7 +25,7 @@ class _DrawerAppState extends State<DrawerApp> {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
-    print(user[8]);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.all(0),
@@ -86,10 +86,8 @@ class _DrawerAppState extends State<DrawerApp> {
             leading: Icon(Icons.settings_applications),
             title: Text("Pengaturan Profil"),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserSetting(pengguna: user)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserSetting()));
             },
           ),
           ListTile(

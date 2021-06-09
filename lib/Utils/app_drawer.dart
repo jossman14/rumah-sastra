@@ -123,10 +123,8 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: Icon(Icons.settings_applications),
             title: Text("Pengaturan Profil"),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserSetting(pengguna: user)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserSetting()));
             },
           ),
           ListTile(

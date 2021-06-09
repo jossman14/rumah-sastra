@@ -22,18 +22,7 @@ class _AddFeedMenulisDialogWidgetState
     return Scaffold(
       appBar: AppBar(
         title: Text('Tambah FeedMenulis'),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.delete),
-        //     onPressed: () {
-        //       final provider =
-        //           Provider.of<FeedMenulisProvider>(context, listen: false);
-        //       provider.removeFeedMenulis(widget.feedMenulis);
 
-        //       Navigator.of(context).pop();
-        //     },
-        //   )
-        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
