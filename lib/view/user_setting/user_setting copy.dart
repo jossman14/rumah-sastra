@@ -56,6 +56,13 @@ class _UserSettingState extends State<UserSetting> {
   var providerAkun;
 
   @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final providerAkun = Provider.of<EmailSignInProvider>(context);
     penggunaLocal = providerAkun.akun;

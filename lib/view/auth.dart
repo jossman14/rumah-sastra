@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print(user);
+    cekAkunEmailGuru(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -143,7 +143,6 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                            
                               setState(() {
                                 loginGuru = !loginGuru;
                                 loginSiswa = !loginSiswa;
@@ -497,7 +496,7 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Widget registerSiswa(BuildContext context) {
-    return cekAkun(context);
+    return registerSiswaHome(context);
   }
 
   Column registerSiswaHome(BuildContext context) {
@@ -752,7 +751,7 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  cekAkun(BuildContext context) {
+  cekAkunEmailGuru(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context);
 
     user != null ? user.clear() : user = [];
@@ -763,8 +762,10 @@ class _AuthPageState extends State<AuthPage> {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             case ConnectionState.done:
               if (snapshot.hasData) {
@@ -800,8 +801,10 @@ class _AuthPageState extends State<AuthPage> {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             case ConnectionState.done:
               if (snapshot.hasData) {
@@ -841,8 +844,10 @@ class _AuthPageState extends State<AuthPage> {
               );
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             case ConnectionState.done:
               if (snapshot.hasData) {

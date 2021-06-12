@@ -22,6 +22,9 @@ Future<bool> loginSiswaAPI(BuildContext context, UserRusa user) async {
         content: Text(await translateText(context, e.message)),
       ),
     );
+
+    munculDialog(context, await translateText(context, e.message));
+
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -47,6 +50,9 @@ Future<bool> loginGuruAPI(BuildContext context, UserRusa user) async {
         content: Text(await translateText(context, e.message)),
       ),
     );
+
+    munculDialog(context, await translateText(context, e.message));
+
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -80,6 +86,9 @@ Future<bool> createAccountSiswaAPI(BuildContext context, UserRusa user) async {
         content: Text(await translateText(context, e.message)),
       ),
     );
+
+    munculDialog(context, await translateText(context, e.message));
+
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -113,6 +122,9 @@ Future<bool> createAccountGuruAPI(BuildContext context, UserRusa user) async {
         content: Text(await translateText(context, e.message)),
       ),
     );
+
+    munculDialog(context, await translateText(context, e.message));
+
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -153,6 +165,9 @@ Future<bool> logout(BuildContext context) async {
         content: Text(await translateText(context, e.message)),
       ),
     );
+
+    munculDialog(context, await translateText(context, e.message));
+
     return false;
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -162,4 +177,26 @@ Future<bool> logout(BuildContext context) async {
     );
     return false;
   }
+}
+
+munculDialog(context, textError) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        title: new Text("Kesalahan"),
+        content: new Text(textError),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new TextButton(
+            child: new Text("Ok"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
