@@ -2,8 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rusa4/chat/api/firebase_api.dart';
-import 'package:rusa4/chat/users.dart';
+
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
 import 'package:rusa4/provider/get_image.dart';
@@ -14,8 +13,6 @@ import 'package:rusa4/view/auth.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseApi.addRandomUsers(Users.initUsers);
-
 
   runApp(MyApp());
 }

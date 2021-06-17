@@ -24,6 +24,8 @@ class UserSetting extends StatefulWidget {
 }
 
 class _UserSettingState extends State<UserSetting> {
+  final _formKey = GlobalKey<FormState>();
+
   String emailLogin = FirebaseAuth.instance.currentUser.uid;
 
   TextEditingController _penggunaname;
@@ -106,510 +108,248 @@ class _UserSettingState extends State<UserSetting> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             // height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 16,
-                ),
-                judulHalaman(),
-                jenisAkun(),
-                userPic(),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /////batas kotak
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "Username",
-                            style: GoogleFonts.firaSans(
-                                fontSize: 14,
-                                color: HexColor('#FF3A00'),
-                                fontWeight: FontWeight.w700),
-                          ),
-                          TextFormField(
-                            enabled: isEdit,
-                            controller: _penggunaname,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Form harus diisi';
-                              }
-                              setState(() {
-                                _penggunaname.text = value;
-                                penggunaLocal[3] = value;
-                              });
-                              return null;
-                            },
-                          ),
-                          //////batas kotak
-                          SizedBox(
-                            height: 16,
-                          ),
-
-                          Visibility(
-                            visible: penggunaLocal[7] == "Guru" ? false : true,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Email Siswa",
-                                  style: GoogleFonts.firaSans(
-                                      fontSize: 14,
-                                      color: HexColor('#FF3A00'),
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                TextFormField(
-                                  // initialValue: formEmailSiswa,
-                                  enabled: isEdit,
-                                  controller: _emailSiswa,
-                                  decoration: InputDecoration(
-                                    hintText: penggunaLocal[0] == ''
-                                        ? '-'
-                                        : penggunaLocal[0],
-                                    hintStyle: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                  validator: (value) {
-                                    final pattern =
-                                        r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
-                                    final regExp = RegExp(pattern);
-
-                                    if (!regExp.hasMatch(value)) {
-                                      return 'Email anda tidak valid';
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          //////batas kotak
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "Email Guru",
-                            style: GoogleFonts.firaSans(
-                                fontSize: 14,
-                                color: HexColor('#FF3A00'),
-                                fontWeight: FontWeight.w700),
-                          ),
-
-                          akunGuru(context),
-                          ////batas kotak
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "Kelas",
-                            style: GoogleFonts.firaSans(
-                                fontSize: 14,
-                                color: HexColor('#FF3A00'),
-                                fontWeight: FontWeight.w700),
-                          ),
-
-                          DropdownButton(
-                            value: _pilihKelasSiswa == null
-                                ? _kelas.text
-                                : _pilihKelasSiswa,
-                            onChanged: isEdit
-                                ? (value) {
-                                    setState(() {
-                                      _pilihKelasSiswa = value;
-                                      _kelas.text = value;
-                                    });
-                                  }
-                                : null,
-                            items: _listPilihKelasSiswa.map((value) {
-                              return DropdownMenuItem(
-                                child: Text(value),
-                                value: value,
-                              );
-                            }).toList(),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Visibility(
-                                visible: !isEdit,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      isEdit = !isEdit;
-                                    });
-                                  },
-                                  child: Text("Edit"),
-                                ),
-                              ),
-                              Visibility(
-                                visible: isEdit,
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    if (imageFile != null) {
-                                      url = await UploadHelper.uploadFile(
-                                          context, imageFile);
-                                      UploadHelper.buildUploadStatus(url[1]);
-                                    }
-
-                                    if (penggunaLocal[7] == "Guru") {
-                                      if (_emailGuru.text != penggunaLocal[1]) {
-                                        updateEmail(_passwordConfirm.text,
-                                            _emailGuru.text);
-                                      }
-                                    } else {
-                                      if (_emailSiswa.text !=
-                                          penggunaLocal[0]) {
-                                        updateEmail(_passwordConfirm.text,
-                                            _emailSiswa.text);
-                                      }
-                                    }
-
-                                    final provider =
-                                        Provider.of<UserRusaProvider>(context,
-                                            listen: false);
-
-                                    penggunaLocal[0] = _emailSiswa.text;
-                                    penggunaLocal[1] = _pilihGuru == null
-                                        ? _emailGuru.text
-                                        : _pilihGuru;
-                                    penggunaLocal[2] = _pilihKelasSiswa == null
-                                        ? _kelas.text
-                                        : _pilihKelasSiswa;
-                                    penggunaLocal[3] = _penggunaname.text;
-                                    penggunaLocal[4] = penggunaLocal[4];
-                                    penggunaLocal[5] = _password.text;
-                                    penggunaLocal[6] = penggunaLocal[6];
-                                    penggunaLocal[7] = penggunaLocal[7];
-                                    penggunaLocal[8] = imageFile == null
-                                        ? penggunaLocal[8]
-                                        : url[0];
-
-                                    providerAkun.akun = penggunaLocal;
-                                    providerAkun.setAkun(penggunaLocal);
-
-                                    hasil = UserRusa(
-                                      akunDibuat: penggunaLocal[4],
-                                      id: penggunaLocal[9],
-                                      emailGuru: _pilihGuru == null
-                                          ? _emailGuru.text
-                                          : _pilihGuru,
-                                      username: _penggunaname.text,
-                                      emailSiswa: _emailSiswa.text,
-                                      password: _password.text,
-                                      passwordConfirm: penggunaLocal[6],
-                                      kelas: _pilihKelasSiswa == null
-                                          ? _kelas.text
-                                          : _pilihKelasSiswa,
-                                      jenisAkun: penggunaLocal[7],
-                                      pic: imageFile == null
-                                          ? penggunaLocal[8]
-                                          : url[0],
-                                    );
-
-                                    providerAkun.akunRusa = hasil;
-
-                                    if (penggunaLocal[7] == "Guru") {
-                                      provider.updateUserRusaGuru(hasil);
-                                    } else {
-                                      provider.updateUserRusa(hasil);
-                                    }
-                                    setState(() {
-                                      isEdit = !isEdit;
-                                    });
-                                  },
-                                  child: Text("Simpan"),
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Visibility(
-                                visible: !isGanti,
-                                child: TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isGanti = !isGanti;
-                                      });
-                                    },
-                                    child: Text('Ganti Password')),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 16,
                   ),
-                ),
-                Visibility(
-                  visible: isGanti,
-                  child: Padding(
+                  judulHalaman(),
+                  jenisAkun(),
+                  userPic(),
+                  Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Ganti Password",
+                            /////batas kotak
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Username",
+                              style: GoogleFonts.firaSans(
+                                  fontSize: 14,
+                                  color: HexColor('#FF3A00'),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            TextFormField(
+                              enabled: isEdit,
+                              controller: _penggunaname,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Form harus diisi';
+                                }
+                                setState(() {
+                                  _penggunaname.text = value;
+                                  penggunaLocal[3] = value;
+                                });
+                                return null;
+                              },
+                            ),
+                            //////batas kotak
+                            SizedBox(
+                              height: 16,
+                            ),
+
+                            Visibility(
+                              visible:
+                                  penggunaLocal[7] == "Guru" ? false : true,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Email Siswa",
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 18,
-                                        color: HexColor('#2C3E50'),
+                                        fontSize: 14,
+                                        color: HexColor('#FF3A00'),
                                         fontWeight: FontWeight.w700),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
+                                  TextFormField(
+                                    // initialValue: formEmailSiswa,
+                                    enabled: isEdit,
+                                    controller: _emailSiswa,
+                                    decoration: InputDecoration(
+                                      hintText: penggunaLocal[0] == ''
+                                          ? '-'
+                                          : penggunaLocal[0],
+                                      hintStyle: TextStyle(
+                                          color: Colors.black, fontSize: 18),
+                                    ),
+                                    validator: (value) {
+                                      final pattern =
+                                          r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
+                                      final regExp = RegExp(pattern);
+
+                                      if (!regExp.hasMatch(value)) {
+                                        return 'Email anda tidak valid';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            //////batas kotak
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Email Guru",
+                              style: GoogleFonts.firaSans(
+                                  fontSize: 14,
+                                  color: HexColor('#FF3A00'),
+                                  fontWeight: FontWeight.w700),
+                            ),
+
+                            akunGuru(context),
+                            ////batas kotak
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Kelas",
+                              style: GoogleFonts.firaSans(
+                                  fontSize: 14,
+                                  color: HexColor('#FF3A00'),
+                                  fontWeight: FontWeight.w700),
+                            ),
+
+                            DropdownButton(
+                              value: _pilihKelasSiswa == null
+                                  ? _kelas.text
+                                  : _pilihKelasSiswa,
+                              onChanged: isEdit
+                                  ? (value) {
+                                      setState(() {
+                                        _pilihKelasSiswa = value;
+                                        _kelas.text = value;
+                                      });
+                                    }
+                                  : null,
+                              items: _listPilihKelasSiswa.map((value) {
+                                return DropdownMenuItem(
+                                  child: Text(value),
+                                  value: value,
+                                );
+                              }).toList(),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
                                 Visibility(
-                                  visible: !isCorrect,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Password",
-                                        style: GoogleFonts.firaSans(
-                                            fontSize: 14,
-                                            color: HexColor('#FF3A00'),
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      TextFormField(
-                                        controller: _passwordCek,
-                                        decoration: InputDecoration(
-                                          hintText: "Masukkan password lama",
-                                          hintStyle:
-                                              TextStyle(color: Colors.black),
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              // Based on passwordVisible state choose the icon
-                                              _passwordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Theme.of(context)
-                                                  .primaryColorDark,
-                                            ),
-                                            onPressed: () {
-                                              // Update the state i.e. toogle the state of passwordVisible variable
-                                              setState(() {
-                                                _passwordVisible =
-                                                    !_passwordVisible;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value.isEmpty ||
-                                              value.length < 8) {
-                                            return 'Password minimal 8 karakter';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        obscureText: _passwordVisible,
-                                      ),
-                                    ],
+                                  visible: !isEdit,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isEdit = !isEdit;
+                                      });
+                                    },
+                                    child: Text("Edit"),
                                   ),
                                 ),
                                 Visibility(
-                                  visible: isCorrect,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Password Baru",
-                                        style: GoogleFonts.firaSans(
-                                            fontSize: 14,
-                                            color: HexColor('#FF3A00'),
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      TextFormField(
-                                        controller: _passwordNew,
-                                        decoration: InputDecoration(
-                                          hintText: "Masukkan password lama",
-                                          hintStyle:
-                                              TextStyle(color: Colors.black),
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              // Based on passwordVisible state choose the icon
-                                              _passwordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Theme.of(context)
-                                                  .primaryColorDark,
-                                            ),
-                                            onPressed: () {
-                                              // Update the state i.e. toogle the state of passwordVisible variable
-                                              setState(() {
-                                                _passwordVisible =
-                                                    !_passwordVisible;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value.isEmpty ||
-                                              value.length < 8) {
-                                            return 'Password minimal 8 karakter';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        obscureText: _passwordVisible,
-                                      ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      Text(
-                                        "Konfirmasi Password Baru",
-                                        style: GoogleFonts.firaSans(
-                                            fontSize: 14,
-                                            color: HexColor('#FF3A00'),
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      TextFormField(
-                                        controller: _passwordConfirm,
-                                        decoration: InputDecoration(
-                                          hintText: "Konfirmasi password baru",
-                                          hintStyle:
-                                              TextStyle(color: Colors.black),
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              // Based on passwordVisible state choose the icon
-                                              _passwordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Theme.of(context)
-                                                  .primaryColorDark,
-                                            ),
-                                            onPressed: () {
-                                              // Update the state i.e. toogle the state of passwordVisible variable
-                                              setState(() {
-                                                _passwordVisible =
-                                                    !_passwordVisible;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value == _passwordNew.text) {
-                                            return null;
-                                          }
-                                          if (value.isEmpty ||
-                                              value.length < 8) {
-                                            return 'Password minimal 8 karakter';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        obscureText: _passwordVisible,
-                                      ),
-                                    ],
+                                  visible: isEdit,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      if (imageFile != null) {
+                                        url = await UploadHelper.uploadFile(
+                                            context, imageFile);
+                                        UploadHelper.buildUploadStatus(url[1]);
+                                      }
+
+                                      if (penggunaLocal[7] == "Guru") {
+                                        if (_emailGuru.text !=
+                                            penggunaLocal[1]) {
+                                          updateEmail(_passwordConfirm.text,
+                                              _emailGuru.text);
+                                        }
+                                      } else {
+                                        if (_emailSiswa.text !=
+                                            penggunaLocal[0]) {
+                                          updateEmail(_passwordConfirm.text,
+                                              _emailSiswa.text);
+                                        }
+                                      }
+
+                                      final provider =
+                                          Provider.of<UserRusaProvider>(context,
+                                              listen: false);
+
+                                      penggunaLocal[0] = _emailSiswa.text;
+                                      penggunaLocal[1] = _pilihGuru == null
+                                          ? _emailGuru.text
+                                          : _pilihGuru;
+                                      penggunaLocal[2] =
+                                          _pilihKelasSiswa == null
+                                              ? _kelas.text
+                                              : _pilihKelasSiswa;
+                                      penggunaLocal[3] = _penggunaname.text;
+                                      penggunaLocal[4] = penggunaLocal[4];
+                                      penggunaLocal[5] = _password.text;
+                                      penggunaLocal[6] = penggunaLocal[6];
+                                      penggunaLocal[7] = penggunaLocal[7];
+                                      penggunaLocal[8] = imageFile == null
+                                          ? penggunaLocal[8]
+                                          : url[0];
+
+                                      providerAkun.akun = penggunaLocal;
+                                      providerAkun.setAkun(penggunaLocal);
+
+                                      hasil = UserRusa(
+                                        akunDibuat: penggunaLocal[4],
+                                        id: penggunaLocal[9],
+                                        emailGuru: _pilihGuru == null
+                                            ? _emailGuru.text
+                                            : _pilihGuru,
+                                        username: _penggunaname.text,
+                                        emailSiswa: _emailSiswa.text,
+                                        password: _password.text,
+                                        passwordConfirm: penggunaLocal[6],
+                                        kelas: _pilihKelasSiswa == null
+                                            ? _kelas.text
+                                            : _pilihKelasSiswa,
+                                        jenisAkun: penggunaLocal[7],
+                                        pic: imageFile == null
+                                            ? penggunaLocal[8]
+                                            : url[0],
+                                      );
+
+                                      providerAkun.akunRusa = hasil;
+
+                                      if (penggunaLocal[7] == "Guru") {
+                                        provider.updateUserRusaGuru(hasil);
+                                      } else {
+                                        provider.updateUserRusa(hasil);
+                                      }
+                                      setState(() {
+                                        isEdit = !isEdit;
+                                      });
+                                    },
+                                    child: Text("Simpan"),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Visibility(
-                                      visible: !isCorrect,
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (_passwordCek.text ==
-                                                  penggunaLocal[6]) {
-                                                isCorrect = !isCorrect;
-                                                ScaffoldMessenger.of(context)
-                                                    .removeCurrentSnackBar();
-                                              } else {
-                                                // print(_passwordCek.text);
-                                                // print(_passwordConfirm.text);
-                                                // print('test');
-                                                // print(penggunaLocal[6]);
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                      content: Text(
-                                                          'Password lama salah!')),
-                                                );
-                                              }
-                                            });
-                                          },
-                                          child: Text('Cek Password')),
-                                    ),
-                                    Visibility(
-                                      visible: isCorrect,
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            if (isCorrect) {
-                                              updatePassword(_passwordCek.text,
-                                                  _passwordNew.text);
-                                              final provider =
-                                                  Provider.of<UserRusaProvider>(
-                                                      context,
-                                                      listen: false);
-
-                                              hasil = UserRusa(
-                                                id: penggunaLocal[9],
-                                                emailGuru: _pilihGuru == null
-                                                    ? _emailGuru.text
-                                                    : _pilihGuru,
-                                                username: _penggunaname.text,
-                                                emailSiswa: _emailSiswa.text,
-                                                password: _passwordNew.text,
-                                                passwordConfirm:
-                                                    _passwordNew.text,
-                                                kelas: _pilihKelasSiswa == null
-                                                    ? _kelas.text
-                                                    : _pilihKelasSiswa,
-                                                akunDibuat: penggunaLocal[4],
-                                                jenisAkun: penggunaLocal[7],
-                                                pic: imageFile == null
-                                                    ? penggunaLocal[8]
-                                                    : url[0],
-                                              );
-
-                                              provider.updateUserRusa(hasil);
-
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                    content: Text(
-                                                        'Ganti Password Berhasil!')),
-                                              );
-
-                                              isCorrect = !isCorrect;
-                                              _passwordNew.clear();
-                                              _password.clear();
-                                              _passwordConfirm.clear();
-                                            }
-
-                                            setState(() {});
-                                          },
-                                          child: Text('Simpan Password')),
-                                    ),
-                                    TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            isGanti = !isGanti;
-                                          });
-                                        },
-                                        child: Text('Batal ganti password')),
-                                  ],
+                                SizedBox(width: 16),
+                                Visibility(
+                                  visible: !isGanti,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isGanti = !isGanti;
+                                        });
+                                      },
+                                      child: Text('Ganti Password')),
                                 ),
                               ],
                             ),
@@ -618,8 +358,280 @@ class _UserSettingState extends State<UserSetting> {
                       ),
                     ),
                   ),
-                )
-              ],
+                  Visibility(
+                    visible: isGanti,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      "Ganti Password",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 18,
+                                          color: HexColor('#2C3E50'),
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Visibility(
+                                    visible: !isCorrect,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Password",
+                                          style: GoogleFonts.firaSans(
+                                              fontSize: 14,
+                                              color: HexColor('#FF3A00'),
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        TextFormField(
+                                          controller: _passwordCek,
+                                          decoration: InputDecoration(
+                                            hintText: "Masukkan password lama",
+                                            hintStyle:
+                                                TextStyle(color: Colors.black),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                // Based on passwordVisible state choose the icon
+                                                _passwordVisible
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Theme.of(context)
+                                                    .primaryColorDark,
+                                              ),
+                                              onPressed: () {
+                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                setState(() {
+                                                  _passwordVisible =
+                                                      !_passwordVisible;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value.isEmpty ||
+                                                value.length < 8) {
+                                              return 'Password minimal 8 karakter';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          obscureText: _passwordVisible,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: isCorrect,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Password Baru",
+                                          style: GoogleFonts.firaSans(
+                                              fontSize: 14,
+                                              color: HexColor('#FF3A00'),
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        TextFormField(
+                                          controller: _passwordNew,
+                                          decoration: InputDecoration(
+                                            hintText: "Masukkan password lama",
+                                            hintStyle:
+                                                TextStyle(color: Colors.black),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                // Based on passwordVisible state choose the icon
+                                                _passwordVisible
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Theme.of(context)
+                                                    .primaryColorDark,
+                                              ),
+                                              onPressed: () {
+                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                setState(() {
+                                                  _passwordVisible =
+                                                      !_passwordVisible;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value.isEmpty ||
+                                                value.length < 8) {
+                                              return 'Password minimal 8 karakter';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          obscureText: _passwordVisible,
+                                        ),
+                                        SizedBox(
+                                          height: 16,
+                                        ),
+                                        Text(
+                                          "Konfirmasi Password Baru",
+                                          style: GoogleFonts.firaSans(
+                                              fontSize: 14,
+                                              color: HexColor('#FF3A00'),
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        TextFormField(
+                                          controller: _passwordConfirm,
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                "Konfirmasi password baru",
+                                            hintStyle:
+                                                TextStyle(color: Colors.black),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                // Based on passwordVisible state choose the icon
+                                                _passwordVisible
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Theme.of(context)
+                                                    .primaryColorDark,
+                                              ),
+                                              onPressed: () {
+                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                setState(() {
+                                                  _passwordVisible =
+                                                      !_passwordVisible;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == _passwordNew.text) {
+                                              return null;
+                                            }
+                                            if (value.isEmpty ||
+                                                value.length < 8) {
+                                              return 'Password minimal 8 karakter';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          obscureText: _passwordVisible,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Visibility(
+                                        visible: !isCorrect,
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                if (_passwordCek.text ==
+                                                    penggunaLocal[6]) {
+                                                  isCorrect = !isCorrect;
+                                                  ScaffoldMessenger.of(context)
+                                                      .removeCurrentSnackBar();
+                                                } else {
+                                                  // print(_passwordCek.text);
+                                                  // print(_passwordConfirm.text);
+                                                  // print('test');
+                                                  // print(penggunaLocal[6]);
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                        content: Text(
+                                                            'Password lama salah!')),
+                                                  );
+                                                }
+                                              });
+                                            },
+                                            child: Text('Cek Password')),
+                                      ),
+                                      Visibility(
+                                        visible: isCorrect,
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              if (isCorrect) {
+                                                updatePassword(
+                                                    _passwordCek.text,
+                                                    _passwordNew.text);
+                                                final provider = Provider.of<
+                                                        UserRusaProvider>(
+                                                    context,
+                                                    listen: false);
+
+                                                hasil = UserRusa(
+                                                  id: penggunaLocal[9],
+                                                  emailGuru: _pilihGuru == null
+                                                      ? _emailGuru.text
+                                                      : _pilihGuru,
+                                                  username: _penggunaname.text,
+                                                  emailSiswa: _emailSiswa.text,
+                                                  password: _passwordNew.text,
+                                                  passwordConfirm:
+                                                      _passwordNew.text,
+                                                  kelas:
+                                                      _pilihKelasSiswa == null
+                                                          ? _kelas.text
+                                                          : _pilihKelasSiswa,
+                                                  akunDibuat: penggunaLocal[4],
+                                                  jenisAkun: penggunaLocal[7],
+                                                  pic: imageFile == null
+                                                      ? penggunaLocal[8]
+                                                      : url[0],
+                                                );
+
+                                                provider.updateUserRusa(hasil);
+
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                      content: Text(
+                                                          'Ganti Password Berhasil!')),
+                                                );
+
+                                                isCorrect = !isCorrect;
+                                                _passwordNew.clear();
+                                                _password.clear();
+                                                _passwordConfirm.clear();
+                                              }
+
+                                              setState(() {});
+                                            },
+                                            child: Text('Simpan Password')),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isGanti = !isGanti;
+                                            });
+                                          },
+                                          child: Text('Batal ganti password')),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

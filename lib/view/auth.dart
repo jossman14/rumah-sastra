@@ -10,8 +10,6 @@ import 'package:rusa4/view/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthPage extends StatefulWidget {
-  static const String routeName = '/auth';
-
   AuthPage({Key key}) : super(key: key);
 
   @override
@@ -49,13 +47,12 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   void initState() {
-    super.initState();
     _passwordVisible = true;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    cekAkunEmailGuru(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -125,7 +122,6 @@ class _AuthPageState extends State<AuthPage> {
                             visible: !register,
                             child: TextButton(
                               onPressed: () {
-                                // Navigator.pushReplacementNamed(context, BuatAkun.routeName);
                                 setState(() {
                                   register = !register;
                                   loginGuru = false;
@@ -173,11 +169,9 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       child: submitBtn(context),
                     ),
-                    register
-                        ? SizedBox(height: 36)
-                        : SizedBox(
-                            height: 36,
-                          )
+                    SizedBox(
+                      height: 36,
+                    ),
                   ],
                 ),
               ),
@@ -354,7 +348,7 @@ class _AuthPageState extends State<AuthPage> {
             visible: _showForm,
             child: _pilihAkun == "Guru"
                 ? registerGuru(context)
-                : registerSiswa(context),
+                : cekAkunEmailGuru(context),
           )
         ],
       ),
@@ -522,15 +516,15 @@ class _AuthPageState extends State<AuthPage> {
           child: Text("Pilih Guru"),
         ),
         DropdownButton(
-          hint: Text(user[0]), // Not necessary for Option 1
-          value: _pilihGuru == null ? user[0] : _pilihGuru,
+          hint: Text("pilih Guru"),
+          value: _pilihGuru == null ? userFinal[0] : _pilihGuru,
           onChanged: (value) {
             setState(() {
               _pilihGuru = value;
               _emailGuru.text = value;
             });
           },
-          items: user.map((value) {
+          items: userFinal.map((value) {
             return DropdownMenuItem(
               child: Text(value),
               value: value,
@@ -751,10 +745,9 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  cekAkunEmailGuru(BuildContext context) {
-    final provider = Provider.of<EmailSignInProvider>(context);
-
+  cekAkunEmailGuru(context) {
     user != null ? user.clear() : user = [];
+
     return FutureBuilder(
         future: FirebaseFirestore.instance.collection("Users").get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -762,11 +755,7 @@ class _AuthPageState extends State<AuthPage> {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+
             case ConnectionState.done:
               if (snapshot.hasData) {
                 QuerySnapshot documents = snapshot.data;
@@ -783,10 +772,14 @@ class _AuthPageState extends State<AuthPage> {
               }
           }
 
+          print('testing get email');
+          print(user);
+
           userFinal = user;
-          provider.daftarEmailGuru = user;
-          return registerSiswaHome(context);
-          // return Container();
+          _pilihGuru = userFinal[0];
+
+          // return null;
+          return registerSiswa(context);
         });
   }
 

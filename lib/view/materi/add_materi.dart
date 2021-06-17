@@ -79,6 +79,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
         writer: user[3],
         kelas: user[2],
         imagegan: imagegan,
+        userID: user[9],
       );
 
       final provider = Provider.of<MateriProvider>(context, listen: false);

@@ -18,6 +18,7 @@ class FeedMenulis {
   List comment = [];
   bool isLike = false;
   bool isComment = false;
+  String userID;
 
   FeedMenulis({
     @required this.createdTime,
@@ -32,6 +33,7 @@ class FeedMenulis {
     @required this.comment,
     @required this.isLike,
     @required this.isComment,
+    @required this.userID,
   });
 
   static FeedMenulis fromJson(Map<String, dynamic> json) => FeedMenulis(
@@ -47,6 +49,7 @@ class FeedMenulis {
         comment: json['comment'],
         isComment: json['isComment'],
         isLike: json['isLike'],
+        userID: json['userID'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,5 +65,6 @@ class FeedMenulis {
         'comment': comment,
         'isComment': isComment,
         'isLike': isLike,
+        'userID': userID,
       };
 }

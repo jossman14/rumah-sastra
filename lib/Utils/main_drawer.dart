@@ -26,6 +26,9 @@ class _DrawerAppState extends State<DrawerApp> {
 
     final user = provider.akun;
 
+    print('main drawer');
+    print(user);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.all(0),
@@ -43,17 +46,11 @@ class _DrawerAppState extends State<DrawerApp> {
               padding: EdgeInsets.all(4.0),
               child: Text(user[3]),
             ),
-            accountEmail: user[7] == "Guru"
-                ? Container(
-                    color: Colors.deepOrange,
-                    padding: EdgeInsets.all(4.0),
-                    child: Text(user[1]),
-                  )
-                : Container(
-                    color: Colors.deepOrange,
-                    padding: EdgeInsets.all(4.0),
-                    child: Text(user[1]),
-                  ),
+            accountEmail: Container(
+              color: Colors.deepOrange,
+              padding: EdgeInsets.all(4.0),
+              child: Text(user[7] == 'Guru' ? user[1] : user[0]),
+            ),
             currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 // backgroundImage: AssetImage('./assets/images/Logo.png'),

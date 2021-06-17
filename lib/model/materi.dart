@@ -15,6 +15,7 @@ class Materi {
   String imagegan;
   String writer;
   String kelas;
+  String userID;
 
   Materi({
     @required this.createdTime,
@@ -26,6 +27,7 @@ class Materi {
     @required this.id,
     @required this.writer,
     @required this.kelas,
+    @required this.userID,
   });
 
   static Materi fromJson(Map<String, dynamic> json) => Materi(
@@ -38,6 +40,7 @@ class Materi {
         kelas: json['kelas'],
         linkVideo: json['linkVideo'],
         imagegan: json['imagegan'],
+        userID: json['userID'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,5 +53,6 @@ class Materi {
         'kelas': kelas,
         'linkVideo': linkVideo,
         'imagegan': imagegan,
+        'userID': userID,
       };
 }

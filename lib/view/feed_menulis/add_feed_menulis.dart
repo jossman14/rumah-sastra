@@ -22,7 +22,6 @@ class _AddFeedMenulisDialogWidgetState
     return Scaffold(
       appBar: AppBar(
         title: Text('Tambah FeedMenulis'),
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -62,13 +61,15 @@ class _AddFeedMenulisDialogWidgetState
         description: description,
         createdTime: DateTime.now(),
         modifTime: DateTime.now(),
-        writer: user[2],
+        writer: user[3],
         kelas: user[2],
-        guru: user[3],
+        guru: user[7] == "Guru" ? "-" : user[1],
         isComment: false,
         isLike: false,
         comment: [],
         like: [],
+        userID: user[9],
+
       );
 
       final provider = Provider.of<FeedMenulisProvider>(context, listen: false);

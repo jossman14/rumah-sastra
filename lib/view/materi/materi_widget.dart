@@ -80,21 +80,31 @@ class MateriWidget extends StatelessWidget {
                       ),
                       subtitle: Row(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            // backgroundImage: AssetImage('./assets/images/Logo.png'),
-                            child: Container(
-                              padding: EdgeInsets.all(6),
-                              child: SvgPicture.network(
-                                user[8],
-                                semanticsLabel: 'Profil Pic',
-                                placeholderBuilder: (BuildContext context) =>
-                                    Container(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child:
-                                            const CircularProgressIndicator()),
-                              ),
-                            ),
+                          Container(
+                            padding: user[8][8] != "f"
+                                ? EdgeInsets.all(12)
+                                : EdgeInsets.all(4),
+                            child: user[8][8] != "f"
+                                ? SvgPicture.network(
+                                    user[8],
+                                    semanticsLabel: 'Profil Pic',
+                                    placeholderBuilder:
+                                        (BuildContext context) => Container(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child:
+                                                const CircularProgressIndicator()),
+                                  )
+                                : Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: new BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: new DecorationImage(
+                                        image: NetworkImage(user[8]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                           ),
                           SizedBox(
                             width: 8,
@@ -106,22 +116,6 @@ class MateriWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Text(
-                    //   materi.title,
-                    //   style: TextStyle(
-                    //     fontWeight: FontWeight.bold,
-                    //     color: Theme.of(context).primaryColor,
-                    //     fontSize: 22,
-                    //   ),
-                    // ),
-                    // if (materi.description.isNotEmpty)
-                    //   Container(
-                    //     margin: EdgeInsets.only(top: 4),
-                    //     child: Text(
-                    //       materi.description,
-                    //       style: TextStyle(fontSize: 20, height: 1.5),
-                    //     ),
-                    //   )
                   ],
                 ),
               ),

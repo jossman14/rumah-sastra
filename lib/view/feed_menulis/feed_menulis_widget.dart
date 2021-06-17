@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,6 +40,8 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String idUser = FirebaseAuth.instance.currentUser.uid;
+
     return user[7] == "Guru"
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
@@ -92,22 +95,6 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                       ),
                       subtitle: Row(
                         children: [
-                          // CircleAvatar(
-                          //   backgroundColor: Colors.white,
-                          //   // backgroundImage: AssetImage('./assets/images/Logo.png'),
-                          //   child: Container(
-                          //     padding: EdgeInsets.all(6),
-                          //     child: SvgPicture.network(
-                          //       user[8],
-                          //       semanticsLabel: 'Profil Pic',
-                          //       placeholderBuilder: (BuildContext context) =>
-                          //           Container(
-                          //               padding: const EdgeInsets.all(10.0),
-                          //               child:
-                          //                   const CircularProgressIndicator()),
-                          //     ),
-                          //   ),
-                          // ),
                           Container(
                               padding: user[8][8] != "f"
                                   ? EdgeInsets.all(12)
