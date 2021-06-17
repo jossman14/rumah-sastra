@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
+import 'package:rusa4/chat/helper/helperfunctions.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/home.dart';
@@ -817,6 +818,7 @@ class _AuthPageState extends State<AuthPage> {
 
           userFinal = user;
           provider.daftarEmailGuru = user;
+
           return HomePage(selectedPage: 1);
 
           // return Container();
@@ -875,6 +877,15 @@ class _AuthPageState extends State<AuthPage> {
                         username: data.get('username'));
 
                     provider.akunRusa = user;
+
+                    HelperFunctions.saveUserLoggedInSharedPreference(true);
+                    HelperFunctions.saveUserNameSharedPreference(user.username);
+                    HelperFunctions.savesharedPreferenceUserPassword(
+                        user.password);
+                    HelperFunctions.saveUserEmailSharedPreference(
+                        user.jenisAkun == "Guru"
+                            ? user.emailGuru
+                            : user.emailSiswa);
                   } else {
                     print('data tidak sama');
                   }
@@ -883,6 +894,7 @@ class _AuthPageState extends State<AuthPage> {
                 print('data tidak ditemukan');
               }
           }
+
           return cekEmailGuru(context);
           // return Container();
         });
