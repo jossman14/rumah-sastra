@@ -4,16 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/quiz/views/hasil_home.dart';
 import 'package:rusa4/view/auth.dart';
-import 'package:rusa4/view/materi/view_materi.dart';
 // import 'package:rusa4/model/user.dart';
 
-class PilihKelas extends StatefulWidget {
+class PilihKelasHasil extends StatefulWidget {
   @override
   _PilihKelasState createState() => _PilihKelasState();
 }
 
-class _PilihKelasState extends State<PilihKelas> {
+class _PilihKelasState extends State<PilihKelasHasil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +57,7 @@ class _PilihKelasState extends State<PilihKelas> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ViewMateri(kelas: "VII"),
+                          builder: (context) => HasilHome(kelas: "VII"),
                         ),
                       );
                     },
@@ -105,7 +105,7 @@ class _PilihKelasState extends State<PilihKelas> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ViewMateri(kelas: "VIII")));
+                              builder: (context) => HasilHome(kelas: "VIII")));
                       // Navigator.pushNamed(context, LoginSiswa.routeName);
                     },
                     child: Column(
@@ -152,7 +152,7 @@ class _PilihKelasState extends State<PilihKelas> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ViewMateri(kelas: 'IX')));
+                              builder: (context) => HasilHome(kelas: 'IX')));
                       // Navigator.pushNamed(context, LoginSiswa.routeName);
                     },
                     child: Column(

@@ -85,14 +85,19 @@ class MateriWidget extends StatelessWidget {
                                 ? EdgeInsets.all(12)
                                 : EdgeInsets.all(4),
                             child: user[8][8] != "f"
-                                ? SvgPicture.network(
-                                    user[8],
-                                    semanticsLabel: 'Profil Pic',
-                                    placeholderBuilder:
-                                        (BuildContext context) => Container(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child:
-                                                const CircularProgressIndicator()),
+                                ? Container(
+                                    width: 30,
+                                    height: 30,
+                                    child: SvgPicture.network(
+                                      user[8],
+                                      semanticsLabel: 'Profil Pic',
+                                      placeholderBuilder:
+                                          (BuildContext context) => Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child:
+                                                  const CircularProgressIndicator()),
+                                    ),
                                   )
                                 : Container(
                                     width: 30,
@@ -109,7 +114,7 @@ class MateriWidget extends StatelessWidget {
                           SizedBox(
                             width: 8,
                           ),
-                          Text(user[3],
+                          Text(materi.writer,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500)),

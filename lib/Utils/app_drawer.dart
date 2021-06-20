@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/home.dart';
@@ -125,6 +126,7 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: Icon(Icons.exit_to_app_rounded),
             title: Text("Logout"),
             onTap: () {
+              notSet();
               FirebaseAuth.instance.signOut();
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => AuthPage()));

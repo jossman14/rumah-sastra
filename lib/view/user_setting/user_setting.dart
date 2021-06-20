@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/Utils/upload_func.dart';
 import 'package:rusa4/Utils/utils.dart';
+import 'package:rusa4/chat/helper/helperfunctions.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/model/user_new.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
@@ -72,6 +73,10 @@ class _UserSettingState extends State<UserSetting> {
               icon: Icon(Icons.exit_to_app_rounded),
               onPressed: () {
                 // Constants.prefs.setBool("loggedIn", false);
+                HelperFunctions.saveUserLoggedInSharedPreference(false);
+                HelperFunctions.saveUserNameSharedPreference("");
+                HelperFunctions.savesharedPreferenceUserPassword("");
+                HelperFunctions.saveUserEmailSharedPreference("");
                 FirebaseAuth.instance.signOut();
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => AuthPage()));

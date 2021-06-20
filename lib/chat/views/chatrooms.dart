@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:rusa4/chat/helper/authenticate.dart';
+import 'package:provider/provider.dart';
+
 import 'package:rusa4/chat/helper/constants.dart';
 import 'package:rusa4/chat/helper/helperfunctions.dart';
 import 'package:rusa4/chat/helper/theme.dart';
-import 'package:rusa4/chat/services/auth.dart';
+
 import 'package:rusa4/chat/services/database.dart';
 import 'package:rusa4/chat/views/chat.dart';
 import 'package:rusa4/chat/views/search.dart';
+import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/model/user.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -15,6 +19,7 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   Stream chatRooms;
+  UserRusa user;
 
   Widget chatRoomsList() {
     return StreamBuilder(
@@ -22,19 +27,22 @@ class _ChatRoomState extends State<ChatRoom> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.documents.length,
+                itemCount: snapshot.data.docs.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ChatRoomsTile(
-                    userName: snapshot.data.documents[index].data['chatRoomId']
+                    userName: snapshot.data.docs[index]
+                        .data()['chatRoomId']
                         .toString()
                         .replaceAll("_", "")
                         .replaceAll(Constants.myName, ""),
-                    chatRoomId:
-                        snapshot.data.documents[index].data["chatRoomId"],
+                    chatRoomId: snapshot.data.docs[index].data()['chatRoomId'],
                   );
                 })
-            : Container();
+            : Container(
+                child: Center(
+                child: Text("belum ada percakapan"),
+              ));
       },
     );
   }
@@ -58,27 +66,10 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    user = provider.akunRusa;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          "assets/images/logo.png",
-          height: 40,
-        ),
-        elevation: 0.0,
-        centerTitle: false,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              AuthService().signOut();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => Authenticate()));
-            },
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(Icons.exit_to_app)),
-          )
-        ],
-      ),
       body: Container(
         child: chatRoomsList(),
       ),
@@ -101,45 +92,51 @@ class ChatRoomsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Chat(
-                      chatRoomId: chatRoomId,
-                    )));
-      },
-      child: Container(
-        color: Colors.black26,
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: Row(
-          children: [
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                  color: CustomTheme.colorAccent,
-                  borderRadius: BorderRadius.circular(30)),
-              child: Text(userName.substring(0, 1),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'OverpassRegular',
-                      fontWeight: FontWeight.w300)),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Card(
+        elevation: 2,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Chat(
+                          chatRoomId: chatRoomId,
+                        )));
+          },
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            child: Row(
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      color: CustomTheme.colorAccent,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text(userName.substring(0, 1),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'OverpassRegular',
+                          fontWeight: FontWeight.w700)),
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(userName,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontFamily: 'OverpassRegular',
+                        fontWeight: FontWeight.w300))
+              ],
             ),
-            SizedBox(
-              width: 12,
-            ),
-            Text(userName,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontFamily: 'OverpassRegular',
-                    fontWeight: FontWeight.w300))
-          ],
+          ),
         ),
       ),
     );

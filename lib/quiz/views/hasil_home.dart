@@ -5,26 +5,42 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/api/materi_firebase_api.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/quiz/services/save_result.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/materi/add_materi.dart';
 import 'package:rusa4/view/materi/materi_widget.dart';
 
-class ViewMateri extends StatefulWidget {
+class HasilHome extends StatefulWidget {
   final String kelas;
-  const ViewMateri({Key key, @required this.kelas}) : super(key: key);
+  const HasilHome({Key key, @required this.kelas}) : super(key: key);
 
   @override
-  _ViewMateriState createState() => _ViewMateriState();
+  _HasilHomeState createState() => _HasilHomeState();
 }
 
-class _ViewMateriState extends State<ViewMateri> {
+class _HasilHomeState extends State<HasilHome> {
+  UserRusa user;
+  Stream hasilQuiz;
+
+  @override
+  void initState() {
+    SaveResultFirebaseApi.readSaveResults(user).then((value) {
+      hasilQuiz = value;
+      setState(() {});
+      print('ayee');
+      print(hasilQuiz);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
-    final user = provider.akun;
+    final user = provider.akunRusa;
 
     return Scaffold(
       drawer: AppDrawer(),
@@ -55,7 +71,7 @@ class _ViewMateriState extends State<ViewMateri> {
       ),
       body: SafeArea(
         child: StreamBuilder<List>(
-          stream: MateriFirebaseApi.readMateris(widget.kelas),
+          stream: hasilQuiz,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -65,15 +81,12 @@ class _ViewMateriState extends State<ViewMateri> {
                   return buildText(
                       'Ada yang error, mohon dicoba lagi nanti ya');
                 } else {
-                  final materis = snapshot.data;
-
-                  final provider = Provider.of<MateriProvider>(context);
-                  provider.setMateris(materis);
-
-                  return materis.isEmpty
+                  final quizResult = snapshot.data;
+                  print("hasilll $quizResult");
+                  return quizResult.isEmpty
                       ? Center(
                           child: Text(
-                            'No materis.',
+                            'No quizResult.',
                             style: TextStyle(fontSize: 20),
                           ),
                         )
@@ -82,11 +95,13 @@ class _ViewMateriState extends State<ViewMateri> {
                           padding: EdgeInsets.all(16),
                           separatorBuilder: (context, index) =>
                               Container(height: 8),
-                          itemCount: materis.length,
+                          itemCount: quizResult.length,
                           itemBuilder: (context, index) {
-                            final materi = materis[index];
+                            final materi = quizResult[index];
 
-                            return MateriWidget(materi: materi);
+                            print("hasilll $materi");
+
+                            return Container();
                           },
                         );
                 }
@@ -94,21 +109,6 @@ class _ViewMateriState extends State<ViewMateri> {
           },
         ),
       ),
-      floatingActionButton: user[7] == "Guru"
-          ? FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              backgroundColor: Colors.black,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddMateriDialogWidget()));
-              },
-              child: Icon(Icons.add),
-            )
-          : null,
     );
   }
 }

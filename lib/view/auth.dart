@@ -45,15 +45,107 @@ class _AuthPageState extends State<AuthPage> {
   List _listPilihKelasGuru = ["VII", "VIII", "IX"];
 
   bool _passwordVisible;
+  bool userIsLoggedIn;
+  String userOld;
+  String passOld;
 
   @override
   void initState() {
     _passwordVisible = true;
+
+    getLoggedInState();
     super.initState();
+  }
+
+  getLoggedInState() async {
+    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+      print('isiii value');
+      print(value);
+      setState(() {
+        userIsLoggedIn = value;
+      });
+    });
+
+    if (userIsLoggedIn == true) {
+      await HelperFunctions.getUserEmailSharedPreference().then((value) {
+        print('isiii email');
+        print(value);
+        setState(() {
+          userOld = value;
+        });
+      });
+      await HelperFunctions.getUserPasswordSharedPreference().then((value) {
+        print('isiii password');
+        print(value);
+        setState(() {
+          passOld = value;
+        });
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    return userIsLoggedIn != null
+        ? userIsLoggedIn == true
+            ? cekLogin(context)
+            : mainAuth(context)
+        : mainAuth(context);
+  }
+
+  cekLogin(BuildContext context) {
+    return FutureBuilder(
+        future: FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: userOld,
+          password: passOld,
+        ),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+
+            case ConnectionState.active:
+
+            case ConnectionState.waiting:
+              print("waiting");
+              print("hasil {$snapshot}");
+
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            case ConnectionState.done:
+              print("done");
+          }
+          return cekPengguna(context);
+        });
+  }
+
+  // cekLoginFunc() async {
+  //   if (userIsLoggedIn == true) {
+  //     await HelperFunctions.getUserEmailSharedPreference().then((value) {
+  //       print('isiii email');
+  //       print(value);
+  //       setState(() {
+  //         userOld = value;
+  //       });
+  //     });
+  //     await HelperFunctions.getUserPasswordSharedPreference().then((value) {
+  //       print('isiii password');
+  //       print(value);
+  //       setState(() {
+  //         passOld = value;
+  //       });
+  //     });
+  //     // await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //     //   email: userOld,
+  //     //   password: passOld,
+  //     // );
+  //     // return [userOld, passOld];
+  //   }
+  // }
+
+  Scaffold mainAuth(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -878,7 +970,8 @@ class _AuthPageState extends State<AuthPage> {
 
                     provider.akunRusa = user;
 
-                    HelperFunctions.saveUserLoggedInSharedPreference(true);
+                    HelperFunctions.saveUserLoggedInSharedPreference(
+                        user.username != null ? true : false);
                     HelperFunctions.saveUserNameSharedPreference(user.username);
                     HelperFunctions.savesharedPreferenceUserPassword(
                         user.password);

@@ -5,6 +5,7 @@
 // import 'package:chatapp/widget/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rusa4/chat/helper/constants.dart';
 import 'package:rusa4/chat/services/database.dart';
 import 'package:rusa4/chat/views/chat.dart';
@@ -48,8 +49,12 @@ class _SearchState extends State<Search> {
             itemCount: searchResultSnapshot.docs.length,
             itemBuilder: (context, index) {
               return userTile(
-                searchResultSnapshot.docs[index].data()["userName"],
-                searchResultSnapshot.docs[index].data()["userEmail"],
+                searchResultSnapshot.docs[index].data()["username"],
+                searchResultSnapshot.docs[index].data()[
+                    searchResultSnapshot.docs[index].data()["jenisAkun"] ==
+                            "Guru"
+                        ? "emailGuru"
+                        : "emailSiswa"],
               );
             })
         : Container();
@@ -86,11 +91,11 @@ class _SearchState extends State<Search> {
             children: [
               Text(
                 userName,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black87, fontSize: 16),
               ),
               Text(
                 userEmail,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black87, fontSize: 16),
               )
             ],
           ),
@@ -105,7 +110,7 @@ class _SearchState extends State<Search> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
                 "Message",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black87, fontSize: 16),
               ),
             ),
           )
@@ -152,7 +157,7 @@ class _SearchState extends State<Search> {
                             decoration: InputDecoration(
                                 hintText: "search username ...",
                                 hintStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black87,
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -175,11 +180,7 @@ class _SearchState extends State<Search> {
                                       end: FractionalOffset.bottomRight),
                                   borderRadius: BorderRadius.circular(40)),
                               padding: EdgeInsets.all(12),
-                              child: Image.asset(
-                                "assets/images/search_white.png",
-                                height: 25,
-                                width: 25,
-                              )),
+                              child: Icon(FontAwesomeIcons.search)),
                         )
                       ],
                     ),

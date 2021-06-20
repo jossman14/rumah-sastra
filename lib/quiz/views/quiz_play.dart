@@ -139,6 +139,7 @@ class _QuizPlayState extends State<QuizPlay> {
                         correct: _correct,
                         incorrect: _incorrect,
                         total: total,
+                        quizId: widget.quizId,
                       )));
         },
       ),

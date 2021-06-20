@@ -126,21 +126,19 @@ class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
           },
         ),
       ),
-      floatingActionButton: user[7] == "Guru"
-          ? FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              backgroundColor: Colors.black,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddFeedMenulisDialogWidget()));
-              },
-              child: Icon(Icons.add),
-            )
-          : null,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.black,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddFeedMenulisDialogWidget()));
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

@@ -2,9 +2,14 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:rusa4/chat/helper/constants.dart';
 import 'package:rusa4/chat/services/database.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/model/user.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -16,6 +21,8 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  UserRusa user;
+
   Stream<QuerySnapshot> chats;
   TextEditingController messageEditingController = new TextEditingController();
 
@@ -25,12 +32,12 @@ class _ChatState extends State<Chat> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.documents.length,
+                itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   return MessageTile(
-                    message: snapshot.data.documents[index].data["message"],
+                    message: snapshot.data.docs[index].data()["message"],
                     sendByMe: Constants.myName ==
-                        snapshot.data.documents[index].data["sendBy"],
+                        snapshot.data.docs[index].data()["sendBy"],
                   );
                 })
             : Container();
@@ -66,6 +73,9 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    user = provider.akunRusa;
+
     return Scaffold(
       appBar: appBarMain(context),
       body: Container(
@@ -87,7 +97,7 @@ class _ChatState extends State<Chat> {
                       decoration: InputDecoration(
                           hintText: "Message ...",
                           hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black87,
                             fontSize: 16,
                           ),
                           border: InputBorder.none),
@@ -100,23 +110,20 @@ class _ChatState extends State<Chat> {
                         addMessage();
                       },
                       child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.asset(
-                            "assets/images/send.png",
-                            height: 25,
-                            width: 25,
-                          )),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  const Color(0x36FFFFFF),
+                                  const Color(0x0FFFFFFF)
+                                ],
+                                begin: FractionalOffset.topLeft,
+                                end: FractionalOffset.bottomRight),
+                            borderRadius: BorderRadius.circular(40)),
+                        padding: EdgeInsets.all(8),
+                        child: Icon(Icons.send),
+                      ),
                     ),
                   ],
                 ),
@@ -158,7 +165,9 @@ class MessageTile extends StatelessWidget {
             gradient: LinearGradient(
               colors: sendByMe
                   ? [const Color(0xff007EF4), const Color(0xff2A75BC)]
-                  : [const Color(0x1AFFFFFF), const Color(0x1AFFFFFF)],
+                  : [HexColor('#2c3e50'), HexColor('#34495e')],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
             )),
         child: Text(message,
             textAlign: TextAlign.start,

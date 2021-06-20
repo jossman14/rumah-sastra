@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
+import 'package:rusa4/chat/helper/helperfunctions.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/user_setting/user_setting.dart';
@@ -26,8 +27,7 @@ class _DrawerAppState extends State<DrawerApp> {
 
     final user = provider.akun;
 
-    print('main drawer');
-    print(user);
+   
 
     return Drawer(
       child: ListView(
@@ -91,6 +91,10 @@ class _DrawerAppState extends State<DrawerApp> {
             leading: Icon(Icons.exit_to_app_rounded),
             title: Text("Logout"),
             onTap: () {
+              HelperFunctions.saveUserLoggedInSharedPreference(false);
+              HelperFunctions.saveUserNameSharedPreference("");
+              HelperFunctions.savesharedPreferenceUserPassword("");
+              HelperFunctions.saveUserEmailSharedPreference("");
               FirebaseAuth.instance.signOut();
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => AuthPage()));
