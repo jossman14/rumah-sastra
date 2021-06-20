@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
 
-
 class AddQuestion extends StatefulWidget {
-
   final String quizId;
   AddQuestion(this.quizId);
 
@@ -21,9 +20,7 @@ class _AddQuestionState extends State<AddQuestion> {
   String question = "", option1 = "", option2 = "", option3 = "", option4 = "";
 
   uploadQuizData() {
-
     if (_formKey.currentState.validate()) {
-
       setState(() {
         isLoading = true;
       });
@@ -46,13 +43,10 @@ class _AddQuestionState extends State<AddQuestion> {
         setState(() {
           isLoading = false;
         });
-
-      }).catchError((e){
+      }).catchError((e) {
         print(e);
       });
-
-
-    }else{
+    } else {
       print("error is happening ");
     }
   }
@@ -61,16 +55,7 @@ class _AddQuestionState extends State<AddQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: BackButton(
-          color: Colors.black54,
-        ),
-        title: AppLogo(),
-        brightness: Brightness.light,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        //brightness: Brightness.li,
-      ),
+      appBar: appBarMainGan(context),
       body: isLoading
           ? Container(
               child: Center(child: CircularProgressIndicator()),
@@ -105,8 +90,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option2 " : null,
                       decoration: InputDecoration(hintText: "Option2"),
-                      onChanged: (val){
-                       option2 = val;
+                      onChanged: (val) {
+                        option2 = val;
                       },
                     ),
                     SizedBox(
@@ -115,9 +100,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option3 " : null,
                       decoration: InputDecoration(hintText: "Option3"),
-                      onChanged: (val){
+                      onChanged: (val) {
                         option3 = val;
-
                       },
                     ),
                     SizedBox(
@@ -126,7 +110,7 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option4 " : null,
                       decoration: InputDecoration(hintText: "Option4"),
-                      onChanged: (val){
+                      onChanged: (val) {
                         option4 = val;
                       },
                     ),
@@ -138,9 +122,7 @@ class _AddQuestionState extends State<AddQuestion> {
                       children: [
                         GestureDetector(
                           onTap: () {
-
-                           Navigator.pop(context);
-
+                            Navigator.pop(context);
                           },
                           child: Container(
                             alignment: Alignment.center,

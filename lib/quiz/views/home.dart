@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rusa4/Utils/app_drawer.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/create_quiz.dart';
 import 'package:rusa4/quiz/views/quiz_play.dart';
@@ -59,14 +61,9 @@ class _HomeState extends State<HomeQuiz> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: AppLogo(),
-        brightness: Brightness.light,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        //brightness: Brightness.li,
-      ),
+      appBar: appBarMainGan(context),
       body: quizList(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -94,8 +91,8 @@ class QuizTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => QuizPlay(id)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => QuizPlay(id, title)));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

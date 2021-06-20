@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rusa4/Utils/app_drawer.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/models/result_model.dart';
@@ -8,13 +10,15 @@ import 'package:rusa4/quiz/views/quiz_play.dart';
 
 class Results extends StatefulWidget {
   final int total, correct, incorrect, notattempted;
-  final quizId;
-  Results(
-      {this.incorrect,
-      this.total,
-      this.correct,
-      this.notattempted,
-      this.quizId});
+  final quizId, quizName;
+  Results({
+    this.incorrect,
+    this.total,
+    this.correct,
+    this.notattempted,
+    this.quizId,
+    this.quizName,
+  });
 
   @override
   _ResultsState createState() => _ResultsState();
@@ -40,6 +44,7 @@ class _ResultsState extends State<Results> {
           username: user.username,
           userId: user.id,
           quizId: widget.quizId,
+          quizName: widget.quizName,
           id: "hehe");
     });
 
@@ -53,6 +58,8 @@ class _ResultsState extends State<Results> {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
     user = provider.akunRusa;
     return Scaffold(
+      drawer: AppDrawer(),
+      appBar: appBarMainGan(context),
       body: Container(
         child: Center(
           child: Column(

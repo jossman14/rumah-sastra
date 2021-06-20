@@ -8,8 +8,6 @@ class SaveResultFirebaseApi {
   static Future createSaveResult(UserRusa user, QuizResult quizResult) async {
     final docQuizResult = FirebaseFirestore.instance
         .collection('QuizResult ${user.kelas} Quiz')
-        .doc(quizResult.quizId)
-        .collection(user.id)
         .doc();
 
     quizResult.id = docQuizResult.id;
@@ -18,17 +16,17 @@ class SaveResultFirebaseApi {
     return docQuizResult.id;
   }
 
-  static readSaveResults(UserRusa user) async =>
-      await FirebaseFirestore.instance
-          .collection('QuizResult ${user.kelas} Quiz')
-          .snapshots();
+  static Stream<List<QuizResult>> readSaveResult(String kelas) =>
+      FirebaseFirestore.instance
+          .collection('QuizResult $kelas Quiz')
+          .orderBy(QuizResultField.createdTime, descending: true)
+          .snapshots()
+          .transform(Utils.transformer(QuizResult.fromJson));
 
   static Future updateSaveResult(UserRusa user, QuizResult quizResult) async {
     final docQuizResult = FirebaseFirestore.instance
         .collection('QuizResult ${user.kelas} Quiz')
-        .doc(quizResult.quizId)
-        .collection(user.id)
-        .doc(quizResult.id);
+        .doc(quizResult.quizId);
 
     await docQuizResult.update(quizResult.toJson());
   }
@@ -36,9 +34,7 @@ class SaveResultFirebaseApi {
   static Future deleteSaveResult(UserRusa user, QuizResult quizResult) async {
     final docQuizResult = FirebaseFirestore.instance
         .collection('QuizResult ${user.kelas} Quiz')
-        .doc(quizResult.quizId)
-        .collection(user.id)
-        .doc(quizResult.id);
+        .doc(quizResult.quizId);
 
     await docQuizResult.delete();
   }

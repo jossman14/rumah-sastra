@@ -7,6 +7,7 @@ import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
 import 'package:rusa4/provider/get_image.dart';
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/provider/user_new.dart';
 import 'package:rusa4/view/auth.dart';
 
@@ -22,7 +23,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => EmailSignInProvider()),
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => FeedMenulisProvider()),
         ChangeNotifierProvider(create: (context) => UserRusaProvider()),
         ChangeNotifierProvider(create: (context) => GetImageProvider()),
+        ChangeNotifierProvider(create: (context) => QuizResultProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

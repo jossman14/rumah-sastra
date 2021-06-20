@@ -11,6 +11,7 @@ class QuizResult {
   double result;
   String userId;
   String quizId;
+  String quizName;
   String id;
 
   QuizResult({
@@ -19,6 +20,7 @@ class QuizResult {
     @required this.username,
     @required this.userId,
     @required this.quizId,
+    @required this.quizName,
     @required this.id,
   });
 
@@ -29,6 +31,7 @@ class QuizResult {
         userId: json['userId'],
         quizId: json['quizId'],
         id: json['id'],
+        quizName: json['quizName'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,5 +41,6 @@ class QuizResult {
         'userId': userId,
         'quizId': quizId,
         'id': id,
+        'quizName': quizName,
       };
 }

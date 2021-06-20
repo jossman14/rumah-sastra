@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/quiz/models/question_model.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/results.dart';
@@ -7,8 +8,8 @@ import 'package:rusa4/quiz/widget/widget.dart';
 import 'package:rusa4/quiz/widgets/quiz_play_widgets.dart';
 
 class QuizPlay extends StatefulWidget {
-  final String quizId;
-  QuizPlay(this.quizId);
+  final String quizId, quizName;
+  QuizPlay(this.quizId, this.quizName);
 
   @override
   _QuizPlayState createState() => _QuizPlayState();
@@ -87,13 +88,7 @@ class _QuizPlayState extends State<QuizPlay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: AppLogo(),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        brightness: Brightness.light,
-        elevation: 0.0,
-      ),
+      appBar: appBarMainGan(context),
       body: isLoading
           ? Container(
               child: Center(child: CircularProgressIndicator()),
@@ -140,6 +135,7 @@ class _QuizPlayState extends State<QuizPlay> {
                         incorrect: _incorrect,
                         total: total,
                         quizId: widget.quizId,
+                        quizName: widget.quizName,
                       )));
         },
       ),

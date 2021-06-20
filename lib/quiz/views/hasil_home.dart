@@ -8,7 +8,9 @@ import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/quiz/services/save_result.dart';
+import 'package:rusa4/quiz/views/quiz_result_widget.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/materi/add_materi.dart';
 import 'package:rusa4/view/materi/materi_widget.dart';
@@ -23,18 +25,6 @@ class HasilHome extends StatefulWidget {
 
 class _HasilHomeState extends State<HasilHome> {
   UserRusa user;
-  Stream hasilQuiz;
-
-  @override
-  void initState() {
-    SaveResultFirebaseApi.readSaveResults(user).then((value) {
-      hasilQuiz = value;
-      setState(() {});
-      print('ayee');
-      print(hasilQuiz);
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +61,7 @@ class _HasilHomeState extends State<HasilHome> {
       ),
       body: SafeArea(
         child: StreamBuilder<List>(
-          stream: hasilQuiz,
+          stream: SaveResultFirebaseApi.readSaveResult(widget.kelas),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -81,12 +71,16 @@ class _HasilHomeState extends State<HasilHome> {
                   return buildText(
                       'Ada yang error, mohon dicoba lagi nanti ya');
                 } else {
-                  final quizResult = snapshot.data;
-                  print("hasilll $quizResult");
-                  return quizResult.isEmpty
+                  final quizResults = snapshot.data;
+                  print(quizResults);
+
+                  final provider = Provider.of<QuizResultProvider>(context);
+                  provider.setQuizResults(quizResults);
+
+                  return quizResults.isEmpty
                       ? Center(
                           child: Text(
-                            'No quizResult.',
+                            'No quizResults.',
                             style: TextStyle(fontSize: 20),
                           ),
                         )
@@ -95,13 +89,11 @@ class _HasilHomeState extends State<HasilHome> {
                           padding: EdgeInsets.all(16),
                           separatorBuilder: (context, index) =>
                               Container(height: 8),
-                          itemCount: quizResult.length,
+                          itemCount: quizResults.length,
                           itemBuilder: (context, index) {
-                            final materi = quizResult[index];
+                            final quizResult = quizResults[index];
 
-                            print("hasilll $materi");
-
-                            return Container();
+                            return QuizResultWidget(quizResult: quizResult);
                           },
                         );
                 }
@@ -113,9 +105,11 @@ class _HasilHomeState extends State<HasilHome> {
   }
 }
 
-Widget buildText(String text) => Center(
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 24, color: Colors.white),
+Widget buildText(String text) => Container(
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
       ),
     );

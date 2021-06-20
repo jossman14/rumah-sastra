@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/add_question.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
@@ -48,16 +49,7 @@ class _CreateQuizState extends State<CreateQuiz> {
     quizImgUrl = "https://picsum.photos/500/300";
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: BackButton(
-          color: Colors.black54,
-        ),
-        title: AppLogo(),
-        brightness: Brightness.light,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        //brightness: Brightness.li,
-      ),
+      appBar: appBarMainGan(context),
       body: Form(
         key: _formKey,
         child: Container(
