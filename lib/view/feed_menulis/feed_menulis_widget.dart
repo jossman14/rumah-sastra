@@ -28,6 +28,8 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
   var provider;
   List user;
 
+  Map allAkun;
+
   @override
   void initState() {
     super.initState();
@@ -35,14 +37,16 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
       provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
       user = provider.akun;
+      allAkun = provider.listAkun;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     String idUser = FirebaseAuth.instance.currentUser.uid;
+    print("cek akun gann ${allAkun[widget.feedMenulis.userID].id}");
 
-    return user[7] == "Guru"
+    return user[9] == allAkun[widget.feedMenulis.userID].id
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Slidable(
@@ -96,12 +100,16 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                       subtitle: Row(
                         children: [
                           Container(
-                              padding: user[8][8] != "f"
-                                  ? EdgeInsets.all(12)
-                                  : EdgeInsets.all(4),
-                              child: user[8][8] != "f"
+                              padding:
+                                  allAkun[widget.feedMenulis.userID].pic[8] !=
+                                          "f"
+                                      ? EdgeInsets.all(12)
+                                      : EdgeInsets.all(4),
+                              child: allAkun[widget.feedMenulis.userID]
+                                          .pic[8] !=
+                                      "f"
                                   ? SvgPicture.network(
-                                      user[8],
+                                      allAkun[widget.feedMenulis.userID].pic,
                                       semanticsLabel: 'Profil Pic',
                                       placeholderBuilder:
                                           (BuildContext context) => Container(
@@ -116,7 +124,9 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                                       decoration: new BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: new DecorationImage(
-                                          image: NetworkImage(user[8]),
+                                          image: NetworkImage(
+                                              allAkun[widget.feedMenulis.userID]
+                                                  .pic),
                                           fit: BoxFit.cover,
                                         ),
                                       ))),

@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/api/feed_menulis_firebase_api.dart';
+import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
 import 'package:rusa4/view/auth.dart';
@@ -23,63 +24,19 @@ class ViewFeedMenulis extends StatefulWidget {
 
 class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
   var user = [];
+  UserRusa akunRusa;
+  Map allAkun;
   String emailLogin = FirebaseAuth.instance.currentUser.uid;
 
   @override
   Widget build(BuildContext context) {
-    return cekAkun(context);
-  }
+    final provider = Provider.of<EmailSignInProvider>(context);
 
-  FutureBuilder<QuerySnapshot> cekAkun(BuildContext context) {
-    user != null ? user.clear() : user = [];
+    user = provider.akun;
+    // akunRusa = provider.akunRusa;
+    // allAkun = provider.listAkun;
 
-    return FutureBuilder(
-        future: FirebaseFirestore.instance.collection("Users").get(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return Center(
-                child: Text("hasilnya none"),
-              );
-            case ConnectionState.active:
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                QuerySnapshot documents = snapshot.data;
-                List<DocumentSnapshot> docs = documents.docs;
-                docs.forEach((data) {
-                  if (data.id == emailLogin) {
-                    user.clear();
-                    user.add(data.get('emailSiswa'));
-                    user.add(data.get('emailGuru'));
-                    user.add(data.get('kelas'));
-                    user.add(data.get('username'));
-                    user.add(data.get('akunDibuat').toDate());
-                    user.add(data.get('password'));
-                    user.add(data.get('passwordConfirm'));
-                    user.add(data.get('jenisAkun'));
-                    user.add(data.get('pic'));
-                    user.add(data.get('id'));
-
-                    final provider = Provider.of<EmailSignInProvider>(context);
-
-                    provider.akun = user;
-                    provider.setAkun(user);
-                  } else {
-                    print('data tidak sama');
-                  }
-                });
-              } else {
-                print('data tidak ditemukan');
-              }
-          }
-
-          return feedMenulisHome(context);
-          // return Container();
-        });
+    return feedMenulisHome(context);
   }
 
   Scaffold feedMenulisHome(BuildContext context) {

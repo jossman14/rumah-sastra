@@ -69,7 +69,9 @@ class _HomePageState extends State<HomePage> {
             indicatorWeight: 5,
             tabs: [
               Tab(icon: Icon(Icons.star), text: 'Feed'),
-              Tab(icon: Icon(Icons.face), text: 'Siswa'),
+              Tab(
+                  icon: Icon(Icons.face),
+                  text: user[7] == "Guru" ? "Guru" : 'Siswa'),
               Tab(icon: Icon(Icons.mail), text: 'Pesan'),
             ],
           ),

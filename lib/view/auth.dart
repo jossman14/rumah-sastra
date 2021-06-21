@@ -58,6 +58,57 @@ class _AuthPageState extends State<AuthPage> {
     super.initState();
   }
 
+  cekSemuaAkun(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context);
+
+    user != null ? user.clear() : user = [];
+
+    var listAkunLocal = new Map();
+    UserRusa cekUser;
+
+    return FutureBuilder(
+        future: FirebaseFirestore.instance.collection("Users").get(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return halamanLoading(context);
+
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                QuerySnapshot documents = snapshot.data;
+                List<DocumentSnapshot> docs = documents.docs;
+
+                docs.forEach((data) {
+                  cekUser = UserRusa(
+                      jenisAkun: data.get('jenisAkun'),
+                      pic: data.get('pic'),
+                      id: data.get('id'),
+                      akunDibuat: data.get('akunDibuat').toDate(),
+                      emailSiswa: data.get('emailSiswa'),
+                      password: data.get('password'),
+                      emailGuru: data.get('emailGuru'),
+                      kelas: data.get('kelas'),
+                      passwordConfirm: data.get('passwordConfirm'),
+                      username: data.get('username'));
+
+                  listAkunLocal[data.get('id')] = cekUser;
+                  cekUser = null;
+                });
+              } else {
+                print('data tidak ditemukan');
+              }
+          }
+
+          provider.listAkun = listAkunLocal;
+          print("cek semua akun $listAkunLocal");
+
+          // return Container();
+          return cekEmailGuru(context);
+        });
+  }
+
   getLoggedInState() async {
     await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
       print('isiii value');
@@ -976,7 +1027,7 @@ class _AuthPageState extends State<AuthPage> {
               }
           }
 
-          return cekEmailGuru(context);
+          return cekSemuaAkun(context);
           // return Container();
         });
   }

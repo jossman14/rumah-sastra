@@ -15,6 +15,7 @@ class EmailSignInProvider extends ChangeNotifier {
   DateTime _akunDibuat;
   List _akun;
   UserRusa _akunRusa;
+  Map _listAkun;
   List _daftarEmailGuru;
 
   EmailSignInProvider() {
@@ -95,6 +96,13 @@ class EmailSignInProvider extends ChangeNotifier {
 
   set daftarEmailGuru(List value) {
     _daftarEmailGuru = value;
+    // notifyListeners();
+  }
+
+  Map get listAkun => _listAkun;
+
+  set listAkun(Map value) {
+    _listAkun = value;
     // notifyListeners();
   }
 
