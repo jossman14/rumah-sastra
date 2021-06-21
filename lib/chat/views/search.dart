@@ -6,10 +6,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:rusa4/chat/helper/constants.dart';
 import 'package:rusa4/chat/services/database.dart';
 import 'package:rusa4/chat/views/chat.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class _SearchState extends State<Search> {
   DatabaseMethods databaseMethods = new DatabaseMethods();
   TextEditingController searchEditingController = new TextEditingController();
   QuerySnapshot searchResultSnapshot;
+  QuerySnapshot searchResultSnapshotAllUserName;
 
   bool isLoading = false;
   bool haveUserSearched = false;
@@ -42,6 +45,17 @@ class _SearchState extends State<Search> {
     }
   }
 
+  initiateSearchAllUsername() async {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+
+    final user = provider.akunRusa;
+    await databaseMethods.searchAllName(user.id).then((snapshot) {
+      searchResultSnapshotAllUserName = snapshot;
+      setState(() {});
+      print("$searchResultSnapshot");
+    });
+  }
+
   Widget userList() {
     return haveUserSearched
         ? ListView.builder(
@@ -57,7 +71,23 @@ class _SearchState extends State<Search> {
                         : "emailSiswa"],
               );
             })
-        : Container();
+        : searchResultSnapshotAllUserName != null
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemCount: searchResultSnapshotAllUserName.docs.length,
+                itemBuilder: (context, index) {
+                  return userTile(
+                    searchResultSnapshotAllUserName.docs[index]
+                        .data()["username"],
+                    searchResultSnapshotAllUserName.docs[index].data()[
+                        searchResultSnapshotAllUserName.docs[index]
+                                    .data()["jenisAkun"] ==
+                                "Guru"
+                            ? "emailGuru"
+                            : "emailSiswa"],
+                  );
+                })
+            : halamanLoadingKecil(context);
   }
 
   /// 1.create a chatroom, send user to the chatroom, other userdetails
@@ -77,6 +107,7 @@ class _SearchState extends State<Search> {
         context,
         MaterialPageRoute(
             builder: (context) => Chat(
+                  username: userName,
                   chatRoomId: chatRoomId,
                 )));
   }
@@ -129,6 +160,7 @@ class _SearchState extends State<Search> {
 
   @override
   void initState() {
+    initiateSearchAllUsername();
     super.initState();
   }
 
@@ -155,7 +187,7 @@ class _SearchState extends State<Search> {
                             controller: searchEditingController,
                             style: simpleTextStyle(),
                             decoration: InputDecoration(
-                                hintText: "search username ...",
+                                hintText: "cari username ...",
                                 hintStyle: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 16,

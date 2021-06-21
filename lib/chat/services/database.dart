@@ -29,6 +29,13 @@ class DatabaseMethods {
         .get();
   }
 
+  searchAllName(String id) {
+    return FirebaseFirestore.instance
+        .collection("Users")
+        .where('id', isNotEqualTo: id)
+        .get();
+  }
+
   Future<bool> addChatRoom(chatRoom, chatRoomId) {
     FirebaseFirestore.instance
         .collection("chatRoom")

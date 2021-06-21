@@ -12,9 +12,9 @@ import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 
 class Chat extends StatefulWidget {
-  final String chatRoomId;
+  final String chatRoomId, username;
 
-  Chat({this.chatRoomId});
+  Chat({this.chatRoomId, this.username});
 
   @override
   _ChatState createState() => _ChatState();
@@ -40,7 +40,11 @@ class _ChatState extends State<Chat> {
                         snapshot.data.docs[index].data()["sendBy"],
                   );
                 })
-            : Container();
+            : Container(
+                child: Center(
+                  child: Text("chat pesan belum ada"),
+                ),
+              );
       },
     );
   }
@@ -77,56 +81,60 @@ class _ChatState extends State<Chat> {
     user = provider.akunRusa;
 
     return Scaffold(
-      appBar: appBarMain(context),
+      appBar: appBarMainChat(context, widget.username),
       body: Container(
         child: Stack(
           children: [
             chatMessages(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              width: MediaQuery.of(context).size.width,
+            inputMessage(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container inputMessage(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      width: MediaQuery.of(context).size.width,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        color: Color(0x54FFFFFF),
+        child: Row(
+          children: [
+            Expanded(
+                child: TextField(
+              controller: messageEditingController,
+              style: simpleTextStyle(),
+              decoration: InputDecoration(
+                  hintText: "Message ...",
+                  hintStyle: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                  ),
+                  border: InputBorder.none),
+            )),
+            SizedBox(
+              width: 16,
+            ),
+            GestureDetector(
+              onTap: () {
+                addMessage();
+              },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                color: Color(0x54FFFFFF),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      controller: messageEditingController,
-                      style: simpleTextStyle(),
-                      decoration: InputDecoration(
-                          hintText: "Message ...",
-                          hintStyle: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                          ),
-                          border: InputBorder.none),
-                    )),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        addMessage();
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [
-                                  const Color(0x36FFFFFF),
-                                  const Color(0x0FFFFFFF)
-                                ],
-                                begin: FractionalOffset.topLeft,
-                                end: FractionalOffset.bottomRight),
-                            borderRadius: BorderRadius.circular(40)),
-                        padding: EdgeInsets.all(8),
-                        child: Icon(Icons.send),
-                      ),
-                    ),
-                  ],
-                ),
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          const Color(0x36FFFFFF),
+                          const Color(0x0FFFFFFF)
+                        ],
+                        begin: FractionalOffset.topLeft,
+                        end: FractionalOffset.bottomRight),
+                    borderRadius: BorderRadius.circular(40)),
+                padding: EdgeInsets.all(8),
+                child: Icon(Icons.send),
               ),
             ),
           ],

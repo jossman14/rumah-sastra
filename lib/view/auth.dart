@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
 import 'package:rusa4/chat/helper/helperfunctions.dart';
+import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/home.dart';
@@ -106,14 +107,8 @@ class _AuthPageState extends State<AuthPage> {
             case ConnectionState.active:
 
             case ConnectionState.waiting:
-              print("waiting");
-              print("hasil {$snapshot}");
+              return halamanLoading(context);
 
-              return Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
             case ConnectionState.done:
               print("done");
           }
@@ -887,11 +882,8 @@ class _AuthPageState extends State<AuthPage> {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              return halamanLoading(context);
+
             case ConnectionState.done:
               if (snapshot.hasData) {
                 QuerySnapshot documents = snapshot.data;
@@ -931,11 +923,7 @@ class _AuthPageState extends State<AuthPage> {
               );
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              return halamanLoading(context);
             case ConnectionState.done:
               if (snapshot.hasData) {
                 QuerySnapshot documents = snapshot.data;
