@@ -21,10 +21,12 @@ class MateriWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    Map allAkun;
 
     final user = provider.akun;
+    allAkun = provider.listAkun;
 
-    return user[7] == "Guru"
+    return user[9] == allAkun[materi.userID].id
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Slidable(
@@ -56,6 +58,10 @@ class MateriWidget extends StatelessWidget {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
+
+    Map allAkun;
+
+    allAkun = provider.listAkun;
     return GestureDetector(
       onTap: () => seeMateri(context, materi),
       child: Card(
@@ -81,15 +87,15 @@ class MateriWidget extends StatelessWidget {
                       subtitle: Row(
                         children: [
                           Container(
-                            padding: user[8][8] != "f"
+                            padding: allAkun[materi.userID].pic[8] != "f"
                                 ? EdgeInsets.all(12)
                                 : EdgeInsets.all(4),
-                            child: user[8][8] != "f"
+                            child: allAkun[materi.userID].pic[8] != "f"
                                 ? Container(
                                     width: 30,
                                     height: 30,
                                     child: SvgPicture.network(
-                                      user[8],
+                                      allAkun[materi.userID].pic,
                                       semanticsLabel: 'Profil Pic',
                                       placeholderBuilder:
                                           (BuildContext context) => Container(
@@ -105,7 +111,8 @@ class MateriWidget extends StatelessWidget {
                                     decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
-                                        image: NetworkImage(user[8]),
+                                        image: NetworkImage(
+                                            allAkun[materi.userID].pic),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -114,7 +121,7 @@ class MateriWidget extends StatelessWidget {
                           SizedBox(
                             width: 8,
                           ),
-                          Text(materi.writer,
+                          Text(allAkun[materi.userID].username,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500)),

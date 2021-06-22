@@ -4,8 +4,8 @@ import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
 
 class AddQuestion extends StatefulWidget {
-  final String quizId;
-  AddQuestion(this.quizId);
+  final String quizId, quizDesc;
+  AddQuestion(this.quizId, this.quizDesc);
 
   @override
   _AddQuestionState createState() => _AddQuestionState();
@@ -54,18 +54,30 @@ class _AddQuestionState extends State<AddQuestion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: appBarMainGan(context),
       body: isLoading
           ? Container(
               child: Center(child: CircularProgressIndicator()),
             )
-          : Form(
-              key: _formKey,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
+          : Container(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Form(
+                key: _formKey,
+                child: ListView(
                   children: [
+                    Text(
+                      widget.quizDesc,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Enter Question" : null,
                       decoration: InputDecoration(hintText: "Question"),
@@ -115,13 +127,13 @@ class _AddQuestionState extends State<AddQuestion> {
                       },
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 60,
                     ),
-                    Spacer(),
                     Row(
                       children: [
                         GestureDetector(
                           onTap: () {
+                            uploadQuizData();
                             Navigator.pop(context);
                           },
                           child: Container(

@@ -11,6 +11,7 @@ import 'package:rusa4/chat/helper/constants.dart';
 import 'package:rusa4/chat/services/database.dart';
 import 'package:rusa4/chat/views/chat.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 
 class Search extends StatefulWidget {
@@ -26,6 +27,8 @@ class _SearchState extends State<Search> {
 
   bool isLoading = false;
   bool haveUserSearched = false;
+
+  UserRusa user;
 
   initiateSearch() async {
     if (searchEditingController.text.isNotEmpty) {
@@ -48,7 +51,7 @@ class _SearchState extends State<Search> {
   initiateSearchAllUsername() async {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
-    final user = provider.akunRusa;
+    user = provider.akunRusa;
     await databaseMethods.searchAllName(user.id).then((snapshot) {
       searchResultSnapshotAllUserName = snapshot;
       setState(() {});
@@ -69,6 +72,7 @@ class _SearchState extends State<Search> {
                             "Guru"
                         ? "emailGuru"
                         : "emailSiswa"],
+                searchResultSnapshot.docs[index].data()["id"],
               );
             })
         : searchResultSnapshotAllUserName != null
@@ -85,18 +89,20 @@ class _SearchState extends State<Search> {
                                 "Guru"
                             ? "emailGuru"
                             : "emailSiswa"],
+                    searchResultSnapshotAllUserName.docs[index].data()["id"],
                   );
                 })
             : halamanLoadingKecil(context);
   }
 
   /// 1.create a chatroom, send user to the chatroom, other userdetails
-  sendMessage(String userName) {
-    List<String> users = [Constants.myName, userName];
+  sendMessage(String userName, UserRusa user, String id) {
+    List<String> users = [user.id, id];
 
-    String chatRoomId = getChatRoomId(Constants.myName, userName);
+    String chatRoomId = getChatRoomId(user.id, id);
 
     Map<String, dynamic> chatRoom = {
+      "userID": id,
       "users": users,
       "chatRoomId": chatRoomId,
     };
@@ -107,12 +113,12 @@ class _SearchState extends State<Search> {
         context,
         MaterialPageRoute(
             builder: (context) => Chat(
-                  username: userName,
+                  username: id,
                   chatRoomId: chatRoomId,
                 )));
   }
 
-  Widget userTile(String userName, String userEmail) {
+  Widget userTile(String userName, String userEmail, String id) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -133,14 +139,14 @@ class _SearchState extends State<Search> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              sendMessage(userName);
+              sendMessage(userName, user, id);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
-                "Message",
+                "hubungi",
                 style: TextStyle(color: Colors.black87, fontSize: 16),
               ),
             ),
@@ -164,8 +170,14 @@ class _SearchState extends State<Search> {
     super.initState();
   }
 
+  Map allAkun;
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+
+    user = provider.akunRusa;
+    allAkun = provider.listAkun;
+
     return Scaffold(
       appBar: appBarMain(context),
       body: isLoading

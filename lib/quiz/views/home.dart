@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/create_quiz.dart';
 import 'package:rusa4/quiz/views/quiz_play.dart';
@@ -38,6 +40,10 @@ class _HomeState extends State<HomeQuiz> {
                                 .data()['quizTitle'],
                             description: snapshot.data.documents[index]
                                 .data()['quizDesc'],
+                            authorId: snapshot.data.documents[index]
+                                .data()['quizAuthorID'],
+                            kelas: snapshot.data.documents[index]
+                                .data()['quizKelas'],
                             id: snapshot.data.documents[index].documentID,
                           );
                         });
@@ -77,22 +83,29 @@ class _HomeState extends State<HomeQuiz> {
 }
 
 class QuizTile extends StatelessWidget {
-  final String imageUrl, title, id, description;
+  final String imageUrl, title, id, description, authorId, kelas;
   final int noOfQuestions;
+
+  Map allAkun;
 
   QuizTile(
       {@required this.title,
       @required this.imageUrl,
       @required this.description,
       @required this.id,
+      @required this.authorId,
+      @required this.kelas,
       @required this.noOfQuestions});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+
+    allAkun = provider.listAkun;
     return GestureDetector(
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => QuizPlay(id, title)));
+            MaterialPageRoute(builder: (context) => QuizPlay(id, title, description)));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -110,28 +123,41 @@ class QuizTile extends StatelessWidget {
                 ),
                 Container(
                   color: Colors.black26,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          description,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            allAkun[authorId].username,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            kelas,
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )

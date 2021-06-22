@@ -26,6 +26,8 @@ class _ChatState extends State<Chat> {
   Stream<QuerySnapshot> chats;
   TextEditingController messageEditingController = new TextEditingController();
 
+  Map allAkun;
+
   Widget chatMessages() {
     return StreamBuilder(
       stream: chats,
@@ -36,8 +38,8 @@ class _ChatState extends State<Chat> {
                 itemBuilder: (context, index) {
                   return MessageTile(
                     message: snapshot.data.docs[index].data()["message"],
-                    sendByMe: Constants.myName ==
-                        snapshot.data.docs[index].data()["sendBy"],
+                    sendByMe:
+                        user.id == snapshot.data.docs[index].data()["sendBy"],
                   );
                 })
             : Container(
@@ -52,7 +54,7 @@ class _ChatState extends State<Chat> {
   addMessage() {
     if (messageEditingController.text.isNotEmpty) {
       Map<String, dynamic> chatMessageMap = {
-        "sendBy": Constants.myName,
+        "sendBy": user.id,
         "message": messageEditingController.text,
         'time': DateTime.now().millisecondsSinceEpoch,
       };
@@ -80,8 +82,9 @@ class _ChatState extends State<Chat> {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
     user = provider.akunRusa;
 
+    allAkun = provider.listAkun;
     return Scaffold(
-      appBar: appBarMainChat(context, widget.username),
+      appBar: appBarMainChat(context, allAkun[widget.username].username),
       body: Container(
         child: Stack(
           children: [
@@ -146,6 +149,7 @@ class _ChatState extends State<Chat> {
 
 class MessageTile extends StatelessWidget {
   final String message;
+
   final bool sendByMe;
 
   MessageTile({@required this.message, @required this.sendByMe});

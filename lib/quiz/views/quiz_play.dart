@@ -8,8 +8,8 @@ import 'package:rusa4/quiz/widget/widget.dart';
 import 'package:rusa4/quiz/widgets/quiz_play_widgets.dart';
 
 class QuizPlay extends StatefulWidget {
-  final String quizId, quizName;
-  QuizPlay(this.quizId, this.quizName);
+  final String quizId, quizName, description;
+  QuizPlay(this.quizId, this.quizName, this.description);
 
   @override
   _QuizPlayState createState() => _QuizPlayState();
@@ -102,6 +102,17 @@ class _QuizPlayState extends State<QuizPlay> {
                     ),
                     SizedBox(
                       height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(
+                        widget.description,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                     questionSnaphot.docs == null
                         ? Container(

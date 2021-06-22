@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/model/user.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/add_question.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
@@ -21,7 +24,11 @@ class _CreateQuizState extends State<CreateQuiz> {
   bool isLoading = false;
   String quizId;
 
+  UserRusa user;
+
   createQuiz() {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    user = provider.akunRusa;
     quizId = getRandString(16);
     if (_formKey.currentState.validate()) {
       setState(() {
@@ -29,9 +36,12 @@ class _CreateQuizState extends State<CreateQuiz> {
       });
 
       Map<String, String> quizData = {
-        "quizImgUrl": quizImgUrl,
+        "quizImgUrl": "https://picsum.photos/seed/$quizId/500/500/?blur",
         "quizTitle": quizTitle,
-        "quizDesc": quizDesc
+        "quizDesc": quizDesc,
+        "quizAuthor": user.username,
+        "quizAuthorID": user.id,
+        "quizKelas": user.kelas
       };
 
       databaseService.addQuizData(quizData, quizId).then((value) {
@@ -39,14 +49,13 @@ class _CreateQuizState extends State<CreateQuiz> {
           isLoading = false;
         });
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => AddQuestion(quizId)));
+            MaterialPageRoute(builder: (context) => AddQuestion(quizId, quizDesc)));
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    quizImgUrl = "https://picsum.photos/500/300";
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBarMainGan(context),
@@ -79,6 +88,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
+                maxLines: 8,
                 validator: (val) =>
                     val.isEmpty ? "Enter Quiz Description" : null,
                 decoration: InputDecoration(hintText: "Quiz Description"),

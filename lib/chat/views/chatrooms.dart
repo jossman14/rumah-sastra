@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rusa4/chat/helper/constants.dart';
@@ -21,6 +22,8 @@ class _ChatRoomState extends State<ChatRoom> {
   Stream chatRooms;
   UserRusa user;
 
+  Map allAkun;
+
   Widget chatRoomsList() {
     return StreamBuilder(
       stream: chatRooms,
@@ -35,7 +38,7 @@ class _ChatRoomState extends State<ChatRoom> {
                         .data()['chatRoomId']
                         .toString()
                         .replaceAll("_", "")
-                        .replaceAll(Constants.myName, ""),
+                        .replaceAll(user.id, ""),
                     chatRoomId: snapshot.data.docs[index].data()['chatRoomId'],
                   );
                 })
@@ -54,12 +57,14 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   getUserInfogetChats() async {
-    Constants.myName = await HelperFunctions.getUserNameSharedPreference();
-    DatabaseMethods().getUserChats(Constants.myName).then((snapshots) {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    user = provider.akunRusa;
+
+    DatabaseMethods().getUserChats(user.id).then((snapshots) {
       setState(() {
         chatRooms = snapshots;
         print(
-            "we got the data + ${chatRooms.toString()} this is name  ${Constants.myName}");
+            "we got the data + ${chatRooms.toString()} this is name  ${user.id}");
       });
     });
   }
@@ -68,6 +73,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
     user = provider.akunRusa;
+    allAkun = provider.listAkun;
 
     return Scaffold(
       body: Container(
@@ -88,10 +94,17 @@ class ChatRoomsTile extends StatelessWidget {
   final String userName;
   final String chatRoomId;
 
+  UserRusa user;
+
+  Map allAkun;
+
   ChatRoomsTile({this.userName, @required this.chatRoomId});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    user = provider.akunRusa;
+    allAkun = provider.listAkun;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
@@ -114,21 +127,35 @@ class ChatRoomsTile extends StatelessWidget {
                 Container(
                   height: 30,
                   width: 30,
-                  decoration: BoxDecoration(
-                      color: CustomTheme.colorAccent,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Text(userName.substring(0, 1),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'OverpassRegular',
-                          fontWeight: FontWeight.w700)),
+                  child: Container(
+                    child: allAkun[userName].pic[8] != "f"
+                        ? Container(
+                            width: 30,
+                            height: 30,
+                            child: SvgPicture.network(
+                              allAkun[userName].pic,
+                              semanticsLabel: 'Profil Pic',
+                              placeholderBuilder: (BuildContext context) =>
+                                  Container(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: const CircularProgressIndicator()),
+                            ),
+                          )
+                        : Container(
+                            decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
+                                image: NetworkImage(allAkun[userName].pic),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                  ),
                 ),
                 SizedBox(
                   width: 12,
                 ),
-                Text(userName,
+                Text(allAkun[userName].username,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: Colors.black87,
