@@ -110,7 +110,7 @@ class _ChatState extends State<Chat> {
               controller: messageEditingController,
               style: simpleTextStyle(),
               decoration: InputDecoration(
-                  hintText: "Message ...",
+                  hintText: "Pesan ...",
                   hintStyle: TextStyle(
                     color: Colors.black87,
                     fontSize: 16,

@@ -34,7 +34,7 @@ class _EditFeedMenulisPageState extends State<EditFeedMenulisPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Edit FeedMenulis'),
+          title: Text('Edit Feed Menulis'),
           actions: [
             IconButton(
               icon: Icon(Icons.delete),

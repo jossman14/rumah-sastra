@@ -61,7 +61,7 @@ class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
                   return feedMenuliss.isEmpty
                       ? Center(
                           child: Text(
-                            'Belum ada feed.',
+                            'Belum ada Feed Menulis',
                             style: TextStyle(fontSize: 20),
                           ),
                         )

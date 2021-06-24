@@ -47,7 +47,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('See FeedMenulis'),
+        title: Text(title),
         actions: user[7] == "Guru"
             ? [
                 IconButton(
@@ -212,14 +212,14 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                                                             editAlertDialog(
                                                                 feedMenulisComment);
                                                           },
-                                                          caption: 'Edit',
+                                                          caption: 'Ubah',
                                                           icon: Icons.edit,
                                                         )
                                                       ],
                                                       secondaryActions: [
                                                         IconSlideAction(
                                                           color: Colors.red,
-                                                          caption: 'Delete',
+                                                          caption: 'Hapus',
                                                           onTap: () =>
                                                               deleteFeedMenulisComment(
                                                                   context,
@@ -303,7 +303,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
             _commentarController.text = '';
             Navigator.pop(context);
           },
-          child: Text('Save'),
+          child: Text('Simpan'),
         ),
       );
 
@@ -428,7 +428,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
             }
             Navigator.pop(context);
           },
-          child: Text('Save'),
+          child: Text('Simpan'),
         ),
       );
 }

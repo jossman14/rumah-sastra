@@ -39,7 +39,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     final user = provider.akun;
     return Scaffold(
       appBar: AppBar(
-        title: Text('See Materi'),
+        title: Text(title),
         actions: user[7] == "Guru"
             ? [
                 IconButton(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/create_quiz.dart';
+import 'package:rusa4/quiz/views/edit_quiz.dart';
 import 'package:rusa4/quiz/views/quiz_play.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
 
@@ -88,6 +90,8 @@ class QuizTile extends StatelessWidget {
 
   Map allAkun;
 
+  List user;
+
   QuizTile(
       {@required this.title,
       @required this.imageUrl,
@@ -97,15 +101,63 @@ class QuizTile extends StatelessWidget {
       @required this.kelas,
       @required this.noOfQuestions});
 
+  void deleteQuiz(BuildContext context, String quizId) async {
+    DatabaseService databaseService = new DatabaseService();
+
+    await databaseService.deleteQuizData(quizId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     allAkun = provider.listAkun;
+    user = provider.akun;
+    print("quizHome $id");
+    return user[9] == authorId
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                key: Key(id),
+                actions: [
+                  IconSlideAction(
+                    color: Colors.green,
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => EditQuiz(id),
+                      ),
+                    ),
+                    caption: 'Ubah',
+                    icon: Icons.edit,
+                  )
+                ],
+                secondaryActions: [
+                  IconSlideAction(
+                    color: Colors.red,
+                    caption: 'Hapus',
+                    onTap: () {
+                      deleteQuiz(context, id);
+                    },
+                    icon: Icons.delete,
+                  )
+                ],
+                child: mainQuiz(context),
+              ),
+            ),
+          )
+        : mainQuiz(context);
+  }
+
+  GestureDetector mainQuiz(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => QuizPlay(id, title, description)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => QuizPlay(id, title, description)));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

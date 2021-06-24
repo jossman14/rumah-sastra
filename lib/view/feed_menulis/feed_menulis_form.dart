@@ -36,13 +36,13 @@ class FeedMenulisFormWidget extends StatelessWidget {
         onChanged: onChangedTitle,
         validator: (title) {
           if (title.isEmpty) {
-            return 'The title cannot be empty';
+            return 'Judul tidak boleh kosong';
           }
           return null;
         },
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
-          labelText: 'Title',
+          labelText: 'Judul',
         ),
       );
 
@@ -52,7 +52,7 @@ class FeedMenulisFormWidget extends StatelessWidget {
         onChanged: onChangedDescription,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
-          labelText: 'Description',
+          labelText: 'Deskripsi',
         ),
       );
 
@@ -63,7 +63,7 @@ class FeedMenulisFormWidget extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all(Colors.black),
           ),
           onPressed: onSavedFeedMenulis,
-          child: Text('Save'),
+          child: Text('Simpan'),
         ),
       );
 }

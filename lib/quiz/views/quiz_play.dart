@@ -178,20 +178,23 @@ class _InfoHeaderState extends State<InfoHeader> {
                     shrinkWrap: true,
                     children: <Widget>[
                       NoOfQuestionTile(
-                        text: "Total",
+                        text: "Jumlah",
                         number: widget.length,
                       ),
                       NoOfQuestionTile(
-                        text: "Correct",
+                        text: "Benar",
                         number: _correct,
                       ),
                       NoOfQuestionTile(
-                        text: "Incorrect",
+                        text: "Belum Benar",
                         number: _incorrect,
                       ),
-                      NoOfQuestionTile(
-                        text: "NotAttempted",
-                        number: _notAttempted,
+                      Visibility(
+                        visible: false,
+                        child: NoOfQuestionTile(
+                          text: "Belum Dicoba",
+                          number: _notAttempted,
+                        ),
                       ),
                     ],
                   ),

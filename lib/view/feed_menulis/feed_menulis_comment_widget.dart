@@ -53,14 +53,14 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
                   onTap: () {
                     editAlertDialog();
                   },
-                  caption: 'Edit',
+                  caption: 'Ubah',
                   icon: Icons.edit,
                 )
               ],
               secondaryActions: [
                 IconSlideAction(
                   color: Colors.red,
-                  caption: 'Delete',
+                  caption: 'Hapus',
                   onTap: () => deleteFeedMenulisComment(
                       context, widget.feedMenulisComment),
                   icon: Icons.delete,
@@ -141,7 +141,7 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
     provider.removeCommentFeed(widget.feedMenulis, feedMenulisComment);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('feedMenulisComment dihapus')),
+      SnackBar(content: Text('Komentar Feed Menulis dihapus')),
     );
   }
 
@@ -207,7 +207,7 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
             // _commentarController.text = '';
             Navigator.pop(context);
           },
-          child: Text('Save'),
+          child: Text('Simpan'),
         ),
       );
 }

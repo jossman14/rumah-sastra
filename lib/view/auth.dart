@@ -102,7 +102,6 @@ class _AuthPageState extends State<AuthPage> {
           }
 
           provider.listAkun = listAkunLocal;
-          print("cek semua akun $listAkunLocal");
 
           // return Container();
           return cekEmailGuru(context);
@@ -261,6 +260,7 @@ class _AuthPageState extends State<AuthPage> {
                             visible: !register,
                             child: TextButton(
                               onPressed: () {
+                                playBtn(context);
                                 setState(() {
                                   register = !register;
                                   loginGuru = false;
@@ -278,6 +278,7 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           TextButton(
                             onPressed: () {
+                              playBtn(context);
                               setState(() {
                                 loginGuru = !loginGuru;
                                 loginSiswa = !loginSiswa;
@@ -361,9 +362,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _password,
           decoration: InputDecoration(
-            hintText: "Password",
+            hintText: "Kata Sandi",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Password",
+            labelText: "Kata Sandi",
             labelStyle: TextStyle(color: Colors.black),
             suffixIcon: IconButton(
               icon: Icon(
@@ -372,6 +373,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
                   _passwordVisible = !_passwordVisible;
@@ -381,7 +383,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
           validator: (value) {
             if (value.isEmpty || value.length < 8) {
-              return 'Password minimal 8 karakter';
+              return 'Kata sandi minimal 8 karakter';
             } else {
               return null;
             }
@@ -422,9 +424,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _password,
           decoration: InputDecoration(
-            hintText: "Password",
+            hintText: "Kata Sandi",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Password",
+            labelText: "Kata Sandi",
             labelStyle: TextStyle(color: Colors.black),
             suffixIcon: IconButton(
               icon: Icon(
@@ -433,6 +435,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
                   _passwordVisible = !_passwordVisible;
@@ -442,7 +445,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
           validator: (value) {
             if (value.isEmpty || value.length < 8) {
-              return 'Password minimal 8 karakter';
+              return 'Kata sandi minimal 8 karakter';
             } else {
               return null;
             }
@@ -500,9 +503,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _username,
           decoration: InputDecoration(
-            hintText: "Username",
+            hintText: "Nama Pengguna",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Username",
+            labelText: "Nama Pengguna",
             labelStyle: TextStyle(color: Colors.black),
           ),
           validator: (value) {
@@ -535,9 +538,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _password,
           decoration: InputDecoration(
-            hintText: "Password",
+            hintText: "Kata Sandi",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Password",
+            labelText: "Kata Sandi",
             labelStyle: TextStyle(color: Colors.black),
             suffixIcon: IconButton(
               icon: Icon(
@@ -546,6 +549,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
                   _passwordVisible = !_passwordVisible;
@@ -555,7 +559,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
           validator: (value) {
             if (value.isEmpty || value.length < 8) {
-              return 'Password minimal 8 karakter';
+              return 'Kata sandi minimal 8 karakter';
             } else {
               return null;
             }
@@ -565,9 +569,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _passwordConfirm,
           decoration: InputDecoration(
-            hintText: "Konfirmasi Password",
+            hintText: "Konfirmasi Kata Sandi",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Konfirmasi Password",
+            labelText: "Konfirmasi Kata Sandi",
             labelStyle: TextStyle(color: Colors.black),
             suffixIcon: IconButton(
               icon: Icon(
@@ -576,6 +580,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
                   _passwordVisible = !_passwordVisible;
@@ -638,9 +643,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _username,
           decoration: InputDecoration(
-            hintText: "Username",
+            hintText: "Nama Pengguna",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Username",
+            labelText: "Nama Pengguna",
             labelStyle: TextStyle(color: Colors.black),
           ),
           validator: (value) {
@@ -712,9 +717,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _password,
           decoration: InputDecoration(
-            hintText: "Password",
+            hintText: "Kata Sandi",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Password",
+            labelText: "Kata Sandi",
             labelStyle: TextStyle(color: Colors.black),
             suffixIcon: IconButton(
               icon: Icon(
@@ -723,6 +728,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
                   _passwordVisible = !_passwordVisible;
@@ -732,7 +738,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
           validator: (value) {
             if (value.isEmpty || value.length < 8) {
-              return 'Password minimal 8 karakter';
+              return 'Kata sandi minimal 8 karakter';
             } else {
               return null;
             }
@@ -742,9 +748,9 @@ class _AuthPageState extends State<AuthPage> {
         TextFormField(
           controller: _passwordConfirm,
           decoration: InputDecoration(
-            hintText: "Konfirmasi Password",
+            hintText: "Konfirmasi Kata Sandi",
             hintStyle: TextStyle(color: Colors.black),
-            labelText: "Konfirmasi Password",
+            labelText: "Konfirmasi Kata Sandi",
             labelStyle: TextStyle(color: Colors.black),
             suffixIcon: IconButton(
               icon: Icon(
@@ -753,6 +759,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
                   _passwordVisible = !_passwordVisible;
@@ -778,10 +785,11 @@ class _AuthPageState extends State<AuthPage> {
 
     return ElevatedButton(
       onPressed: () {
+        playBtn(context);
         if (_formKey.currentState.validate()) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Loading..."),
+              content: Text("Memuat..."),
             ),
           );
           //provider state

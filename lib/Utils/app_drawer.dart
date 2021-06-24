@@ -104,7 +104,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.mail),
-            title: Text("Chat"),
+            title: Text("Pesan"),
             onTap: () {
               Navigator.push(
                 context,
@@ -124,7 +124,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app_rounded),
-            title: Text("Logout"),
+            title: Text("Keluar"),
             onTap: () {
               notSet();
               FirebaseAuth.instance.signOut();

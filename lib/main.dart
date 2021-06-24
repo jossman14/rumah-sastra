@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rusa4/provider/audio_provider.dart';
 
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserRusaProvider()),
         ChangeNotifierProvider(create: (context) => GetImageProvider()),
         ChangeNotifierProvider(create: (context) => QuizResultProvider()),
+        ChangeNotifierProvider(create: (context) => AudioProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

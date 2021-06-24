@@ -36,14 +36,14 @@ class MateriWidget extends StatelessWidget {
                 IconSlideAction(
                   color: Colors.green,
                   onTap: () => editMateri(context, materi),
-                  caption: 'Edit',
+                  caption: 'Ubah',
                   icon: Icons.edit,
                 )
               ],
               secondaryActions: [
                 IconSlideAction(
                   color: Colors.red,
-                  caption: 'Delete',
+                  caption: 'Hapus',
                   onTap: () => deleteMateri(context, materi),
                   icon: Icons.delete,
                 )

@@ -36,14 +36,14 @@ class QuizResultWidget extends StatelessWidget {
     //             IconSlideAction(
     //               color: Colors.green,
     //               onTap: () => editQuizResult(context, quizResult),
-    //               caption: 'Edit',
+    //               caption: 'Ubah',
     //               icon: Icons.edit,
     //             )
     //           ],
     //           secondaryActions: [
     //             IconSlideAction(
     //               color: Colors.red,
-    //               caption: 'Delete',
+    //               caption: 'Hapus',
     //               onTap: () => deleteQuizResult(context, quizResult),
     //               icon: Icons.delete,
     //             )

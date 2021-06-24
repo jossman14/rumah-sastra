@@ -138,7 +138,7 @@ class _UserSettingState extends State<UserSetting> {
                               height: 16,
                             ),
                             Text(
-                              "Username",
+                              "Nama Pengguna",
                               style: GoogleFonts.firaSans(
                                   fontSize: 14,
                                   color: HexColor('#FF3A00'),
@@ -261,7 +261,7 @@ class _UserSettingState extends State<UserSetting> {
                                         isEdit = !isEdit;
                                       });
                                     },
-                                    child: Text("Edit"),
+                                    child: Text("Ubah"),
                                   ),
                                 ),
                                 Visibility(
@@ -377,7 +377,7 @@ class _UserSettingState extends State<UserSetting> {
                                 children: [
                                   Center(
                                     child: Text(
-                                      "Ganti Password",
+                                      "Ganti Kata Sandi",
                                       style: GoogleFonts.firaSans(
                                           fontSize: 18,
                                           color: HexColor('#2C3E50'),
@@ -392,7 +392,7 @@ class _UserSettingState extends State<UserSetting> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          "Password",
+                                          "Kata Sandi",
                                           style: GoogleFonts.firaSans(
                                               fontSize: 14,
                                               color: HexColor('#FF3A00'),
@@ -401,7 +401,8 @@ class _UserSettingState extends State<UserSetting> {
                                         TextFormField(
                                           controller: _passwordCek,
                                           decoration: InputDecoration(
-                                            hintText: "Masukkan password lama",
+                                            hintText:
+                                                "Masukkan kata sandi lama",
                                             hintStyle:
                                                 TextStyle(color: Colors.black),
                                             suffixIcon: IconButton(
@@ -440,7 +441,7 @@ class _UserSettingState extends State<UserSetting> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          "Password Baru",
+                                          "Kata Sandi Baru",
                                           style: GoogleFonts.firaSans(
                                               fontSize: 14,
                                               color: HexColor('#FF3A00'),
@@ -449,7 +450,8 @@ class _UserSettingState extends State<UserSetting> {
                                         TextFormField(
                                           controller: _passwordNew,
                                           decoration: InputDecoration(
-                                            hintText: "Masukkan password lama",
+                                            hintText:
+                                                "Masukkan kata sandi lama",
                                             hintStyle:
                                                 TextStyle(color: Colors.black),
                                             suffixIcon: IconButton(
@@ -484,7 +486,7 @@ class _UserSettingState extends State<UserSetting> {
                                           height: 16,
                                         ),
                                         Text(
-                                          "Konfirmasi Password Baru",
+                                          "Konfirmasi kata sandi Baru",
                                           style: GoogleFonts.firaSans(
                                               fontSize: 14,
                                               color: HexColor('#FF3A00'),
@@ -494,7 +496,7 @@ class _UserSettingState extends State<UserSetting> {
                                           controller: _passwordConfirm,
                                           decoration: InputDecoration(
                                             hintText:
-                                                "Konfirmasi password baru",
+                                                "Konfirmasi kata sandi baru",
                                             hintStyle:
                                                 TextStyle(color: Colors.black),
                                             suffixIcon: IconButton(

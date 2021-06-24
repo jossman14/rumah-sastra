@@ -80,7 +80,7 @@ class _HasilHomeState extends State<HasilHome> {
                   return quizResults.isEmpty
                       ? Center(
                           child: Text(
-                            'No quizResults.',
+                            'TIdak ada Hasil Quiz.',
                             style: TextStyle(fontSize: 20),
                           ),
                         )

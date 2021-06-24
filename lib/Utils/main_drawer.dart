@@ -27,8 +27,6 @@ class _DrawerAppState extends State<DrawerApp> {
 
     final user = provider.akun;
 
-   
-
     return Drawer(
       child: ListView(
         padding: EdgeInsets.all(0),
@@ -89,7 +87,7 @@ class _DrawerAppState extends State<DrawerApp> {
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app_rounded),
-            title: Text("Logout"),
+            title: Text("Keluar"),
             onTap: () {
               HelperFunctions.saveUserLoggedInSharedPreference(false);
               HelperFunctions.saveUserNameSharedPreference("");

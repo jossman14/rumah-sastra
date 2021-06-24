@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:rusa4/chat/helper/helperfunctions.dart';
+import 'package:rusa4/provider/audio_provider.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/auth.dart';
 
 Widget appBarMain(BuildContext context) {
@@ -71,6 +74,12 @@ Scaffold halamanLoading(BuildContext context) {
       ),
     ),
   );
+}
+
+playBtn(BuildContext context) {
+  final provider = Provider.of<AudioProvider>(context, listen: false);
+  print("audio di playy");
+  return provider.playGan;
 }
 
 halamanLoadingKecil(BuildContext context) {

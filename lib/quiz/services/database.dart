@@ -15,16 +15,34 @@ class DatabaseService {
   }
 
   getData() async {
-
     return await FirebaseFirestore.instance.collection("users").snapshots();
   }
 
   Future<void> addQuizData(Map quizData, String quizId) async {
-    
     await FirebaseFirestore.instance
         .collection("Quiz")
         .doc(quizId)
         .set(quizData)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<void> editQuizData(Map quizData, String quizId) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz")
+        .doc(quizId)
+        .update(quizData)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<void> deleteQuizData(String quizId) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz")
+        .doc(quizId)
+        .delete()
         .catchError((e) {
       print(e);
     });
@@ -41,8 +59,28 @@ class DatabaseService {
     });
   }
 
+  Future<void> updateQuestionData(
+      quizData, String quizId, String questionId) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz")
+        .doc(quizId)
+        .collection("QNA")
+        .doc(questionId)
+        .update(quizData)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
   getQuizData() async {
     return await FirebaseFirestore.instance.collection("Quiz").snapshots();
+  }
+
+  getQuizDataSingle(String quizId) async {
+    return await FirebaseFirestore.instance
+        .collection("Quiz")
+        .doc(quizId)
+        .get();
   }
 
   getQuestionData(String quizId) async {

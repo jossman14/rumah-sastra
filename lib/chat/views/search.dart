@@ -146,7 +146,7 @@ class _SearchState extends State<Search> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
-                "hubungi",
+                "Hubungi",
                 style: TextStyle(color: Colors.black87, fontSize: 16),
               ),
             ),
@@ -199,7 +199,7 @@ class _SearchState extends State<Search> {
                             controller: searchEditingController,
                             style: simpleTextStyle(),
                             decoration: InputDecoration(
-                                hintText: "cari username ...",
+                                hintText: "cari nama pengguna ...",
                                 hintStyle: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 16,

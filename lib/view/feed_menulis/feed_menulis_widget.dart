@@ -56,14 +56,14 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                 IconSlideAction(
                   color: Colors.green,
                   onTap: () => editFeedMenulis(context, widget.feedMenulis),
-                  caption: 'Edit',
+                  caption: 'Ubah',
                   icon: Icons.edit,
                 )
               ],
               secondaryActions: [
                 IconSlideAction(
                   color: Colors.red,
-                  caption: 'Delete',
+                  caption: 'Hapus',
                   onTap: () => deleteFeedMenulis(context, widget.feedMenulis),
                   icon: Icons.delete,
                 )
@@ -214,7 +214,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
     provider.removeFeedMenulis(feedMenulis);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('feedMenulis dihapus')),
+      SnackBar(content: Text('Feed Menulis dihapus')),
     );
   }
 
@@ -262,7 +262,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
             _commentarController.text = '';
             Navigator.pop(context);
           },
-          child: Text('Save'),
+          child: Text('Simpan'),
         ),
       );
 }
