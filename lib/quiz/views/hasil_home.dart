@@ -16,8 +16,9 @@ import 'package:rusa4/view/materi/add_materi.dart';
 import 'package:rusa4/view/materi/materi_widget.dart';
 
 class HasilHome extends StatefulWidget {
-  final String kelas;
-  const HasilHome({Key key, @required this.kelas}) : super(key: key);
+  final String kelas, idQuiz;
+  const HasilHome({Key key, @required this.kelas, @required this.idQuiz})
+      : super(key: key);
 
   @override
   _HasilHomeState createState() => _HasilHomeState();
@@ -93,7 +94,15 @@ class _HasilHomeState extends State<HasilHome> {
                           itemBuilder: (context, index) {
                             final quizResult = quizResults[index];
 
-                            return QuizResultWidget(quizResult: quizResult);
+                            return quizResult.quizId == widget.idQuiz
+                                ? QuizResultWidget(
+                                    quizResult: quizResult,
+                                    hidden: true,
+                                  )
+                                : QuizResultWidget(
+                                    quizResult: quizResult,
+                                    hidden: false,
+                                  );
                           },
                         );
                 }

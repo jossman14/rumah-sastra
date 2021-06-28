@@ -3,29 +3,27 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
-import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/cerita_page.dart';
 import 'package:rusa4/quiz/views/create_quiz.dart';
 import 'package:rusa4/quiz/views/edit_quiz.dart';
-import 'package:rusa4/quiz/views/quiz_play.dart';
-import 'package:rusa4/quiz/widget/widget.dart';
+import 'package:rusa4/quiz/views/hasil_home.dart';
 
-class HomeQuiz extends StatefulWidget {
+class HomeQuizResult extends StatefulWidget {
+  final String kelas;
+  HomeQuizResult(
+    this.kelas,
+  );
   @override
-  _HomeState createState() => _HomeState();
+  _HomeQuizResultState createState() => _HomeQuizResultState();
 }
 
-class _HomeState extends State<HomeQuiz> {
+class _HomeQuizResultState extends State<HomeQuizResult> {
   Stream quizStream;
   DatabaseService databaseService = new DatabaseService();
-  // Map allAkun;
-  UserRusa user;
-  Widget quizList() {
-    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
-    user = provider.akunRusa;
+  Widget quizList() {
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -42,7 +40,7 @@ class _HomeState extends State<HomeQuiz> {
                         itemBuilder: (context, index) {
                           return snapshot.data.documents[index]
                                       .data()['quizKelas'] ==
-                                  user.kelas
+                                  widget.kelas
                               ? QuizTile(
                                   noOfQuestions: snapshot.data.documents.length,
                                   imageUrl: snapshot.data.documents[index]
@@ -57,7 +55,7 @@ class _HomeState extends State<HomeQuiz> {
                                       .data()['quizKelas'],
                                   id: snapshot.data.documents[index].documentID,
                                   hidden: true,
-                                  kelasPilih: user.kelas,
+                                  kelasPilih: widget.kelas,
                                 )
                               : QuizTile(
                                   noOfQuestions: snapshot.data.documents.length,
@@ -73,7 +71,7 @@ class _HomeState extends State<HomeQuiz> {
                                       .data()['quizKelas'],
                                   id: snapshot.data.documents[index].documentID,
                                   hidden: false,
-                                  kelasPilih: user.kelas,
+                                  kelasPilih: widget.kelas,
                                 );
                         });
               },
@@ -100,21 +98,21 @@ class _HomeState extends State<HomeQuiz> {
       backgroundColor: Colors.white,
       appBar: appBarMainGan(context),
       body: quizList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CreateQuiz()));
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (context) => CreateQuiz()));
+      //   },
+      // ),
     );
   }
 }
 
 class QuizTile extends StatelessWidget {
   final String imageUrl, title, id, description, authorId, kelas, kelasPilih;
-  final int noOfQuestions;
   final bool hidden;
+  final int noOfQuestions;
 
   Map allAkun;
 
@@ -145,41 +143,7 @@ class QuizTile extends StatelessWidget {
     allAkun = provider.listAkun;
     user = provider.akun;
     print("quizHome $id");
-    return user[9] == authorId
-        ? Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                key: Key(id),
-                actions: [
-                  IconSlideAction(
-                    color: Colors.green,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => EditQuiz(id),
-                      ),
-                    ),
-                    caption: 'Ubah',
-                    icon: Icons.edit,
-                  )
-                ],
-                secondaryActions: [
-                  IconSlideAction(
-                    color: Colors.red,
-                    caption: 'Hapus',
-                    onTap: () {
-                      deleteQuiz(context, id);
-                    },
-                    icon: Icons.delete,
-                  )
-                ],
-                child: mainQuiz(context),
-              ),
-            ),
-          )
-        : mainQuiz(context);
+    return mainQuiz(context);
   }
 
   Visibility mainQuiz(BuildContext context) {
@@ -190,7 +154,10 @@ class QuizTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => CeritaPage(id, title, description)));
+                  builder: (context) => HasilHome(
+                        kelas: kelasPilih,
+                        idQuiz: id,
+                      )));
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

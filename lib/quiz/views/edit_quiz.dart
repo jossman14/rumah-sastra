@@ -102,8 +102,9 @@ class _EditQuizState extends State<EditQuiz> {
               ),
               TextFormField(
                 controller: TextEditingController()..text = quizTitle,
-                validator: (val) => val.isEmpty ? "Enter Quiz Title" : null,
-                decoration: InputDecoration(hintText: "Quiz Title"),
+                validator: (val) =>
+                    val.isEmpty ? "Masukkan Judul Uji Pemahaman" : null,
+                decoration: InputDecoration(hintText: "Judul Uji Pemahaman"),
                 onChanged: (val) {
                   quizTitle = val;
                 },
@@ -114,9 +115,8 @@ class _EditQuizState extends State<EditQuiz> {
               TextFormField(
                 maxLines: 8,
                 controller: TextEditingController()..text = quizDesc,
-                validator: (val) =>
-                    val.isEmpty ? "Enter Quiz Description" : null,
-                decoration: InputDecoration(hintText: "Quiz Description"),
+                validator: (val) => val.isEmpty ? "Masukkan Soal Cerita" : null,
+                decoration: InputDecoration(hintText: "Soal Cerita"),
                 onChanged: (val) {
                   quizDesc = val;
                 },
@@ -134,7 +134,7 @@ class _EditQuizState extends State<EditQuiz> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(30)),
                   child: Text(
-                    "Create Quiz",
+                    "Ubah Uji Pemahaman",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),

@@ -16,9 +16,11 @@ import 'package:rusa4/view/materi/see_materi.dart';
 
 class QuizResultWidget extends StatelessWidget {
   final QuizResult quizResult;
+  final bool hidden;
 
   const QuizResultWidget({
     @required this.quizResult,
+    @required this.hidden,
     Key key,
   }) : super(key: key);
 
@@ -59,83 +61,86 @@ class QuizResultWidget extends StatelessWidget {
 
     final user = provider.akun;
     final userRusa = provider.akunRusa;
-    return GestureDetector(
-      // onTap: () => seeQuizResult(context, quizResult),
-      onTap: () {},
-      child: Card(
-        child: Container(
-          color: Colors.white,
-          padding: EdgeInsets.all(20),
-          child: Row(
-            children: [
-              const SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: HexColor('#2980b9'),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          quizResult.quizName,
-                          style: GoogleFonts.firaSans(
-                              fontSize: 18,
-                              color: HexColor('#ecf0f1'),
-                              fontWeight: FontWeight.w500),
+    return Visibility(
+      visible: hidden,
+      child: GestureDetector(
+        // onTap: () => seeQuizResult(context, quizResult),
+        onTap: () {},
+        child: Card(
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const SizedBox(width: 5),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        color: HexColor('#2980b9'),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            quizResult.quizName,
+                            style: GoogleFonts.firaSans(
+                                fontSize: 18,
+                                color: HexColor('#ecf0f1'),
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      quizResult.username,
-                      style: GoogleFonts.firaSans(
-                          fontSize: 18,
-                          color: HexColor('#2C3E50'),
-                          fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      child: Center(
-                          child: Stack(
-                        children: <Widget>[
-                          // Stroked text as border.
-                          Text(
-                            "${quizResult.result}",
-                            style: TextStyle(
-                              fontSize: 45,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = 6
-                                ..color = quizResult.result > 60.0
-                                    ? HexColor('#27ae60')
-                                    : HexColor('#c0392b'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        quizResult.username,
+                        style: GoogleFonts.firaSans(
+                            fontSize: 18,
+                            color: HexColor('#2C3E50'),
+                            fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        child: Center(
+                            child: Stack(
+                          children: <Widget>[
+                            // Stroked text as border.
+                            Text(
+                              "${quizResult.result}",
+                              style: TextStyle(
+                                fontSize: 45,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 6
+                                  ..color = quizResult.result > 60.0
+                                      ? HexColor('#27ae60')
+                                      : HexColor('#c0392b'),
+                              ),
                             ),
-                          ),
-                          // Solid text as fill.
-                          Text(
-                            "${quizResult.result}",
-                            style: TextStyle(
-                              fontSize: 45,
-                              color: quizResult.result > 60.0
-                                  ? HexColor("#2ecc71")
-                                  : HexColor("#e74c3c"),
+                            // Solid text as fill.
+                            Text(
+                              "${quizResult.result}",
+                              style: TextStyle(
+                                fontSize: 45,
+                                color: quizResult.result > 60.0
+                                    ? HexColor("#2ecc71")
+                                    : HexColor("#e74c3c"),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        )
+                            // child: Text("${(widget.correct / widget.total) * 100}",)
+                            // ,
+                            ),
                       )
-                          // child: Text("${(widget.correct / widget.total) * 100}",)
-                          // ,
-                          ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

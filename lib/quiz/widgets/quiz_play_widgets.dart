@@ -31,11 +31,10 @@ class _OptionTileState extends State<OptionTile> {
                     width: 1.5),
                 color: widget.optionSelected == widget.description
                     ? widget.description == widget.correctAnswer
-                    ? Colors.green.withOpacity(0.7)
-                    : Colors.red.withOpacity(0.7)
+                        ? Colors.green.withOpacity(0.7)
+                        : Colors.red.withOpacity(0.7)
                     : Colors.white,
-              borderRadius: BorderRadius.circular(24)
-            ),
+                borderRadius: BorderRadius.circular(24)),
             child: Text(
               widget.option,
               style: TextStyle(
@@ -48,15 +47,71 @@ class _OptionTileState extends State<OptionTile> {
           SizedBox(
             width: 8,
           ),
-          Text(widget.description, style: TextStyle(
-            fontSize: 17, color: Colors.black54
-          ),)
+          Text(
+            widget.description,
+            style: TextStyle(fontSize: 17, color: Colors.black54),
+          )
         ],
       ),
     );
   }
 }
 
+class OptionTileCek extends StatefulWidget {
+  final String option, description, correctAnswer, optionSelected;
+  final bool cekJawaban;
+
+  OptionTileCek(
+      {this.description,
+      this.correctAnswer,
+      this.option,
+      this.optionSelected,
+      this.cekJawaban});
+
+  @override
+  _OptionTileCekState createState() => _OptionTileCekState();
+}
+
+class _OptionTileCekState extends State<OptionTileCek> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        children: [
+          Container(
+            height: 28,
+            width: 28,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: widget.cekJawaban
+                        ? Colors.green.withOpacity(0.7)
+                        : Colors.red.withOpacity(0.7),
+                    width: 1.5),
+                color: widget.cekJawaban
+                    ? Colors.green.withOpacity(0.7)
+                    : Colors.red.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(24)),
+            child: Text(
+              widget.option,
+              style: TextStyle(
+                color: widget.cekJawaban ? Colors.white : Colors.grey,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Text(
+            widget.description,
+            style: TextStyle(fontSize: 17, color: Colors.black54),
+          )
+        ],
+      ),
+    );
+  }
+}
 
 class NoOfQuestionTile extends StatefulWidget {
   final String text;
@@ -76,14 +131,12 @@ class _NoOfQuestionTileState extends State<NoOfQuestionTile> {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(14),
-                bottomLeft: Radius.circular(14)
-              ),
-              color: Colors.blue
-            ),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(14),
+                    bottomLeft: Radius.circular(14)),
+                color: Colors.blue),
             child: Text(
               "${widget.number}",
               style: TextStyle(color: Colors.white),
@@ -92,12 +145,11 @@ class _NoOfQuestionTileState extends State<NoOfQuestionTile> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(14),
-                bottomRight: Radius.circular(14),
-              ),
-              color: Colors.black54
-            ),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(14),
+                  bottomRight: Radius.circular(14),
+                ),
+                color: Colors.black54),
             child: Text(
               widget.text,
               style: TextStyle(color: Colors.white),
@@ -108,4 +160,3 @@ class _NoOfQuestionTileState extends State<NoOfQuestionTile> {
     );
   }
 }
-

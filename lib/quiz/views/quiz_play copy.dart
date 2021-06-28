@@ -5,17 +5,18 @@ import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/audio_provider.dart';
 import 'package:rusa4/quiz/models/question_model.dart';
 import 'package:rusa4/quiz/services/database.dart';
-import 'package:rusa4/quiz/views/quiz_play%20copy.dart';
 import 'package:rusa4/quiz/views/results.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
 import 'package:rusa4/quiz/widgets/quiz_play_widgets.dart';
 
-class QuizPlay extends StatefulWidget {
+class QuizPlayFull extends StatefulWidget {
   final String quizId, quizName, description;
-  QuizPlay(this.quizId, this.quizName, this.description);
+  final int correct, incorrect, total;
+  QuizPlayFull(this.quizId, this.quizName, this.description, this.correct,
+      this.incorrect, this.total);
 
   @override
-  _QuizPlayState createState() => _QuizPlayState();
+  _QuizPlayFullState createState() => _QuizPlayFullState();
 }
 
 int _correct = 0;
@@ -23,18 +24,14 @@ int _incorrect = 0;
 int _notAttempted = 0;
 int total = 0;
 
-List jawaban;
-
 /// Stream
 Stream infoStream;
 
-class _QuizPlayState extends State<QuizPlay> {
+class _QuizPlayFullState extends State<QuizPlayFull> {
   QuerySnapshot questionSnaphot;
   DatabaseService databaseService = new DatabaseService();
 
   bool isLoading = true;
-
-  int cekSoal;
 
   @override
   void initState() {
@@ -94,7 +91,6 @@ class _QuizPlayState extends State<QuizPlay> {
 
   @override
   Widget build(BuildContext context) {
-    cekSoal = cekSoalFunc(context);
     return Scaffold(
       appBar: appBarMainGan(context),
       body: isLoading
@@ -128,75 +124,39 @@ class _QuizPlayState extends State<QuizPlay> {
                               child: Text("No Data"),
                             ),
                           )
-                        : cekSoal >= questionSnaphot.docs.length
-                            ? selesaiQuiz()
-                            : QuizPlayTile(
+                        : ListView.builder(
+                            itemCount: questionSnaphot.docs.length,
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return QuizPlayTile(
                                 questionModel: getQuestionModelFromDatasnapshot(
-                                    questionSnaphot.docs[cekSoal]),
-                                index: cekSoal,
-                              ),
+                                    questionSnaphot.docs[index]),
+                                index: index,
+                              );
+                            })
                   ],
                 ),
               ),
             ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.check),
-      //   onPressed: () {
-      //     Navigator.pushReplacement(
-      //         context,
-      //         MaterialPageRoute(
-      //             builder: (context) => Results(
-      //                   correct: _correct,
-      //                   incorrect: _incorrect,
-      //                   total: total,
-      //                   quizId: widget.quizId,
-      //                   quizName: widget.quizName,
-      //                 )));
-      //   },
-      // ),
-    );
-  }
-
-  selesaiQuiz() {
-    final providerCekSoal = Provider.of<AudioProvider>(context);
-    providerCekSoal.resetSoalProvider = 0;
-
-    return Column(
-      children: [
-        Container(
-          child: Center(
-            child: Text("Terima kasih, anda telah menyelesaikan uji pemahaman"),
-          ),
-        ),
-        // QuizPlayFull
-
-        GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => QuizPlayFull(
-                          widget.quizId,
-                          widget.quizName,
-                          widget.description,
-                          _correct,
-                          _incorrect,
-                          total,
-                        )));
-          },
-          child: Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width / 2 - 20,
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(15)),
-            child: Text(
-              "Lihat Skor",
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-          ),
-        ),
-      ],
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.check),
+        onPressed: () {
+          final providerCekSoal =
+              Provider.of<AudioProvider>(context, listen: false);
+          providerCekSoal.resetJawaban = true;
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Results(
+                        correct: widget.correct,
+                        incorrect: widget.incorrect,
+                        total: widget.total,
+                        quizId: widget.quizId,
+                        quizName: widget.quizName,
+                      )));
+        },
+      ),
     );
   }
 }
@@ -263,11 +223,11 @@ class QuizPlayTile extends StatefulWidget {
 
 class _QuizPlayTileState extends State<QuizPlayTile> {
   String optionSelected = "";
+  List jawaban;
 
-  bool cekBool;
   @override
   Widget build(BuildContext context) {
-    final providerCekSoal = Provider.of<AudioProvider>(context);
+    jawaban = getJawaban(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -298,7 +258,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                       ///correct
                       if (widget.questionModel.option1 ==
                           widget.questionModel.correctOption) {
-                        cekBool = true;
                         setState(() {
                           optionSelected = widget.questionModel.option1;
                           widget.questionModel.answered = true;
@@ -306,8 +265,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                           _notAttempted = _notAttempted + 1;
                         });
                       } else {
-                        cekBool = false;
-
                         setState(() {
                           optionSelected = widget.questionModel.option1;
                           widget.questionModel.answered = true;
@@ -316,15 +273,13 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                         });
                       }
                     }
-
-                    providerCekSoal.cekSoalProvider = 1;
-                    providerCekSoal.tambahJawaban = cekBool;
                   },
-                  child: OptionTile(
+                  child: OptionTileCek(
                     option: "A",
                     description: "${widget.questionModel.option1}",
                     correctAnswer: widget.questionModel.correctOption,
                     optionSelected: optionSelected,
+                    cekJawaban: jawaban[widget.index],
                   ),
                 ),
                 SizedBox(
@@ -336,8 +291,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                       ///correct
                       if (widget.questionModel.option2 ==
                           widget.questionModel.correctOption) {
-                        cekBool = true;
-
                         setState(() {
                           optionSelected = widget.questionModel.option2;
                           widget.questionModel.answered = true;
@@ -345,8 +298,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                           _notAttempted = _notAttempted + 1;
                         });
                       } else {
-                        cekBool = false;
-
                         setState(() {
                           optionSelected = widget.questionModel.option2;
                           widget.questionModel.answered = true;
@@ -355,9 +306,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                         });
                       }
                     }
-
-                    providerCekSoal.cekSoalProvider = 1;
-                    providerCekSoal.tambahJawaban = cekBool;
                   },
                   child: OptionTile(
                     option: "B",
@@ -375,8 +323,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                       ///correct
                       if (widget.questionModel.option3 ==
                           widget.questionModel.correctOption) {
-                        cekBool = true;
-
                         setState(() {
                           optionSelected = widget.questionModel.option3;
                           widget.questionModel.answered = true;
@@ -384,8 +330,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                           _notAttempted = _notAttempted + 1;
                         });
                       } else {
-                        cekBool = false;
-
                         setState(() {
                           optionSelected = widget.questionModel.option3;
                           widget.questionModel.answered = true;
@@ -394,9 +338,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                         });
                       }
                     }
-
-                    providerCekSoal.cekSoalProvider = 1;
-                    providerCekSoal.tambahJawaban = cekBool;
                   },
                   child: OptionTile(
                     option: "C",
@@ -414,8 +355,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                       ///correct
                       if (widget.questionModel.option4 ==
                           widget.questionModel.correctOption) {
-                        cekBool = true;
-
                         setState(() {
                           optionSelected = widget.questionModel.option4;
                           widget.questionModel.answered = true;
@@ -423,8 +362,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                           _notAttempted = _notAttempted + 1;
                         });
                       } else {
-                        cekBool = false;
-
                         setState(() {
                           optionSelected = widget.questionModel.option4;
                           widget.questionModel.answered = true;
@@ -433,9 +370,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                         });
                       }
                     }
-
-                    providerCekSoal.cekSoalProvider = 1;
-                    providerCekSoal.tambahJawaban = cekBool;
                   },
                   child: OptionTile(
                     option: "D",

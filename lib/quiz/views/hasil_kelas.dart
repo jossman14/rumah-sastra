@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/quiz/views/hasil_home.dart';
+import 'package:rusa4/quiz/views/hasil_quiz_fix.dart';
 import 'package:rusa4/view/auth.dart';
 // import 'package:rusa4/model/user.dart';
 
@@ -57,7 +58,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HasilHome(kelas: "VII"),
+                          builder: (context) => HomeQuizResult("VII"),
                         ),
                       );
                     },
@@ -105,7 +106,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HasilHome(kelas: "VIII")));
+                              builder: (context) => HomeQuizResult("VIII")));
                       // Navigator.pushNamed(context, LoginSiswa.routeName);
                     },
                     child: Column(
@@ -152,7 +153,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HasilHome(kelas: 'IX')));
+                              builder: (context) => HomeQuizResult("IX")));
                       // Navigator.pushNamed(context, LoginSiswa.routeName);
                     },
                     child: Column(

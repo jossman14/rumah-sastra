@@ -48,8 +48,10 @@ class _CreateQuizState extends State<CreateQuiz> {
         setState(() {
           isLoading = false;
         });
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => AddQuestion(quizId, quizDesc)));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddQuestion(quizId, quizDesc)));
       });
     }
   }
@@ -78,8 +80,9 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
-                validator: (val) => val.isEmpty ? "Enter Quiz Title" : null,
-                decoration: InputDecoration(hintText: "Quiz Title"),
+                validator: (val) =>
+                    val.isEmpty ? "Masukkan Judul Uji Pemahaman" : null,
+                decoration: InputDecoration(hintText: "Judul Uji Pemahaman"),
                 onChanged: (val) {
                   quizTitle = val;
                 },
@@ -89,9 +92,8 @@ class _CreateQuizState extends State<CreateQuiz> {
               ),
               TextFormField(
                 maxLines: 8,
-                validator: (val) =>
-                    val.isEmpty ? "Enter Quiz Description" : null,
-                decoration: InputDecoration(hintText: "Quiz Description"),
+                validator: (val) => val.isEmpty ? "Masukkan Soal Cerita" : null,
+                decoration: InputDecoration(hintText: "Soal Cerita"),
                 onChanged: (val) {
                   quizDesc = val;
                 },
@@ -109,7 +111,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(30)),
                   child: Text(
-                    "Create Quiz",
+                    "Buat Uji Pemahaman",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),

@@ -6,9 +6,8 @@ import 'package:rusa4/quiz/models/result_model.dart';
 
 class SaveResultFirebaseApi {
   static Future createSaveResult(UserRusa user, QuizResult quizResult) async {
-    final docQuizResult = FirebaseFirestore.instance
-        .collection('QuizResult ${user.kelas} Quiz')
-        .doc();
+    final docQuizResult =
+        FirebaseFirestore.instance.collection('QuizResult Quiz').doc();
 
     quizResult.id = docQuizResult.id;
     await docQuizResult.set(quizResult.toJson());
@@ -18,14 +17,14 @@ class SaveResultFirebaseApi {
 
   static Stream<List<QuizResult>> readSaveResult(String kelas) =>
       FirebaseFirestore.instance
-          .collection('QuizResult $kelas Quiz')
+          .collection('QuizResult Quiz')
           .orderBy(QuizResultField.createdTime, descending: true)
           .snapshots()
           .transform(Utils.transformer(QuizResult.fromJson));
 
   static Future updateSaveResult(UserRusa user, QuizResult quizResult) async {
     final docQuizResult = FirebaseFirestore.instance
-        .collection('QuizResult ${user.kelas} Quiz')
+        .collection('QuizResult Quiz')
         .doc(quizResult.quizId);
 
     await docQuizResult.update(quizResult.toJson());
@@ -33,7 +32,7 @@ class SaveResultFirebaseApi {
 
   static Future deleteSaveResult(UserRusa user, QuizResult quizResult) async {
     final docQuizResult = FirebaseFirestore.instance
-        .collection('QuizResult ${user.kelas} Quiz')
+        .collection('QuizResult Quiz')
         .doc(quizResult.quizId);
 
     await docQuizResult.delete();

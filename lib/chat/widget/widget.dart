@@ -77,9 +77,33 @@ Scaffold halamanLoading(BuildContext context) {
 }
 
 playBtn(BuildContext context) {
-  final provider = Provider.of<AudioProvider>(context, listen: false);
+  // final provider = Provider.of<AudioProvider>(context, listen: false);
   print("audio di playy");
-  return provider.playGan;
+  // return provider.playGan;
+}
+
+cekSoalFunc(BuildContext context) {
+  final provider = Provider.of<AudioProvider>(context);
+
+  return provider.cekSoalProvider;
+}
+
+tambahCekSoalFunc(BuildContext context) {
+  final providerCekSoal = Provider.of<AudioProvider>(context);
+
+  return providerCekSoal.cekSoalProvider = 1;
+}
+
+getJawaban(BuildContext context) {
+  final provider = Provider.of<AudioProvider>(context);
+
+  return provider.jawaban;
+}
+
+setJawaban(BuildContext context, value) {
+  final providerCekSoal = Provider.of<AudioProvider>(context, listen: false);
+
+  return providerCekSoal.tambahJawaban = value;
 }
 
 halamanLoadingKecil(BuildContext context) {

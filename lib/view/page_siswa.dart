@@ -122,53 +122,53 @@ class PageSiswa extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            SizedBox(
-              width: 300,
-              height: 118.0,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed))
-                        return HexColor('#F55413');
-                      return HexColor(
-                          '#FF7138'); //F69A9A Use the component's default.
-                    },
-                  ),
-                ),
-                onPressed: () {
-                  // Navigator.pushNamed(context, LoginSiswa.routeName);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => PilihKelasHasil())));
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.supervised_user_circle,
-                      size: 36,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Hasil Penilaian',
-                      style: GoogleFonts.firaSans(
-                          fontSize: 18,
-                          color: HexColor('#FFFFFF'),
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            // SizedBox(
+            //   width: 300,
+            //   height: 118.0,
+            //   child: ElevatedButton(
+            //     style: ButtonStyle(
+            //       backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            //         (Set<MaterialState> states) {
+            //           if (states.contains(MaterialState.pressed))
+            //             return HexColor('#F55413');
+            //           return HexColor(
+            //               '#FF7138'); //F69A9A Use the component's default.
+            //         },
+            //       ),
+            //     ),
+            //     onPressed: () {
+            //       // Navigator.pushNamed(context, LoginSiswa.routeName);
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: ((context) => PilihKelasHasil())));
+            //     },
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         Icon(
+            //           Icons.supervised_user_circle,
+            //           size: 36,
+            //           color: Colors.white,
+            //         ),
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+            //         Text(
+            //           'Hasil Penilaian',
+            //           style: GoogleFonts.firaSans(
+            //               fontSize: 18,
+            //               color: HexColor('#FFFFFF'),
+            //               fontWeight: FontWeight.w500),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
           ],
         ),
       ),
