@@ -11,6 +11,7 @@ import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/provider/user_new.dart';
 import 'package:rusa4/view/auth.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,8 +45,39 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        home: AuthPage(),
+        home: SplashGan(),
       ),
     );
+  }
+}
+
+class SplashGan extends StatefulWidget {
+  @override
+  _SplashGanState createState() => new _SplashGanState();
+}
+
+class _SplashGanState extends State<SplashGan> {
+  @override
+  Widget build(BuildContext context) {
+    return new SplashScreen(
+        seconds: 5,
+        navigateAfterSeconds: new AuthPage(),
+        title: new Text(
+          'Selamat Datang di Aplikasi Rumah Sastra',
+          style: new TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+          ),
+        ),
+        image: new Image.asset(
+          './assets/images/Logo.png',
+          width: MediaQuery.of(context).size.width / 2,
+          height: MediaQuery.of(context).size.height / 2,
+        ),
+        backgroundColor: Colors.white,
+        styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 100.0,
+        onClick: () => print("Rumah Sastra"),
+        loaderColor: Colors.orange);
   }
 }

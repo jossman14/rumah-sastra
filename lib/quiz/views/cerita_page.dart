@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/provider/audio_provider.dart';
 import 'package:rusa4/quiz/views/quiz_play.dart';
+import 'dart:async';
 
 class CeritaPage extends StatefulWidget {
   final String quizId, quizName, description;
@@ -10,9 +13,13 @@ class CeritaPage extends StatefulWidget {
   _CeritaPageState createState() => _CeritaPageState();
 }
 
+
 class _CeritaPageState extends State<CeritaPage> {
   @override
   Widget build(BuildContext context) {
+    
+    final providerCekSoal = Provider.of<AudioProvider>(context);
+   
     return Scaffold(
       appBar: appBarMainGan(context),
       body: Padding(
@@ -37,6 +44,10 @@ class _CeritaPageState extends State<CeritaPage> {
             ),
             GestureDetector(
               onTap: () {
+                providerCekSoal.resetJawaban = true;
+                providerCekSoal.resetSoalProvider = 0;
+                providerCekSoal.resetcorrectAnswer = "reset";
+                providerCekSoal.resetoptionSelected = "reset";
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

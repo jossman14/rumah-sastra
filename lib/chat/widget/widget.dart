@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/chat/helper/helperfunctions.dart';
 import 'package:rusa4/provider/audio_provider.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 
 Widget appBarMain(BuildContext context) {
@@ -95,13 +96,13 @@ tambahCekSoalFunc(BuildContext context) {
 }
 
 getJawaban(BuildContext context) {
-  final provider = Provider.of<AudioProvider>(context);
+  final provider = Provider.of<AudioProvider>(context, listen: false);
 
   return provider.jawaban;
 }
 
 setJawaban(BuildContext context, value) {
-  final providerCekSoal = Provider.of<AudioProvider>(context, listen: false);
+  final providerCekSoal = Provider.of<AudioProvider>(context);
 
   return providerCekSoal.tambahJawaban = value;
 }
@@ -133,6 +134,10 @@ notSet() {
   HelperFunctions.saveUserNameSharedPreference("");
   HelperFunctions.savesharedPreferenceUserPassword("");
   HelperFunctions.saveUserEmailSharedPreference("");
+}
+
+bunyiGan() {
+  return playSound();
 }
 
 InputDecoration textFieldInputDecoration(String hintText) {

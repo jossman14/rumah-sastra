@@ -41,7 +41,8 @@ class _CreateQuizState extends State<CreateQuiz> {
         "quizDesc": quizDesc,
         "quizAuthor": user.username,
         "quizAuthorID": user.id,
-        "quizKelas": user.kelas
+        "quizKelas": user.kelas,
+        // "quizUser" : [],
       };
 
       databaseService.addQuizData(quizData, quizId).then((value) {

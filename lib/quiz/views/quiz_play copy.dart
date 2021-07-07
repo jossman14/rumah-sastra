@@ -38,8 +38,8 @@ class _QuizPlayFullState extends State<QuizPlayFull> {
     databaseService.getQuestionData(widget.quizId).then((value) {
       questionSnaphot = value;
       _notAttempted = questionSnaphot.docs.length;
-      _correct = 0;
-      _incorrect = 0;
+      _correct = widget.correct;
+      _incorrect = widget.incorrect;
       isLoading = false;
       total = questionSnaphot.docs.length;
       setState(() {});
@@ -48,7 +48,6 @@ class _QuizPlayFullState extends State<QuizPlayFull> {
 
     if (infoStream == null) {
       infoStream = Stream<List<int>>.periodic(Duration(milliseconds: 100), (x) {
-        print("this is x $x");
         return [_correct, _incorrect];
       });
     }
@@ -69,7 +68,7 @@ class _QuizPlayFullState extends State<QuizPlayFull> {
       questionSnapshot.data()["option3"],
       questionSnapshot.data()["option4"]
     ];
-    options.shuffle();
+    // options.shuffle();
 
     questionModel.option1 = options[0];
     questionModel.option2 = options[1];
@@ -89,8 +88,10 @@ class _QuizPlayFullState extends State<QuizPlayFull> {
     super.dispose();
   }
 
+  // Provider providerCekSoal;
   @override
   Widget build(BuildContext context) {
+    final providerCekSoal = Provider.of<AudioProvider>(context);
     return Scaffold(
       appBar: appBarMainGan(context),
       body: isLoading
@@ -142,9 +143,11 @@ class _QuizPlayFullState extends State<QuizPlayFull> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-          final providerCekSoal =
-              Provider.of<AudioProvider>(context, listen: false);
-          providerCekSoal.resetJawaban = true;
+          // providerCekSoal.resetJawaban = true;
+          // providerCekSoal.resetSoalProvider = 0;
+          // providerCekSoal.resetcorrectAnswer = "reset";
+          // providerCekSoal.resetoptionSelected = "reset";
+
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -227,6 +230,8 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
   @override
   Widget build(BuildContext context) {
+    final providerCekSoal = Provider.of<AudioProvider>(context);
+
     jawaban = getJawaban(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -253,32 +258,13 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                   height: 12,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    if (!widget.questionModel.answered) {
-                      ///correct
-                      if (widget.questionModel.option1 ==
-                          widget.questionModel.correctOption) {
-                        setState(() {
-                          optionSelected = widget.questionModel.option1;
-                          widget.questionModel.answered = true;
-                          _correct = _correct + 1;
-                          _notAttempted = _notAttempted + 1;
-                        });
-                      } else {
-                        setState(() {
-                          optionSelected = widget.questionModel.option1;
-                          widget.questionModel.answered = true;
-                          _incorrect = _incorrect + 1;
-                          _notAttempted = _notAttempted - 1;
-                        });
-                      }
-                    }
-                  },
-                  child: OptionTileCek(
+                  onTap: () {},
+                  child: OptionTileBackupCek(
                     option: "A",
                     description: "${widget.questionModel.option1}",
-                    correctAnswer: widget.questionModel.correctOption,
-                    optionSelected: optionSelected,
+                    correctAnswer: providerCekSoal.correctAnswer[widget.index],
+                    optionSelected:
+                        providerCekSoal.optionSelected[widget.index],
                     cekJawaban: jawaban[widget.index],
                   ),
                 ),
@@ -286,96 +272,39 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                   height: 4,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    if (!widget.questionModel.answered) {
-                      ///correct
-                      if (widget.questionModel.option2 ==
-                          widget.questionModel.correctOption) {
-                        setState(() {
-                          optionSelected = widget.questionModel.option2;
-                          widget.questionModel.answered = true;
-                          _correct = _correct + 1;
-                          _notAttempted = _notAttempted + 1;
-                        });
-                      } else {
-                        setState(() {
-                          optionSelected = widget.questionModel.option2;
-                          widget.questionModel.answered = true;
-                          _incorrect = _incorrect + 1;
-                          _notAttempted = _notAttempted - 1;
-                        });
-                      }
-                    }
-                  },
-                  child: OptionTile(
+                  onTap: () {},
+                  child: OptionTileBackup(
                     option: "B",
                     description: "${widget.questionModel.option2}",
-                    correctAnswer: widget.questionModel.correctOption,
-                    optionSelected: optionSelected,
+                    correctAnswer: providerCekSoal.correctAnswer[widget.index],
+                    optionSelected:
+                        providerCekSoal.optionSelected[widget.index],
                   ),
                 ),
                 SizedBox(
                   height: 4,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    if (!widget.questionModel.answered) {
-                      ///correct
-                      if (widget.questionModel.option3 ==
-                          widget.questionModel.correctOption) {
-                        setState(() {
-                          optionSelected = widget.questionModel.option3;
-                          widget.questionModel.answered = true;
-                          _correct = _correct + 1;
-                          _notAttempted = _notAttempted + 1;
-                        });
-                      } else {
-                        setState(() {
-                          optionSelected = widget.questionModel.option3;
-                          widget.questionModel.answered = true;
-                          _incorrect = _incorrect + 1;
-                          _notAttempted = _notAttempted - 1;
-                        });
-                      }
-                    }
-                  },
-                  child: OptionTile(
+                  onTap: () {},
+                  child: OptionTileBackup(
                     option: "C",
                     description: "${widget.questionModel.option3}",
-                    correctAnswer: widget.questionModel.correctOption,
-                    optionSelected: optionSelected,
+                    correctAnswer: providerCekSoal.correctAnswer[widget.index],
+                    optionSelected:
+                        providerCekSoal.optionSelected[widget.index],
                   ),
                 ),
                 SizedBox(
                   height: 4,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    if (!widget.questionModel.answered) {
-                      ///correct
-                      if (widget.questionModel.option4 ==
-                          widget.questionModel.correctOption) {
-                        setState(() {
-                          optionSelected = widget.questionModel.option4;
-                          widget.questionModel.answered = true;
-                          _correct = _correct + 1;
-                          _notAttempted = _notAttempted + 1;
-                        });
-                      } else {
-                        setState(() {
-                          optionSelected = widget.questionModel.option4;
-                          widget.questionModel.answered = true;
-                          _incorrect = _incorrect + 1;
-                          _notAttempted = _notAttempted - 1;
-                        });
-                      }
-                    }
-                  },
-                  child: OptionTile(
+                  onTap: () {},
+                  child: OptionTileBackup(
                     option: "D",
                     description: "${widget.questionModel.option4}",
-                    correctAnswer: widget.questionModel.correctOption,
-                    optionSelected: optionSelected,
+                    correctAnswer: providerCekSoal.correctAnswer[widget.index],
+                    optionSelected:
+                        providerCekSoal.optionSelected[widget.index],
                   ),
                 ),
                 SizedBox(

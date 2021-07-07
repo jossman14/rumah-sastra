@@ -10,50 +10,46 @@ import 'package:rusa4/model/materi.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/quiz/models/result_model.dart';
+import 'package:rusa4/quiz/services/database.dart';
+import 'package:rusa4/quiz/views/quiz_play%20copy.dart';
 import 'package:rusa4/view/materi/edit_materi.dart';
 import 'package:rusa4/view/materi/see_materi.dart';
 
 class QuizResultWidget extends StatelessWidget {
   final QuizResult quizResult;
   final bool hidden;
+  final String idResult, cekIdUser;
 
   const QuizResultWidget({
     @required this.quizResult,
     @required this.hidden,
+    @required this.idResult,
+    @required this.cekIdUser,
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return buildQuizResult(context);
+    // return buildQuizResult(context);
 
-    // return user[7] == "Guru"
-    //     ? ClipRRect(
-    //         borderRadius: BorderRadius.circular(16),
-    //         child: Slidable(
-    //           actionPane: SlidableDrawerActionPane(),
-    //           key: Key(quizResult.id),
-    //           actions: [
-    //             IconSlideAction(
-    //               color: Colors.green,
-    //               onTap: () => editQuizResult(context, quizResult),
-    //               caption: 'Ubah',
-    //               icon: Icons.edit,
-    //             )
-    //           ],
-    //           secondaryActions: [
-    //             IconSlideAction(
-    //               color: Colors.red,
-    //               caption: 'Hapus',
-    //               onTap: () => deleteQuizResult(context, quizResult),
-    //               icon: Icons.delete,
-    //             )
-    //           ],
-    //           child: buildQuizResult(context),
-    //         ),
-    //       )
-    //     : buildQuizResult(context);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        key: Key(quizResult.id),
+        secondaryActions: [
+          IconSlideAction(
+            color: Colors.red,
+            caption: 'Hapus',
+            onTap: () => deleteQuizResult(context, idResult, cekIdUser),
+            icon: Icons.delete,
+          )
+        ],
+        child: buildQuizResult(context),
+      ),
+    );
   }
 
   Widget buildQuizResult(BuildContext context) {
@@ -65,7 +61,19 @@ class QuizResultWidget extends StatelessWidget {
       visible: hidden,
       child: GestureDetector(
         // onTap: () => seeQuizResult(context, quizResult),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => QuizPlayFull(
+                        quizResult.quizId,
+                        quizResult.quizName,
+                        quizResult.description,
+                        quizResult.correct,
+                        quizResult.incorrect,
+                        quizResult.total,
+                      )));
+        },
         child: Card(
           child: Container(
             color: Colors.white,
@@ -199,14 +207,17 @@ class QuizResultWidget extends StatelessWidget {
   //     ],
   //   ),
   // ),
-  // void deleteQuizResult(BuildContext context, QuizResult quizResult) {
-  //   final provider = Provider.of<QuizResultProvider>(context, listen: false);
-  //   provider.removeQuizResult(quizResult);
+  void deleteQuizResult(BuildContext context, idResult, cekIdUser) {
+    DatabaseService databaseService = new DatabaseService();
 
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(content: Text('quizResult dihapus')),
-  //   );
-  // }
+    final provider = Provider.of<QuizResultProvider>(context, listen: false);
+    provider.removeQuizResult(idResult);
+
+    databaseService.deleteUser(cekIdUser);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('quizResult dihapus')),
+    );
+  }
 
   // void editQuizResult(BuildContext context, QuizResult quizResult) =>
   //     Navigator.of(context).push(

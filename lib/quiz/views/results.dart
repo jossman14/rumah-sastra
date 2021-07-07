@@ -6,7 +6,9 @@ import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/models/result_model.dart';
 import 'package:rusa4/quiz/services/save_result.dart';
+import 'package:rusa4/quiz/views/home.dart';
 import 'package:rusa4/quiz/views/quiz_play.dart';
+import 'package:rusa4/view/home.dart';
 
 class Results extends StatefulWidget {
   final int total, correct, incorrect, notattempted;
@@ -30,27 +32,8 @@ class _ResultsState extends State<Results> {
 
   @override
   void initState() {
-    inputNilai();
+    // inputNilai();
     super.initState();
-  }
-
-  inputNilai() {
-    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
-    setState(() {
-      user = provider.akunRusa;
-      quizResult = QuizResult(
-          createdTime: DateTime.now(),
-          result: (widget.correct / widget.total) * 100,
-          username: user.username,
-          userId: user.id,
-          quizId: widget.quizId,
-          quizName: widget.quizName,
-          id: "hehe");
-    });
-
-    SaveResultFirebaseApi.createSaveResult(user, quizResult);
-
-    return true;
   }
 
   @override
@@ -148,7 +131,12 @@ class _ResultsState extends State<Results> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(selectedPage: 1),
+                    ),
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -156,7 +144,7 @@ class _ResultsState extends State<Results> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(30)),
                   child: Text(
-                    "Go to home",
+                    "Ke Materi",
                     style: TextStyle(color: Colors.white, fontSize: 19),
                   ),
                 ),

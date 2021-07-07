@@ -18,7 +18,12 @@ class _EditQuestionState extends State<EditQuestion> {
 
   bool isLoading = false;
 
-  String question = "", option1 = "", option2 = "", option3 = "", option4 = "";
+  String question = "",
+      option1 = "",
+      option2 = "",
+      option3 = "",
+      option4 = "",
+      waktu = "";
 
   QuerySnapshot questionSnaphot;
 
@@ -56,6 +61,9 @@ class _EditQuestionState extends State<EditQuestion> {
         "option4": option4 == ""
             ? questionSnaphot.docs[cekPertanyaan].data()["option4"]
             : option4,
+        "waktu": waktu == ""
+            ? questionSnaphot.docs[cekPertanyaan].data()["waktu"]
+            : waktu,
       };
 
       String questionId = questionSnaphot.docs[cekPertanyaan].id;
@@ -191,6 +199,23 @@ class _EditQuestionState extends State<EditQuestion> {
                           InputDecoration(hintText: "Pilihan jawaban 4"),
                       onChanged: (val) {
                         option4 = val;
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: TextEditingController()
+                        ..text = cekPertanyaan < total
+                            ? questionSnaphot.docs[cekPertanyaan]
+                                .data()["waktu"]
+                            : 0,
+                      validator: (val) =>
+                          val.isEmpty ? "Masukkan durasi waktu" : null,
+                      decoration:
+                          InputDecoration(hintText: "Masukkan durasi waktu"),
+                      onChanged: (val) {
+                        waktu = val;
                       },
                     ),
                     SizedBox(

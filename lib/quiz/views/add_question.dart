@@ -17,7 +17,12 @@ class _AddQuestionState extends State<AddQuestion> {
 
   bool isLoading = false;
 
-  String question = "", option1 = "", option2 = "", option3 = "", option4 = "";
+  String question = "",
+      option1 = "",
+      option2 = "",
+      option3 = "",
+      option4 = "",
+      waktu = "";
 
   uploadQuizData() {
     if (_formKey.currentState.validate()) {
@@ -30,7 +35,8 @@ class _AddQuestionState extends State<AddQuestion> {
         "option1": option1,
         "option2": option2,
         "option3": option3,
-        "option4": option4
+        "option4": option4,
+        "waktu": waktu,
       };
 
       print("${widget.quizId}");
@@ -40,6 +46,7 @@ class _AddQuestionState extends State<AddQuestion> {
         option2 = "";
         option3 = "";
         option4 = "";
+        waktu = "";
         setState(() {
           isLoading = false;
         });
@@ -132,6 +139,18 @@ class _AddQuestionState extends State<AddQuestion> {
                           InputDecoration(hintText: "Pilihan jawaban 4"),
                       onChanged: (val) {
                         option4 = val;
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      validator: (val) =>
+                          val.isEmpty ? "Masukkan durasi waktu" : null,
+                      decoration:
+                          InputDecoration(hintText: "masukkan durasi waktu"),
+                      onChanged: (val) {
+                        waktu = val;
                       },
                     ),
                     SizedBox(

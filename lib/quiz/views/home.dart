@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -19,13 +20,17 @@ class HomeQuiz extends StatefulWidget {
 
 class _HomeState extends State<HomeQuiz> {
   Stream quizStream;
+  QuerySnapshot quizStreamUser;
   DatabaseService databaseService = new DatabaseService();
   // Map allAkun;
   UserRusa user;
+
+  List temp;
   Widget quizList() {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     user = provider.akunRusa;
+
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -40,25 +45,53 @@ class _HomeState extends State<HomeQuiz> {
                         physics: ClampingScrollPhysics(),
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context, index) {
-                          return snapshot.data.documents[index]
+                          var cek = cekUser(
+                              snapshot.data.documents[index].documentID);
+                          print("hehe ${temp.contains(user.id)}");
+                          print(
+                              "iddd ${snapshot.data.documents[index].documentID}");
+                          return (snapshot.data.documents[index]
                                       .data()['quizKelas'] ==
-                                  user.kelas
-                              ? QuizTile(
-                                  noOfQuestions: snapshot.data.documents.length,
-                                  imageUrl: snapshot.data.documents[index]
-                                      .data()['quizImgUrl'],
-                                  title: snapshot.data.documents[index]
-                                      .data()['quizTitle'],
-                                  description: snapshot.data.documents[index]
-                                      .data()['quizDesc'],
-                                  authorId: snapshot.data.documents[index]
-                                      .data()['quizAuthorID'],
-                                  kelas: snapshot.data.documents[index]
-                                      .data()['quizKelas'],
-                                  id: snapshot.data.documents[index].documentID,
-                                  hidden: true,
-                                  kelasPilih: user.kelas,
-                                )
+                                  user.kelas)
+                              ? cek && temp.contains(user.id)
+                                  ? QuizTile(
+                                      noOfQuestions:
+                                          snapshot.data.documents.length,
+                                      imageUrl: snapshot.data.documents[index]
+                                          .data()['quizImgUrl'],
+                                      title: snapshot.data.documents[index]
+                                          .data()['quizTitle'],
+                                      description: snapshot
+                                          .data.documents[index]
+                                          .data()['quizDesc'],
+                                      authorId: snapshot.data.documents[index]
+                                          .data()['quizAuthorID'],
+                                      kelas: snapshot.data.documents[index]
+                                          .data()['quizKelas'],
+                                      id: snapshot
+                                          .data.documents[index].documentID,
+                                      hidden: false,
+                                      kelasPilih: user.kelas,
+                                    )
+                                  : QuizTile(
+                                      noOfQuestions:
+                                          snapshot.data.documents.length,
+                                      imageUrl: snapshot.data.documents[index]
+                                          .data()['quizImgUrl'],
+                                      title: snapshot.data.documents[index]
+                                          .data()['quizTitle'],
+                                      description: snapshot
+                                          .data.documents[index]
+                                          .data()['quizDesc'],
+                                      authorId: snapshot.data.documents[index]
+                                          .data()['quizAuthorID'],
+                                      kelas: snapshot.data.documents[index]
+                                          .data()['quizKelas'],
+                                      id: snapshot
+                                          .data.documents[index].documentID,
+                                      hidden: true,
+                                      kelasPilih: user.kelas,
+                                    )
                               : QuizTile(
                                   noOfQuestions: snapshot.data.documents.length,
                                   imageUrl: snapshot.data.documents[index]
@@ -84,10 +117,41 @@ class _HomeState extends State<HomeQuiz> {
     );
   }
 
+  cekUser(user) {
+    temp = [];
+    for (var i = 0; i < utama.length; i++) {
+      if (utama[i][0] == user) {
+        temp.add(utama[i][1]);
+      }
+    }
+
+    print("temp $temp");
+    return true;
+  }
+
+  Map streamUser = new Map();
+  List streamGan = [];
+  List utama = [];
   @override
   void initState() {
     databaseService.getQuizData().then((value) {
       quizStream = value;
+      setState(() {});
+    });
+    databaseService.getUserData().then((value) {
+      quizStreamUser = value;
+
+      for (var item in quizStreamUser.docs) {
+        streamGan.add(item.data()["quizId"]);
+        streamGan.add(item.data()["user"]);
+        // streamUser["${item.data()["quizId"]}"] = item.data()["user"];
+
+        utama.add(streamGan);
+        streamGan = [];
+      }
+
+      print("hasill map $utama");
+      print("hasill list $streamGan");
       setState(() {});
     });
     super.initState();
@@ -187,7 +251,7 @@ class QuizTile extends StatelessWidget {
       visible: hidden,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => CeritaPage(id, title, description)));

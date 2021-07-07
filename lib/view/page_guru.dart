@@ -1,12 +1,21 @@
+import 'dart:io';
+
+// import 'package:audioplayers/audio_cache.dart';
+// import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/views/hasil_kelas.dart';
 import 'package:rusa4/quiz/views/home.dart';
-
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/home.dart';
 import 'package:rusa4/view/pilih_kelas.dart';
 
@@ -21,15 +30,46 @@ class PageGuru extends StatefulWidget {
 }
 
 class _PageGuruState extends State<PageGuru> {
+  AudioPlayer audioPlayer = AudioPlayer();
+  AudioPlayerState audioPlayerState = AudioPlayerState.PAUSED;
+  AudioCache audioCache;
+  String filePath = 'audio.mp3';
+
+  @override
+  void initState() {
+    super.initState();
+
+    audioCache = AudioCache(fixedPlayer: audioPlayer);
+    audioPlayer.onPlayerStateChanged.listen((AudioPlayerState s) {
+      setState(() {
+        audioPlayerState = s;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    // audioPlayer.release();
+    // audioPlayer.dispose();
+    // audioCache.clearCache();
+  }
+
+  playMusic() async {
+    await audioCache.play(filePath);
+  }
+
+  pauseMusic() async {
+    await audioPlayer.pause();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('halaman guru');
     // print(user);
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
-
-    print(user[7]);
 
     return Center(
         child: SingleChildScrollView(
@@ -39,6 +79,15 @@ class _PageGuruState extends State<PageGuru> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // IconButton(
+            //   onPressed: () {
+
+            //   },
+            //   iconSize: 50,
+            //   icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+            //       ? Icons.pause_circle
+            //       : Icons.play_circle),
+            // ),
             SizedBox(
               height: 30,
             ),

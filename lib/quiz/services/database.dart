@@ -59,6 +59,25 @@ class DatabaseService {
     });
   }
 
+  Future<void> addUser(user) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz User")
+        .add(user)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<void> deleteUser(user) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz User")
+        .doc(user)
+        .delete()
+        .catchError((e) {
+      print(e);
+    });
+  }
+
   Future<void> updateQuestionData(
       quizData, String quizId, String questionId) async {
     await FirebaseFirestore.instance
@@ -89,5 +108,9 @@ class DatabaseService {
         .doc(quizId)
         .collection("QNA")
         .get();
+  }
+
+  getUserData() async {
+    return await FirebaseFirestore.instance.collection("Quiz User").get();
   }
 }

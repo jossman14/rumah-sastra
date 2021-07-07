@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audio_cache.dart';
+// import 'package:audioplayers/audio_cache.dart';
 
 class AudioProvider extends ChangeNotifier {
   // final player = AudioCache();
@@ -49,6 +49,42 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _jawaban = [];
     print("hasil tambah jawaban $_jawaban");
+    notifyListeners();
+  }
+
+  List _optionSelected = [];
+
+  List get optionSelected => _optionSelected;
+
+  set tambahoptionSelected(String value) {
+    print("hasil tambah value $value");
+    _optionSelected.add(value);
+    print("hasil tambah optionSelected $_optionSelected");
     // notifyListeners();
+  }
+
+  set resetoptionSelected(String value) {
+    print("hasil tambah value $value");
+    _optionSelected = [];
+    print("hasil tambah optionSelected $_optionSelected");
+    notifyListeners();
+  }
+
+  List _correctAnswer = [];
+
+  List get correctAnswer => _correctAnswer;
+
+  set tambahcorrectAnswer(String value) {
+    print("hasil tambah value $value");
+    _correctAnswer.add(value);
+    print("hasil tambah correctAnswer $_correctAnswer");
+    // notifyListeners();
+  }
+
+  set resetcorrectAnswer(String value) {
+    print("hasil tambah value $value");
+    _correctAnswer = [];
+    print("hasil tambah correctAnswer $_correctAnswer");
+    notifyListeners();
   }
 }

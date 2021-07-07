@@ -44,7 +44,6 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
   @override
   Widget build(BuildContext context) {
     String idUser = FirebaseAuth.instance.currentUser.uid;
-    print("cek akun gann ${allAkun[widget.feedMenulis.userID].id}");
 
     return user[9] == allAkun[widget.feedMenulis.userID].id
         ? ClipRRect(

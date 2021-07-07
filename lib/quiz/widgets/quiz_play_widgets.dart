@@ -1,67 +1,97 @@
 import 'package:flutter/material.dart';
 
-class OptionTile extends StatefulWidget {
+class OptionTileBackup extends StatefulWidget {
   final String option, description, correctAnswer, optionSelected;
 
-  OptionTile(
+  OptionTileBackup(
       {this.description, this.correctAnswer, this.option, this.optionSelected});
 
   @override
-  _OptionTileState createState() => _OptionTileState();
+  _OptionTileBackupState createState() => _OptionTileBackupState();
 }
 
-class _OptionTileState extends State<OptionTile> {
+class _OptionTileBackupState extends State<OptionTileBackup> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Row(
-        children: [
-          Container(
-            height: 28,
-            width: 28,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: widget.optionSelected == widget.description
-                        ? widget.description == widget.correctAnswer
-                            ? Colors.green.withOpacity(0.7)
-                            : Colors.red.withOpacity(0.7)
-                        : Colors.grey,
-                    width: 1.5),
-                color: widget.optionSelected == widget.description
-                    ? widget.description == widget.correctAnswer
-                        ? Colors.green.withOpacity(0.7)
-                        : Colors.red.withOpacity(0.7)
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(24)),
-            child: Text(
-              widget.option,
-              style: TextStyle(
-                color: widget.optionSelected == widget.description
-                    ? Colors.white
-                    : Colors.grey,
+    return Visibility(
+      visible: widget.optionSelected == widget.description ? true : false,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Row(
+          children: [
+            Container(
+              height: 28,
+              width: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: widget.optionSelected == widget.description
+                          ? widget.description == widget.correctAnswer
+                              ? Colors.green
+                              : Colors.red
+                          : Colors.grey,
+                      width: 1.5),
+                  color: widget.optionSelected == widget.description
+                      ? widget.description == widget.correctAnswer
+                          ? Colors.green
+                          : Colors.red
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(24)),
+              child: Text(
+                widget.option,
+                style: TextStyle(
+                  color: widget.optionSelected == widget.description
+                      ? Colors.red
+                      : Colors.green,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Text(
-            widget.description,
-            style: TextStyle(fontSize: 17, color: Colors.black54),
-          )
-        ],
+            // Container(
+            //   height: 28,
+            //   width: 28,
+            //   alignment: Alignment.center,
+            //   decoration: BoxDecoration(
+            //       border: Border.all(
+            //           color: widget.optionSelected == widget.description
+            //               ? widget.description == widget.correctAnswer
+            //                   ? Colors.green
+            //                   : Colors.red
+            //               : Colors.grey,
+            //           width: 1.5),
+            //       color: widget.optionSelected == widget.description
+            //           ? widget.description == widget.correctAnswer
+            //               ? Colors.green
+            //               : Colors.red
+            //           : Colors.white,
+            //       borderRadius: BorderRadius.circular(24)),
+            //   child: Text(
+            //     widget.option,
+            //     style: TextStyle(
+            //       color: widget.optionSelected == widget.description
+            //           ? Colors.white
+            //           : Colors.grey,
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              widget.description,
+              style: TextStyle(fontSize: 17, color: Colors.black54),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class OptionTileCek extends StatefulWidget {
+class OptionTileBackupCek extends StatefulWidget {
   final String option, description, correctAnswer, optionSelected;
   final bool cekJawaban;
 
-  OptionTileCek(
+  OptionTileBackupCek(
       {this.description,
       this.correctAnswer,
       this.option,
@@ -69,45 +99,50 @@ class OptionTileCek extends StatefulWidget {
       this.cekJawaban});
 
   @override
-  _OptionTileCekState createState() => _OptionTileCekState();
+  _OptionTileBackupCekState createState() => _OptionTileBackupCekState();
 }
 
-class _OptionTileCekState extends State<OptionTileCek> {
+class _OptionTileBackupCekState extends State<OptionTileBackupCek> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Row(
-        children: [
-          Container(
-            height: 28,
-            width: 28,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: widget.cekJawaban
-                        ? Colors.green.withOpacity(0.7)
-                        : Colors.red.withOpacity(0.7),
-                    width: 1.5),
-                color: widget.cekJawaban
-                    ? Colors.green.withOpacity(0.7)
-                    : Colors.red.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(24)),
-            child: Text(
-              widget.option,
-              style: TextStyle(
-                color: widget.cekJawaban ? Colors.white : Colors.grey,
+    return Visibility(
+      visible: widget.description == widget.correctAnswer ? true : false,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Row(
+          children: [
+            Container(
+              height: 28,
+              width: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: widget.description == widget.correctAnswer
+                          ? Colors.green
+                          : Colors.grey,
+                      width: 1.5),
+                  color: widget.description == widget.correctAnswer
+                      ? Colors.green
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(24)),
+              child: Text(
+                widget.option,
+                style: TextStyle(
+                  color: widget.description == widget.correctAnswer
+                      ? Colors.green
+                      : Colors.white,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Text(
-            widget.description,
-            style: TextStyle(fontSize: 17, color: Colors.black54),
-          )
-        ],
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              widget.description,
+              style: TextStyle(fontSize: 17, color: Colors.black54),
+            )
+          ],
+        ),
       ),
     );
   }

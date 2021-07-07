@@ -13,6 +13,13 @@ class QuizResult {
   String quizId;
   String quizName;
   String id;
+  List cekJawaban;
+  List optionSelected;
+  List correctAnswer;
+  int correct;
+  int incorrect;
+  int total;
+  String description;
 
   QuizResult({
     @required this.createdTime,
@@ -22,6 +29,13 @@ class QuizResult {
     @required this.quizId,
     @required this.quizName,
     @required this.id,
+    @required this.cekJawaban,
+    @required this.optionSelected,
+    @required this.correctAnswer,
+    @required this.correct,
+    @required this.incorrect,
+    @required this.total,
+    @required this.description,
   });
 
   static QuizResult fromJson(Map<String, dynamic> json) => QuizResult(
@@ -32,6 +46,13 @@ class QuizResult {
         quizId: json['quizId'],
         id: json['id'],
         quizName: json['quizName'],
+        cekJawaban: json['cekJawaban'],
+        optionSelected: json['optionSelected'],
+        correctAnswer: json['correctAnswer'],
+        correct: json['correct'],
+        incorrect: json['incorrect'],
+        total: json['total'],
+        description: json['description'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,5 +63,12 @@ class QuizResult {
         'quizId': quizId,
         'id': id,
         'quizName': quizName,
+        "cekJawaban": cekJawaban,
+        "optionSelected": optionSelected,
+        "correctAnswer": correctAnswer,
+        "correct": correct,
+        "incorrect": incorrect,
+        "total": total,
+        "description": description,
       };
 }

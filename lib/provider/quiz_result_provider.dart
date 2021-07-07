@@ -22,8 +22,8 @@ class QuizResultProvider extends ChangeNotifier {
   void addQuizResult(UserRusa user, QuizResult quizResult) =>
       SaveResultFirebaseApi.createSaveResult(user, quizResult);
 
-  void removeQuizResult(UserRusa user, QuizResult quizResult) =>
-      SaveResultFirebaseApi.deleteSaveResult(user, quizResult);
+  void removeQuizResult(String quizResult) =>
+      SaveResultFirebaseApi.deleteSaveResult(quizResult);
 
   // void updateQuizResult(QuizResult quizResult, String title, String description,
   //     String imagegan, String linkVideo) {

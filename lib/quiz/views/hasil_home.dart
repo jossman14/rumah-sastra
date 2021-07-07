@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -9,6 +10,7 @@ import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/provider/quiz_result_provider.dart';
+import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/services/save_result.dart';
 import 'package:rusa4/quiz/views/quiz_result_widget.dart';
 import 'package:rusa4/view/auth.dart';
@@ -26,6 +28,45 @@ class HasilHome extends StatefulWidget {
 
 class _HasilHomeState extends State<HasilHome> {
   UserRusa user;
+  QuerySnapshot quizStreamUser;
+  DatabaseService databaseService = new DatabaseService();
+  List temp = [];
+
+  cekUser(user) {
+    for (var i = 0; i < utama.length; i++) {
+      if (utama[i][0] == user) {
+        temp.add(utama[i][1]);
+      }
+    }
+
+    print("temp $temp");
+    return true;
+  }
+
+  Map streamUser = new Map();
+  List streamGan = [];
+  List utama = [];
+  @override
+  void initState() {
+    databaseService.getUserData().then((value) {
+      quizStreamUser = value;
+
+      for (var item in quizStreamUser.docs) {
+        streamGan.add(item.id);
+        streamGan.add(item.data()["quizId"]);
+        streamGan.add(item.data()["user"]);
+        // streamUser["${item.data()["quizId"]}"] = item.data()["user"];
+
+        utama.add(streamGan);
+        streamGan = [];
+      }
+
+      print("hasill map $utama");
+      print("hasill list $streamGan");
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,15 +134,34 @@ class _HasilHomeState extends State<HasilHome> {
                           itemCount: quizResults.length,
                           itemBuilder: (context, index) {
                             final quizResult = quizResults[index];
+                            var cekIdUser = "d";
+                            // for (var item in quizStreamUser.docs) {
+                            //   if (quizResult.userId == item.data()["user"]) {
+                            //     cekIdUser = item.id;
+                            //     print("cek iddd ${item.id}");
+                            //   }
+                            // }
 
+                            for (var i = 0; i < utama.length; i++) {
+                              if (utama[i][2] == quizResult.userId) {
+                                cekIdUser = utama[i][0];
+                              }
+                            }
+                            // print("cek hasil cekiduser $cekIdUser");
+                            // print(
+                            //     "cek hasil idResult ${quizResults[index].id}");
                             return quizResult.quizId == widget.idQuiz
                                 ? QuizResultWidget(
                                     quizResult: quizResult,
                                     hidden: true,
+                                    idResult: quizResults[index].id,
+                                    cekIdUser: cekIdUser,
                                   )
                                 : QuizResultWidget(
                                     quizResult: quizResult,
                                     hidden: false,
+                                    idResult: quizResults[index].id,
+                                    cekIdUser: cekIdUser,
                                   );
                           },
                         );

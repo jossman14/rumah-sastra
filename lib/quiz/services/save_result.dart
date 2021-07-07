@@ -30,10 +30,10 @@ class SaveResultFirebaseApi {
     await docQuizResult.update(quizResult.toJson());
   }
 
-  static Future deleteSaveResult(UserRusa user, QuizResult quizResult) async {
+  static Future deleteSaveResult(String quizResult) async {
     final docQuizResult = FirebaseFirestore.instance
         .collection('QuizResult Quiz')
-        .doc(quizResult.quizId);
+        .doc(quizResult);
 
     await docQuizResult.delete();
   }

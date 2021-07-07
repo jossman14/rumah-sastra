@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/audio_provider.dart';
+import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/models/question_model.dart';
+import 'package:rusa4/quiz/models/result_model.dart';
 import 'package:rusa4/quiz/services/database.dart';
+import 'package:rusa4/quiz/services/save_result.dart';
 import 'package:rusa4/quiz/views/quiz_play%20copy.dart';
-import 'package:rusa4/quiz/views/results.dart';
-import 'package:rusa4/quiz/widget/widget.dart';
-import 'package:rusa4/quiz/widgets/quiz_play_widgets.dart';
+import 'package:rusa4/quiz/widgets/quiz_play_widgets_real.dart';
 
 class QuizPlay extends StatefulWidget {
   final String quizId, quizName, description;
@@ -36,6 +39,8 @@ class _QuizPlayState extends State<QuizPlay> {
 
   int cekSoal;
 
+  List waktuList = [];
+  int waktuu = 60;
   @override
   void initState() {
     databaseService.getQuestionData(widget.quizId).then((value) {
@@ -51,7 +56,7 @@ class _QuizPlayState extends State<QuizPlay> {
 
     if (infoStream == null) {
       infoStream = Stream<List<int>>.periodic(Duration(milliseconds: 100), (x) {
-        print("this is x $x");
+        // print("this is x $x");
         return [_correct, _incorrect];
       });
     }
@@ -80,7 +85,18 @@ class _QuizPlayState extends State<QuizPlay> {
     questionModel.option4 = options[3];
     questionModel.correctOption = questionSnapshot.data()["option1"];
     questionModel.answered = false;
+    questionModel.waktu = questionSnapshot.data()["waktu"];
 
+    try {
+      // waktuList.add(questionSnapshot.data()["waktu"]);
+      waktuu = int.parse(questionSnapshot.data()["waktu"]);
+      waktuList.add(questionSnapshot.data()["waktu"]);
+    } catch (e) {
+      waktuList.add("60");
+      print(e);
+    }
+
+    print("jjj $waktuList");
     print(questionModel.correctOption.toLowerCase());
 
     return questionModel;
@@ -129,12 +145,12 @@ class _QuizPlayState extends State<QuizPlay> {
                             ),
                           )
                         : cekSoal >= questionSnaphot.docs.length
-                            ? selesaiQuiz()
+                            ? inputNilai()
                             : QuizPlayTile(
                                 questionModel: getQuestionModelFromDatasnapshot(
                                     questionSnaphot.docs[cekSoal]),
                                 index: cekSoal,
-                              ),
+                                waktuList: waktuList),
                   ],
                 ),
               ),
@@ -157,10 +173,46 @@ class _QuizPlayState extends State<QuizPlay> {
     );
   }
 
-  selesaiQuiz() {
-    final providerCekSoal = Provider.of<AudioProvider>(context);
-    providerCekSoal.resetSoalProvider = 0;
+  inputNilai() {
+    var quizResult;
+    var user;
+    DatabaseService databaseService = new DatabaseService();
 
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    final providerCekSoal = Provider.of<AudioProvider>(context);
+
+    user = provider.akunRusa;
+    setState(() {
+      quizResult = QuizResult(
+        createdTime: DateTime.now(),
+        result: (_correct / total) * 100,
+        username: user.username,
+        userId: user.id,
+        quizId: widget.quizId,
+        quizName: widget.quizName,
+        id: "hehe",
+        cekJawaban: providerCekSoal.jawaban,
+        correctAnswer: providerCekSoal.correctAnswer,
+        optionSelected: providerCekSoal.optionSelected,
+        correct: _correct,
+        incorrect: _incorrect,
+        total: total,
+        description: widget.description,
+      );
+    });
+
+    SaveResultFirebaseApi.createSaveResult(user, quizResult);
+
+    Map<String, String> quizDataUser = {
+      "quizId": widget.quizId,
+      "user": user.id,
+    };
+
+    databaseService.addUser(quizDataUser);
+    return selesaiQuiz();
+  }
+
+  selesaiQuiz() {
     return Column(
       children: [
         Container(
@@ -217,33 +269,36 @@ class _InfoHeaderState extends State<InfoHeader> {
         stream: infoStream,
         builder: (context, snapshot) {
           return snapshot.hasData
-              ? Container(
-                  height: 40,
-                  margin: EdgeInsets.only(left: 14),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      NoOfQuestionTile(
-                        text: "Jumlah",
-                        number: widget.length,
-                      ),
-                      NoOfQuestionTile(
-                        text: "Benar",
-                        number: _correct,
-                      ),
-                      NoOfQuestionTile(
-                        text: "Belum Benar",
-                        number: _incorrect,
-                      ),
-                      Visibility(
-                        visible: false,
-                        child: NoOfQuestionTile(
-                          text: "Belum Dicoba",
-                          number: _notAttempted,
+              ? Visibility(
+                  visible: false,
+                  child: Container(
+                    height: 40,
+                    margin: EdgeInsets.only(left: 14),
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        NoOfQuestionTile(
+                          text: "Jumlah",
+                          number: widget.length,
                         ),
-                      ),
-                    ],
+                        NoOfQuestionTile(
+                          text: "Benar",
+                          number: _correct,
+                        ),
+                        NoOfQuestionTile(
+                          text: "Belum Benar",
+                          number: _incorrect,
+                        ),
+                        Visibility(
+                          visible: false,
+                          child: NoOfQuestionTile(
+                            text: "Belum Dicoba",
+                            number: _notAttempted,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : Container();
@@ -254,8 +309,12 @@ class _InfoHeaderState extends State<InfoHeader> {
 class QuizPlayTile extends StatefulWidget {
   final QuestionModel questionModel;
   final int index;
+  final List waktuList;
 
-  QuizPlayTile({@required this.questionModel, @required this.index});
+  QuizPlayTile(
+      {@required this.questionModel,
+      @required this.index,
+      @required this.waktuList});
 
   @override
   _QuizPlayTileState createState() => _QuizPlayTileState();
@@ -265,9 +324,82 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
   String optionSelected = "";
 
   bool cekBool;
+
+  Timer _timer;
+  int _start;
+
+  startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  sec5Timer(providerCekSoal) {
+    // Timer(Duration(), () {
+    // providerCekSoal.cekSoalProvider = 1;
+    // });
+
+    Timer.run(() {
+      providerCekSoal.cekSoalProvider = 1;
+      providerCekSoal.tambahJawaban = false;
+      providerCekSoal.tambahoptionSelected = "hehehehehe";
+      providerCekSoal.tambahcorrectAnswer = widget.questionModel.correctOption;
+      setState(() {
+        _start = int.parse(widget.waktuList[widget.index]);
+        cek = 0;
+      });
+    });
+
+    return mainQuizGan(providerCekSoal);
+  }
+
+  int cek = 0;
+  @override
+  void initState() {
+    // _start = int.parse(widget.waktuList[widget.index]);
+    _start = int.parse(widget.waktuList[widget.index]);
+
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    //
+
     final providerCekSoal = Provider.of<AudioProvider>(context);
+
+    return _start <= 0 ? sec5Timer(providerCekSoal) : coba(providerCekSoal);
+  }
+
+  coba(providerCekSoal) {
+    cek++;
+    if (cek == 1) {
+      _start = int.parse(widget.waktuList[widget.index]);
+    }
+
+    return mainQuizGan(providerCekSoal);
+  }
+
+  Padding mainQuizGan(AudioProvider providerCekSoal) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -278,8 +410,47 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                Container(
+                  color: Colors.deepOrange,
                   height: 15,
+                  width: 10.0 * _start,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      child: Center(
+                          child: Stack(
+                        children: <Widget>[
+                          // Stroked text as border.
+                          Text(
+                            "$_start",
+                            style: TextStyle(
+                              fontSize: 45,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 6
+                                ..color = Colors.blue[700],
+                            ),
+                          ),
+                          // Solid text as fill.
+                          Text(
+                            "$_start",
+                            style: TextStyle(
+                              fontSize: 45,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                        ],
+                      )
+                          // child: Text("${(widget.correct / widget.total) * 100}",)
+                          // ,
+                          ),
+                    ),
+                  ],
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
@@ -319,6 +490,14 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
                     providerCekSoal.cekSoalProvider = 1;
                     providerCekSoal.tambahJawaban = cekBool;
+                    providerCekSoal.tambahoptionSelected =
+                        widget.questionModel.option1;
+                    providerCekSoal.tambahcorrectAnswer =
+                        widget.questionModel.correctOption;
+                    setState(() {
+                      _start = int.parse(widget.waktuList[widget.index]);
+                      cek = 0;
+                    });
                   },
                   child: OptionTile(
                     option: "A",
@@ -358,6 +537,14 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
                     providerCekSoal.cekSoalProvider = 1;
                     providerCekSoal.tambahJawaban = cekBool;
+                    providerCekSoal.tambahoptionSelected =
+                        widget.questionModel.option2;
+                    providerCekSoal.tambahcorrectAnswer =
+                        widget.questionModel.correctOption;
+                    setState(() {
+                      _start = int.parse(widget.waktuList[widget.index]);
+                      cek = 0;
+                    });
                   },
                   child: OptionTile(
                     option: "B",
@@ -397,6 +584,14 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
                     providerCekSoal.cekSoalProvider = 1;
                     providerCekSoal.tambahJawaban = cekBool;
+                    providerCekSoal.tambahoptionSelected =
+                        widget.questionModel.option3;
+                    providerCekSoal.tambahcorrectAnswer =
+                        widget.questionModel.correctOption;
+                    setState(() {
+                      _start = int.parse(widget.waktuList[widget.index]);
+                      cek = 0;
+                    });
                   },
                   child: OptionTile(
                     option: "C",
@@ -436,6 +631,14 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
                     providerCekSoal.cekSoalProvider = 1;
                     providerCekSoal.tambahJawaban = cekBool;
+                    providerCekSoal.tambahoptionSelected =
+                        widget.questionModel.option4;
+                    providerCekSoal.tambahcorrectAnswer =
+                        widget.questionModel.correctOption;
+                    setState(() {
+                      _start = int.parse(widget.waktuList[widget.index]);
+                      cek = 0;
+                    });
                   },
                   child: OptionTile(
                     option: "D",
