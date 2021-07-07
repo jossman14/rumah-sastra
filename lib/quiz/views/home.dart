@@ -55,6 +55,8 @@ class _HomeState extends State<HomeQuiz> {
                                   user.kelas)
                               ? cek && temp.contains(user.id)
                                   ? QuizTile(
+                                      quizTime: snapshot.data.documents[index]
+                                          .data()['quizTime'],
                                       noOfQuestions:
                                           snapshot.data.documents.length,
                                       imageUrl: snapshot.data.documents[index]
@@ -74,6 +76,8 @@ class _HomeState extends State<HomeQuiz> {
                                       kelasPilih: user.kelas,
                                     )
                                   : QuizTile(
+                                      quizTime: snapshot.data.documents[index]
+                                          .data()['quizTime'],
                                       noOfQuestions:
                                           snapshot.data.documents.length,
                                       imageUrl: snapshot.data.documents[index]
@@ -93,6 +97,8 @@ class _HomeState extends State<HomeQuiz> {
                                       kelasPilih: user.kelas,
                                     )
                               : QuizTile(
+                                  quizTime: snapshot.data.documents[index]
+                                      .data()['quizTime'],
                                   noOfQuestions: snapshot.data.documents.length,
                                   imageUrl: snapshot.data.documents[index]
                                       .data()['quizImgUrl'],
@@ -176,7 +182,14 @@ class _HomeState extends State<HomeQuiz> {
 }
 
 class QuizTile extends StatelessWidget {
-  final String imageUrl, title, id, description, authorId, kelas, kelasPilih;
+  final String imageUrl,
+      title,
+      id,
+      description,
+      authorId,
+      kelas,
+      kelasPilih,
+      quizTime;
   final int noOfQuestions;
   final bool hidden;
 
@@ -194,6 +207,7 @@ class QuizTile extends StatelessWidget {
     @required this.noOfQuestions,
     @required this.hidden,
     @required this.kelasPilih,
+    @required this.quizTime,
   });
 
   void deleteQuiz(BuildContext context, String quizId) async {
@@ -254,7 +268,8 @@ class QuizTile extends StatelessWidget {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => CeritaPage(id, title, description)));
+                  builder: (context) =>
+                      CeritaPage(id, title, description, quizTime)));
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

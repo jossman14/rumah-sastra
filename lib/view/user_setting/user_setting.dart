@@ -58,6 +58,8 @@ class _UserSettingState extends State<UserSetting> {
   UserRusa hasil;
   var providerAkun;
 
+  String _penggunaValue;
+
   @override
   Widget build(BuildContext context) {
     final providerAkun = Provider.of<EmailSignInProvider>(context);
@@ -675,7 +677,8 @@ class _UserSettingState extends State<UserSetting> {
                               image: NetworkImage(penggunaLocal[8]),
                               fit: BoxFit.cover,
                             ),
-                          ))
+                          ),
+                        )
                   : Container(
                       width: 140.0,
                       height: 140.0,

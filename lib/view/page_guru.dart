@@ -79,15 +79,33 @@ class _PageGuruState extends State<PageGuru> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // IconButton(
-            //   onPressed: () {
-
-            //   },
-            //   iconSize: 50,
-            //   icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
-            //       ? Icons.pause_circle
-            //       : Icons.play_circle),
-            // ),
+            IconButton(
+              onPressed: () {
+                playSound();
+              },
+              iconSize: 50,
+              icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+                  ? Icons.pause_circle
+                  : Icons.play_circle),
+            ),
+            IconButton(
+              onPressed: () {
+                loopSound();
+              },
+              iconSize: 50,
+              icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+                  ? Icons.pause_circle
+                  : Icons.play_circle),
+            ),
+            IconButton(
+              onPressed: () {
+                pauseSound();
+              },
+              iconSize: 50,
+              icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+                  ? Icons.pause_circle
+                  : Icons.play_circle),
+            ),
             SizedBox(
               height: 30,
             ),

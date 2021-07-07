@@ -19,7 +19,7 @@ class _CreateQuizState extends State<CreateQuiz> {
   DatabaseService databaseService = new DatabaseService();
   final _formKey = GlobalKey<FormState>();
 
-  String quizImgUrl, quizTitle, quizDesc;
+  String quizImgUrl, quizTitle, quizDesc, quizTime;
 
   bool isLoading = false;
   String quizId;
@@ -42,6 +42,7 @@ class _CreateQuizState extends State<CreateQuiz> {
         "quizAuthor": user.username,
         "quizAuthorID": user.id,
         "quizKelas": user.kelas,
+        "quizTime": quizTime,
         // "quizUser" : [],
       };
 
@@ -97,6 +98,18 @@ class _CreateQuizState extends State<CreateQuiz> {
                 decoration: InputDecoration(hintText: "Soal Cerita"),
                 onChanged: (val) {
                   quizDesc = val;
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              TextFormField(
+                maxLines: 8,
+                validator: (val) =>
+                    val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                decoration: InputDecoration(hintText: "Durasi Soal Cerita"),
+                onChanged: (val) {
+                  quizTime = val;
                 },
               ),
               Spacer(),

@@ -8,6 +8,7 @@ import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/home.dart';
+import 'package:rusa4/view/profileUser.dart';
 import 'package:rusa4/view/user_setting/user_setting.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -120,6 +121,14 @@ class _AppDrawerState extends State<AppDrawer> {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => UserSetting()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings_applications),
+            title: Text("Profil Pembuat Aplikasi"),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfileUser()));
             },
           ),
           ListTile(
