@@ -9,6 +9,7 @@ import 'package:rusa4/model/feed_menulis.dart';
 import 'package:rusa4/model/feed_menulis_comment.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/feed_menulis/edit_feed_menulis.dart';
 import 'package:rusa4/view/feed_menulis/feed_menulis_comment_widget.dart';
 
@@ -26,6 +27,8 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
   var provider;
   List user;
 
+  Map allAkun;
+
   String title;
   String description;
 
@@ -40,6 +43,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
       provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
       user = provider.akun;
+      allAkun = provider.listAkun;
     });
   }
 
@@ -48,11 +52,12 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        actions: user[7] == "Guru"
+        actions: user[9] == widget.feedMenulis.id
             ? [
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
+                    playSound();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => EditFeedMenulisPage(
@@ -64,6 +69,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
+                    playSound();
                     final provider = Provider.of<FeedMenulisProvider>(context,
                         listen: false);
                     provider.removeFeedMenulis(widget.feedMenulis);
@@ -115,6 +121,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                               ? Colors.blue
                               : Colors.black,
                           onPressed: () {
+                            playSound();
                             final provider = Provider.of<FeedMenulisProvider>(
                                 context,
                                 listen: false);
@@ -143,6 +150,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                                   ? Colors.blue
                                   : Colors.black,
                               onPressed: () {
+                                playSound();
                                 buildAlertDialog();
                               },
                             ),
@@ -194,7 +202,8 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                                             //         feedMenulisComment,
                                             //     feedMenulis:
                                             //         widget.feedMenulis);
-                                            return user[7] == "Guru"
+                                            return user[9] ==
+                                                    feedMenulisComment.userId
                                                 ? ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -291,10 +300,12 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
             backgroundColor: MaterialStateProperty.all(Colors.black),
           ),
           onPressed: () {
+            playSound();
             final komentar = FeedMenulisComment(
                 id: DateTime.now().toString(),
                 createdTime: DateTime.now(),
                 description: _commentarController.text,
+                userId: user[9],
                 writer: user[3]);
 
             final provider =
@@ -332,31 +343,44 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                       ),
                       subtitle: Row(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            // backgroundImage: AssetImage('./assets/images/Logo.png'),
-                            child: Container(
-                              padding: EdgeInsets.all(6),
-                              child: SvgPicture.network(
-                                user[8],
-                                semanticsLabel: 'Profil Pic',
-                                placeholderBuilder: (BuildContext context) =>
-                                    Container(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child:
-                                            const CircularProgressIndicator()),
-                              ),
-                            ),
-                          ),
+                          Container(
+                              padding:
+                                  allAkun[feedMenulisComment.userId].pic[8] !=
+                                          "f"
+                                      ? EdgeInsets.all(12)
+                                      : EdgeInsets.all(4),
+                              child: allAkun[feedMenulisComment.userId]
+                                          .pic[8] !=
+                                      "f"
+                                  ? SvgPicture.network(
+                                      allAkun[feedMenulisComment.userId].pic,
+                                      semanticsLabel: 'Profil Pic',
+                                      placeholderBuilder:
+                                          (BuildContext context) => Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child:
+                                                  const CircularProgressIndicator()),
+                                    )
+                                  : Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                          image: NetworkImage(
+                                              allAkun[feedMenulisComment.userId]
+                                                  .pic),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ))),
                           SizedBox(
                             width: 8,
                           ),
-                          Text(
-                            user[3],
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w500),
-                          ),
+                          Text(feedMenulisComment.writer,
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),
@@ -376,7 +400,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
     provider.removeCommentFeed(widget.feedMenulis, feedMenulisComment);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('feedMenulisComment dihapus')),
+      SnackBar(content: Text('Komentar Feed Menulis dihapus')),
     );
   }
 
@@ -418,6 +442,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
             backgroundColor: MaterialStateProperty.all(Colors.black),
           ),
           onPressed: () {
+            playSound();
             final provider =
                 Provider.of<FeedMenulisProvider>(context, listen: false);
             provider.editCommentFeed(widget.feedMenulis, feedMenulisComment,

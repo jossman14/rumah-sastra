@@ -8,6 +8,7 @@ import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/results.dart';
 import 'package:rusa4/quiz/widget/widget.dart';
 import 'package:rusa4/quiz/widgets/quiz_play_widgets.dart';
+import 'package:rusa4/view/audioGan.dart';
 
 class QuizPlayFull extends StatefulWidget {
   final String quizId, quizName, description;
@@ -143,6 +144,7 @@ class _QuizPlayFullState extends State<QuizPlayFull> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
+          playSound();
           // providerCekSoal.resetJawaban = true;
           // providerCekSoal.resetSoalProvider = 0;
           // providerCekSoal.resetcorrectAnswer = "reset";

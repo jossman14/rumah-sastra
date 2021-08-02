@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +9,7 @@ import 'package:rusa4/model/feed_menulis.dart';
 import 'package:rusa4/model/feed_menulis_comment.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/feed_menulis/edit_feed_menulis.dart';
 import 'package:rusa4/view/feed_menulis/see_feed_menulis.dart';
 
@@ -31,17 +33,24 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
   var provider;
   List user;
 
+  Map allAkun;
+
   @override
   void initState() {
     super.initState();
-    provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    setState(() {
+      provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
-    user = provider.akun;
+      user = provider.akun;
+      allAkun = provider.listAkun;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return user[7] == "Guru"
+    String idUser = FirebaseAuth.instance.currentUser.uid;
+
+    return user[9] == allAkun[widget.feedMenulisComment.id].id
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Slidable(
@@ -97,31 +106,44 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
                       ),
                       subtitle: Row(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            // backgroundImage: AssetImage('./assets/images/Logo.png'),
-                            child: Container(
-                              padding: EdgeInsets.all(6),
-                              child: SvgPicture.network(
-                                user[8],
-                                semanticsLabel: 'Profil Pic',
-                                placeholderBuilder: (BuildContext context) =>
-                                    Container(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child:
-                                            const CircularProgressIndicator()),
-                              ),
-                            ),
-                          ),
+                          Container(
+                              padding: allAkun[widget.feedMenulisComment.id]
+                                          .pic[8] !=
+                                      "f"
+                                  ? EdgeInsets.all(12)
+                                  : EdgeInsets.all(4),
+                              child: allAkun[widget.feedMenulisComment.id]
+                                          .pic[8] !=
+                                      "f"
+                                  ? SvgPicture.network(
+                                      allAkun[widget.feedMenulisComment.id].pic,
+                                      semanticsLabel: 'Profil Pic',
+                                      placeholderBuilder:
+                                          (BuildContext context) => Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child:
+                                                  const CircularProgressIndicator()),
+                                    )
+                                  : Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                          image: NetworkImage(allAkun[
+                                                  widget.feedMenulisComment.id]
+                                              .pic),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ))),
                           SizedBox(
                             width: 8,
                           ),
-                          Text(
-                            user[3],
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w500),
-                          ),
+                          Text(widget.feedMenulis.comment[0],
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),
@@ -200,6 +222,7 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
             backgroundColor: MaterialStateProperty.all(Colors.black),
           ),
           onPressed: () {
+            playSound();
             final provider =
                 Provider.of<FeedMenulisProvider>(context, listen: false);
             provider.editCommentFeed(widget.feedMenulis,

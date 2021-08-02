@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:rusa4/quiz/views/hasil_kelas.dart';
 import 'package:rusa4/quiz/views/home.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/materi/view_materi.dart';
 import 'package:rusa4/view/pilih_kelas.dart';
 
@@ -47,6 +48,7 @@ class PageSiswa extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  playSound();
                   // Navigator.pushNamed(context, LoginSiswa.routeName);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => PilihKelas()));
@@ -92,6 +94,7 @@ class PageSiswa extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  playSound();
                   // Navigator.pushNamed(context, LoginSiswa.routeName);
                   Navigator.push(context,
                       MaterialPageRoute(builder: ((context) => HomeQuiz())));
@@ -137,6 +140,7 @@ class PageSiswa extends StatelessWidget {
             //       ),
             //     ),
             //     onPressed: () {
+            // playSound();
             //       // Navigator.pushNamed(context, LoginSiswa.routeName);
             //       Navigator.push(
             //           context,

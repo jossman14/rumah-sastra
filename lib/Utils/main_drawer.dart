@@ -35,7 +35,8 @@ class _DrawerAppState extends State<DrawerApp> {
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage("https://picsum.photos/200/300"),
+                  image: NetworkImage(
+                      "https://picsum.photos/seed/${user[9]}/500/500/?blur"),
                   fit: BoxFit.cover),
               color: Colors.red,
             ),

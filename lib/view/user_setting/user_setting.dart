@@ -17,6 +17,7 @@ import 'package:rusa4/model/user.dart';
 import 'package:rusa4/model/user_new.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/user_new.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 
 class UserSetting extends StatefulWidget {
@@ -74,6 +75,7 @@ class _UserSettingState extends State<UserSetting> {
           IconButton(
               icon: Icon(Icons.exit_to_app_rounded),
               onPressed: () {
+                playSound();
                 // Constants.prefs.setBool("loggedIn", false);
                 HelperFunctions.saveUserLoggedInSharedPreference(false);
                 HelperFunctions.saveUserNameSharedPreference("");
@@ -259,6 +261,7 @@ class _UserSettingState extends State<UserSetting> {
                                   visible: !isEdit,
                                   child: ElevatedButton(
                                     onPressed: () {
+                                      playSound();
                                       setState(() {
                                         isEdit = !isEdit;
                                       });
@@ -270,6 +273,7 @@ class _UserSettingState extends State<UserSetting> {
                                   visible: isEdit,
                                   child: ElevatedButton(
                                     onPressed: () async {
+                                      playSound();
                                       if (imageFile != null) {
                                         url = await UploadHelper.uploadFile(
                                             context, imageFile);
@@ -352,6 +356,7 @@ class _UserSettingState extends State<UserSetting> {
                                   visible: !isGanti,
                                   child: TextButton(
                                       onPressed: () {
+                                        playSound();
                                         setState(() {
                                           isGanti = !isGanti;
                                         });
@@ -417,6 +422,7 @@ class _UserSettingState extends State<UserSetting> {
                                                     .primaryColorDark,
                                               ),
                                               onPressed: () {
+                                                playSound();
                                                 // Update the state i.e. toogle the state of passwordVisible variable
                                                 setState(() {
                                                   _passwordVisible =
@@ -466,6 +472,7 @@ class _UserSettingState extends State<UserSetting> {
                                                     .primaryColorDark,
                                               ),
                                               onPressed: () {
+                                                playSound();
                                                 // Update the state i.e. toogle the state of passwordVisible variable
                                                 setState(() {
                                                   _passwordVisible =
@@ -511,6 +518,7 @@ class _UserSettingState extends State<UserSetting> {
                                                     .primaryColorDark,
                                               ),
                                               onPressed: () {
+                                                playSound();
                                                 // Update the state i.e. toogle the state of passwordVisible variable
                                                 setState(() {
                                                   _passwordVisible =
@@ -547,6 +555,7 @@ class _UserSettingState extends State<UserSetting> {
                                         visible: !isCorrect,
                                         child: ElevatedButton(
                                             onPressed: () {
+                                              playSound();
                                               setState(() {
                                                 if (_passwordCek.text ==
                                                     penggunaLocal[6]) {
@@ -573,6 +582,7 @@ class _UserSettingState extends State<UserSetting> {
                                         visible: isCorrect,
                                         child: ElevatedButton(
                                             onPressed: () {
+                                              playSound();
                                               if (isCorrect) {
                                                 updatePassword(
                                                     _passwordCek.text,
@@ -624,6 +634,7 @@ class _UserSettingState extends State<UserSetting> {
                                       ),
                                       TextButton(
                                           onPressed: () {
+                                            playSound();
                                             setState(() {
                                               isGanti = !isGanti;
                                             });
@@ -706,6 +717,7 @@ class _UserSettingState extends State<UserSetting> {
                         color: Colors.white,
                       ),
                       onPressed: () {
+                        playSound();
                         munculDialog();
                       },
                     ),
@@ -808,6 +820,7 @@ class _UserSettingState extends State<UserSetting> {
             new TextButton(
               child: new Text("Kamera"),
               onPressed: () async {
+                playSound();
                 Navigator.pop(context);
                 imageFile = await UploadHelper.getFromCamera();
                 isEdit = true;
@@ -817,6 +830,7 @@ class _UserSettingState extends State<UserSetting> {
             new TextButton(
               child: new Text("Galeri"),
               onPressed: () async {
+                playSound();
                 Navigator.pop(context);
                 imageFile = await UploadHelper.getFromGallery();
                 isEdit = true;

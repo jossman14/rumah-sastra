@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/materi/view_materi.dart';
 // import 'package:rusa4/model/user.dart';
@@ -54,6 +55,7 @@ class _PilihKelasState extends State<PilihKelas> {
                       ),
                     ),
                     onPressed: () {
+                      playSound();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -102,6 +104,7 @@ class _PilihKelasState extends State<PilihKelas> {
                       ),
                     ),
                     onPressed: () {
+                      playSound();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -149,6 +152,7 @@ class _PilihKelasState extends State<PilihKelas> {
                       ),
                     ),
                     onPressed: () {
+                      playSound();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -196,6 +200,7 @@ class _PilihKelasState extends State<PilihKelas> {
         IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
             onPressed: () {
+              playSound();
               // Constants.prefs.setBool("loggedIn", false);
               notSet();
               FirebaseAuth.instance.signOut();

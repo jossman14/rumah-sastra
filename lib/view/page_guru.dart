@@ -79,33 +79,34 @@ class _PageGuruState extends State<PageGuru> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              onPressed: () {
-                playSound();
-              },
-              iconSize: 50,
-              icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
-                  ? Icons.pause_circle
-                  : Icons.play_circle),
-            ),
-            IconButton(
-              onPressed: () {
-                loopSound();
-              },
-              iconSize: 50,
-              icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
-                  ? Icons.pause_circle
-                  : Icons.play_circle),
-            ),
-            IconButton(
-              onPressed: () {
-                pauseSound();
-              },
-              iconSize: 50,
-              icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
-                  ? Icons.pause_circle
-                  : Icons.play_circle),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     playSound();
+            //   },
+            //   iconSize: 50,
+            //   icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+            //       ? Icons.pause_circle
+            //       : Icons.play_circle),
+            // ),
+            // IconButton(
+            //   onPressed: () {
+            //     loopSound();
+            //   },
+            //   iconSize: 50,
+            //   icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+            //       ? Icons.pause_circle
+            //       : Icons.play_circle),
+            // ),
+            // Text("Pause"),
+            // IconButton(
+            //   onPressed: () {
+            //     pauseSound();
+            //   },
+            //   iconSize: 50,
+            //   icon: Icon(audioPlayerState == AudioPlayerState.PLAYING
+            //       ? Icons.pause_circle
+            //       : Icons.play_circle),
+            // ),
             SizedBox(
               height: 30,
             ),
@@ -134,6 +135,7 @@ class _PageGuruState extends State<PageGuru> {
                   ),
                 ),
                 onPressed: () {
+                  playSound();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -182,6 +184,7 @@ class _PageGuruState extends State<PageGuru> {
                   ),
                 ),
                 onPressed: () {
+                  playSound();
                   Navigator.push(context,
                       MaterialPageRoute(builder: ((context) => HomeQuiz())));
                 },
@@ -226,6 +229,7 @@ class _PageGuruState extends State<PageGuru> {
                   ),
                 ),
                 onPressed: () {
+                  playSound();
                   Navigator.push(
                       context,
                       MaterialPageRoute(

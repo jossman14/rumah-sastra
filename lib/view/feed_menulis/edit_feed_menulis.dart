@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/model/feed_menulis.dart';
 import 'package:rusa4/provider/feed_materi.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/feed_menulis/feed_menulis_form.dart';
 import 'package:rusa4/view/feed_menulis/see_feed_menulis.dart';
 
@@ -39,6 +40,7 @@ class _EditFeedMenulisPageState extends State<EditFeedMenulisPage> {
             IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
+                playSound();
                 final provider =
                     Provider.of<FeedMenulisProvider>(context, listen: false);
                 provider.removeFeedMenulis(widget.feedMenulis);

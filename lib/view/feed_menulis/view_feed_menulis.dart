@@ -8,6 +8,7 @@ import 'package:rusa4/api/feed_menulis_firebase_api.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/feed_menulis/add_feed_menulis.dart';
 
@@ -89,6 +90,7 @@ class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
         ),
         backgroundColor: Colors.black,
         onPressed: () {
+          playSound();
           Navigator.push(
               context,
               MaterialPageRoute(

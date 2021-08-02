@@ -47,7 +47,7 @@ class FeedMenulisFormWidget extends StatelessWidget {
       );
 
   Widget buildDescription() => TextFormField(
-        maxLines: 4,
+        maxLines: 15,
         initialValue: description,
         onChanged: onChangedDescription,
         decoration: InputDecoration(

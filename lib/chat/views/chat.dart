@@ -10,6 +10,7 @@ import 'package:rusa4/chat/services/database.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/view/audioGan.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId, username;
@@ -122,6 +123,7 @@ class _ChatState extends State<Chat> {
             ),
             GestureDetector(
               onTap: () {
+                playSound();
                 addMessage();
               },
               child: Container(

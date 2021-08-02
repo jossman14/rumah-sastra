@@ -143,7 +143,7 @@ class MateriWidget extends StatelessWidget {
     provider.removeMateri(materi);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('materi dihapus')),
+      SnackBar(content: Text('Materi dihapus')),
     );
   }
 

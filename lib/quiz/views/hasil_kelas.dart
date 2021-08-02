@@ -6,6 +6,7 @@ import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/quiz/views/hasil_home.dart';
 import 'package:rusa4/quiz/views/hasil_quiz_fix.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 // import 'package:rusa4/model/user.dart';
 
@@ -55,6 +56,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                       ),
                     ),
                     onPressed: () {
+                      playSound();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -103,6 +105,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                       ),
                     ),
                     onPressed: () {
+                      playSound();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -150,6 +153,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                       ),
                     ),
                     onPressed: () {
+                      playSound();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -197,6 +201,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
         IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
             onPressed: () {
+              playSound();
               // Constants.prefs.setBool("loggedIn", false);
               notSet();
               FirebaseAuth.instance.signOut();

@@ -13,6 +13,7 @@ import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/services/save_result.dart';
 import 'package:rusa4/quiz/views/quiz_result_widget.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/materi/add_materi.dart';
 import 'package:rusa4/view/materi/materi_widget.dart';
@@ -82,6 +83,7 @@ class _HasilHomeState extends State<HasilHome> {
           IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
             onPressed: () {
+              playSound();
               // Constants.prefs.setBool("loggedIn", false);
               notSet();
               FirebaseAuth.instance.signOut();

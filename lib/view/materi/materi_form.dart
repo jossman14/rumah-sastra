@@ -5,7 +5,7 @@ import 'package:rusa4/Utils/upload_file.dart';
 import 'package:rusa4/provider/get_image.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class MateriFormWidget extends StatelessWidget {
+class MateriFormWidget extends StatefulWidget {
   final String title;
   final String linkVideo;
   final String description;
@@ -30,6 +30,11 @@ class MateriFormWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _MateriFormWidgetState createState() => _MateriFormWidgetState();
+}
+
+class _MateriFormWidgetState extends State<MateriFormWidget> {
+  @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -41,8 +46,8 @@ class MateriFormWidget extends StatelessWidget {
             UploadPage(),
             buildImage(context),
             SizedBox(height: 8),
-            imagegan.length > 2 && imagegan[8] == "f"
-                ? showImage(context, imagegan)
+            widget.imagegan.length > 2 && widget.imagegan[8] == "f"
+                ? showImage(context, widget.imagegan)
                 : Container(),
             SizedBox(height: 16),
             buildDescription(),
@@ -54,8 +59,8 @@ class MateriFormWidget extends StatelessWidget {
 
   Widget buildTitle() => TextFormField(
         maxLines: 1,
-        initialValue: title,
-        onChanged: onChangedTitle,
+        initialValue: widget.title,
+        onChanged: widget.onChangedTitle,
         validator: (title) {
           if (title.isEmpty) {
             return 'Judul tidak boleh kosong';
@@ -75,8 +80,8 @@ class MateriFormWidget extends StatelessWidget {
       children: [
         TextFormField(
           maxLines: 1,
-          initialValue: linkVideo,
-          onChanged: onChangedlinkVideo,
+          initialValue: widget.linkVideo,
+          onChanged: widget.onChangedlinkVideo,
           validator: (title) {
             if (title.isEmpty) {
               return 'Link video tidak boleh kosong';
@@ -111,7 +116,7 @@ class MateriFormWidget extends StatelessWidget {
 
   cekIdYT() {
     try {
-      String videoID = YoutubePlayer.convertUrlToId(linkVideo);
+      String videoID = YoutubePlayer.convertUrlToId(widget.linkVideo);
       return videoID;
     } on Exception catch (exception) {
       print(exception);
@@ -123,9 +128,9 @@ class MateriFormWidget extends StatelessWidget {
   }
 
   Widget buildDescription() => TextFormField(
-        maxLines: 4,
-        initialValue: description,
-        onChanged: onChangedDescription,
+        maxLines: 20,
+        initialValue: widget.description,
+        onChanged: widget.onChangedDescription,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
           labelText: 'Deskripsi',
@@ -155,7 +160,7 @@ class MateriFormWidget extends StatelessWidget {
       visible: false,
       child: TextFormField(
         maxLines: 1,
-        onChanged: onChangedimagegan,
+        onChanged: widget.onChangedimagegan,
         controller: _imageganController,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -171,7 +176,7 @@ class MateriFormWidget extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.black),
           ),
-          onPressed: onSavedMateri,
+          onPressed: widget.onSavedMateri,
           child: Text('Simpan'),
         ),
       );

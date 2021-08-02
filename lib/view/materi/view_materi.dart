@@ -7,6 +7,7 @@ import 'package:rusa4/api/materi_firebase_api.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/auth.dart';
 import 'package:rusa4/view/materi/add_materi.dart';
 import 'package:rusa4/view/materi/materi_widget.dart';
@@ -34,6 +35,7 @@ class _ViewMateriState extends State<ViewMateri> {
           IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
             onPressed: () {
+              playSound();
               // Constants.prefs.setBool("loggedIn", false);
               notSet();
               FirebaseAuth.instance.signOut();
@@ -101,6 +103,7 @@ class _ViewMateriState extends State<ViewMateri> {
               ),
               backgroundColor: Colors.black,
               onPressed: () {
+                playSound();
                 Navigator.push(
                     context,
                     MaterialPageRoute(

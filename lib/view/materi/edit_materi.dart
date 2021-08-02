@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/model/materi.dart';
 
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/materi/materi_form.dart';
 import 'package:rusa4/view/materi/see_materi.dart';
 
@@ -40,6 +41,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
             IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
+                playSound();
                 final provider =
                     Provider.of<MateriProvider>(context, listen: false);
                 provider.removeMateri(widget.materi);

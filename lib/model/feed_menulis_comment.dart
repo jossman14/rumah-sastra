@@ -10,12 +10,14 @@ class FeedMenulisComment {
   String id;
   String description;
   String writer;
+  String userId;
 
   FeedMenulisComment({
     @required this.createdTime,
     @required this.description,
     @required this.id,
     @required this.writer,
+    @required this.userId,
   });
 
   static FeedMenulisComment fromJson(Map<String, dynamic> json) =>
@@ -24,6 +26,7 @@ class FeedMenulisComment {
         description: json['description'],
         id: json['id'],
         writer: json['writer'],
+        userId: json['userId'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,5 +34,6 @@ class FeedMenulisComment {
         'description': description,
         'id': id,
         'writer': writer,
+        'userId': userId,
       };
 }

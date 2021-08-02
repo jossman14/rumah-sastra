@@ -8,6 +8,7 @@ import 'package:rusa4/chat/helper/helperfunctions.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -260,6 +261,7 @@ class _AuthPageState extends State<AuthPage> {
                             visible: !register,
                             child: TextButton(
                               onPressed: () {
+                                playSound();
                                 playBtn(context);
                                 setState(() {
                                   register = !register;
@@ -278,6 +280,7 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           TextButton(
                             onPressed: () {
+                              playSound();
                               playBtn(context);
                               setState(() {
                                 loginGuru = !loginGuru;
@@ -373,6 +376,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playSound();
                 playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
@@ -435,6 +439,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playSound();
                 playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
@@ -549,6 +554,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playSound();
                 playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
@@ -580,6 +586,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playSound();
                 playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
@@ -728,6 +735,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playSound();
                 playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
@@ -759,6 +767,7 @@ class _AuthPageState extends State<AuthPage> {
                 color: Theme.of(context).primaryColorDark,
               ),
               onPressed: () {
+                playSound();
                 playBtn(context);
                 // Update the state i.e. toogle the state of passwordVisible variable
                 setState(() {
@@ -785,6 +794,7 @@ class _AuthPageState extends State<AuthPage> {
 
     return ElevatedButton(
       onPressed: () {
+        playSound();
         playBtn(context);
         if (_formKey.currentState.validate()) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -918,7 +928,7 @@ class _AuthPageState extends State<AuthPage> {
                 print('data tidak ditemukan');
               }
           }
-
+          user = user != null ? user : ["Loading.."];
           print('testing get email');
           print(user);
 
@@ -958,6 +968,7 @@ class _AuthPageState extends State<AuthPage> {
                 print('data tidak ditemukan');
               }
           }
+          user = user != null ? user : ["Loading.."];
 
           userFinal = user;
           provider.daftarEmailGuru = user;

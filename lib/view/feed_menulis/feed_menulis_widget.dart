@@ -8,6 +8,7 @@ import 'package:rusa4/model/feed_menulis.dart';
 import 'package:rusa4/model/feed_menulis_comment.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/feed_materi.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/feed_menulis/edit_feed_menulis.dart';
 import 'package:rusa4/view/feed_menulis/see_feed_menulis.dart';
 
@@ -25,7 +26,7 @@ class FeedMenulisWidget extends StatefulWidget {
 
 class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
   TextEditingController _commentarController = TextEditingController();
-  var provider;
+  var provider, providerComment;
   List user;
 
   Map allAkun;
@@ -35,6 +36,8 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
     super.initState();
     setState(() {
       provider = Provider.of<EmailSignInProvider>(context, listen: false);
+      providerComment =
+          Provider.of<FeedMenulisProvider>(context, listen: false);
 
       user = provider.akun;
       allAkun = provider.listAkun;
@@ -43,8 +46,9 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String idUser = FirebaseAuth.instance.currentUser.uid;
-
+    // print(allAkun["k1zCQTqC9KO2HMcH53b9j2HTc9E3"].id);
+    // print(allAkun[widget.feedMenulis.userID].id);
+    // print(user[9]);
     return user[9] == allAkun[widget.feedMenulis.userID].id
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
@@ -149,6 +153,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                               ? Colors.blue
                               : Colors.black,
                           onPressed: () {
+                            playSound();
                             final provider = Provider.of<FeedMenulisProvider>(
                                 context,
                                 listen: false);
@@ -168,6 +173,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                               ? Colors.blue
                               : Colors.black,
                           onPressed: () {
+                            playSound();
                             buildAlertDialog();
                           },
                         ),
@@ -249,15 +255,15 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
             backgroundColor: MaterialStateProperty.all(Colors.black),
           ),
           onPressed: () {
+            playSound();
             final komentar = FeedMenulisComment(
                 id: DateTime.now().toString(),
                 createdTime: DateTime.now(),
                 description: _commentarController.text,
+                userId: user[9],
                 writer: user[3]);
 
-            final provider =
-                Provider.of<FeedMenulisProvider>(context, listen: false);
-            provider.commentFeed(widget.feedMenulis, komentar);
+            providerComment.commentFeed(widget.feedMenulis, komentar);
             _commentarController.text = '';
             Navigator.pop(context);
           },

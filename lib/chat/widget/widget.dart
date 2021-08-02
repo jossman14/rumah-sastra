@@ -31,6 +31,7 @@ AppBar appBarMainGan(BuildContext context) {
       IconButton(
           icon: Icon(Icons.exit_to_app_rounded),
           onPressed: () {
+            playSound();
             // Constants.prefs.setBool("loggedIn", false);
             notSet();
             FirebaseAuth.instance.signOut();

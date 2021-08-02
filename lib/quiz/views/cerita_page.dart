@@ -63,12 +63,8 @@ class _CeritaPageState extends State<CeritaPage> {
     final providerCekSoal = Provider.of<AudioProvider>(context);
 
     return _start <= 0
-        ? nextGan(providerCekSoal, context)
+        ? pindahHalaman(providerCekSoal, context)
         : mainCerita(context, providerCekSoal);
-  }
-
-  nextGan(providerCekSoal, context) {
-    return pindahHalaman(providerCekSoal, context);
   }
 
   Scaffold mainCerita(BuildContext context, AudioProvider providerCekSoal) {
@@ -86,10 +82,12 @@ class _CeritaPageState extends State<CeritaPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
-                          color: Colors.deepOrange,
-                          height: 15,
-                          width: 10.0 * _start,
+                        Flexible(
+                          child: Container(
+                            color: Colors.deepOrange,
+                            height: 15,
+                            width: 10.0 * _start,
+                          ),
                         ),
                       ],
                     ),
@@ -169,16 +167,17 @@ class _CeritaPageState extends State<CeritaPage> {
   }
 
   pindahHalaman(AudioProvider providerCekSoal, BuildContext context) {
-    Timer.run(() {
-      providerCekSoal.resetJawaban = true;
-      providerCekSoal.resetSoalProvider = 0;
-      providerCekSoal.resetcorrectAnswer = "reset";
-      providerCekSoal.resetoptionSelected = "reset";
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => QuizPlay(
-                  widget.quizId, widget.quizName, widget.description)));
-    });
+    // Timer.run(() {
+    // _timer.cancel();
+    providerCekSoal.resetJawaban = true;
+    providerCekSoal.resetSoalProvider = 0;
+    providerCekSoal.resetcorrectAnswer = "reset";
+    providerCekSoal.resetoptionSelected = "reset";
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                QuizPlay(widget.quizId, widget.quizName, widget.description)));
+    // });
   }
 }

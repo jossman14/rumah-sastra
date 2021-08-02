@@ -5,6 +5,7 @@ import 'package:rusa4/model/materi.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 
 import 'package:rusa4/provider/materi_provider.dart';
+import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/materi/edit_materi.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -45,6 +46,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
+                    playSound();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) =>
@@ -56,6 +58,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
+                    playSound();
                     final provider =
                         Provider.of<MateriProvider>(context, listen: false);
                     provider.removeMateri(widget.materi);
@@ -66,15 +69,15 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
               ]
             : null,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              child: Padding(
-                padding: EdgeInsets.all(16),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(27),
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Text(

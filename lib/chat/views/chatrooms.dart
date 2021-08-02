@@ -12,6 +12,7 @@ import 'package:rusa4/chat/views/search.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
+import 'package:rusa4/view/audioGan.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -82,6 +83,7 @@ class _ChatRoomState extends State<ChatRoom> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search),
         onPressed: () {
+          playSound();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Search()));
         },
@@ -111,6 +113,7 @@ class ChatRoomsTile extends StatelessWidget {
         elevation: 2,
         child: GestureDetector(
           onTap: () {
+            playSound();
             Navigator.push(
                 context,
                 MaterialPageRoute(
