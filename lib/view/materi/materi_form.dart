@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:quill_delta/quill_delta.dart';
 import 'package:rusa4/Utils/upload_file.dart';
 import 'package:rusa4/provider/get_image.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:zefyr/zefyr.dart';
 
 class MateriFormWidget extends StatefulWidget {
   final String title;
@@ -34,6 +36,24 @@ class MateriFormWidget extends StatefulWidget {
 }
 
 class _MateriFormWidgetState extends State<MateriFormWidget> {
+  ZefyrController _zcontroller;
+
+  FocusNode _focusNode;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final zdocument = _loadDocument();
+    _zcontroller = ZefyrController(zdocument);
+    _focusNode = FocusNode();
+  }
+
+  NotusDocument _loadDocument() {
+    final Delta delta = Delta()..insert("Rumah Sastra\n");
+    return NotusDocument.fromDelta(delta);
+  }
+
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Column(
@@ -51,6 +71,8 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
                 : Container(),
             SizedBox(height: 16),
             buildDescription(),
+            SizedBox(height: 16),
+            buildZDescription(),
             SizedBox(height: 16),
             buildButton(),
           ],
@@ -135,6 +157,21 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
           border: UnderlineInputBorder(),
           labelText: 'Deskripsi',
         ),
+      );
+
+  Widget buildZDescription() => ZefyrScaffold(
+        child: ZefyrEditor(
+          padding: EdgeInsets.all(16),
+          controller: _zcontroller,
+          focusNode: _focusNode,
+        ),
+        // maxLines: 20,
+        // initialValue: widget.description,
+        // onChanged: widget.onChangedDescription,
+        // decoration: InputDecoration(
+        //   border: UnderlineInputBorder(),
+        //   labelText: 'Deskripsi',
+        // ),
       );
 
   showImage(BuildContext context, file) {
