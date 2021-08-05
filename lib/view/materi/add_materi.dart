@@ -20,6 +20,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
   String linkVideo = '';
   String description = '';
   String imagegan = '';
+  String link = '';
   List url;
 
   @override
@@ -43,6 +44,8 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
                 linkVideo: linkVideo,
                 description: description,
                 imagegan: imagegan,
+                link: link,
+
                 onChangedTitle: (title) => setState(() => this.title = title),
                 onChangedlinkVideo: (linkVideo) =>
                     setState(() => this.linkVideo = linkVideo),
@@ -50,6 +53,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
                     setState(() => this.description = description),
                 onChangedimagegan: (imagegan) =>
                     setState(() => this.imagegan = imagegan),
+                onChangedlink: (link) => setState(() => this.link = link),
                 onSavedMateri: addMateri,
               ),
             ),
@@ -79,6 +83,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
         writer: user[3],
         kelas: user[2],
         imagegan: imagegan,
+        link: link,
         userID: user[9],
       );
 
