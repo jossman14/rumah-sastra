@@ -22,6 +22,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
   String linkVideo;
   String description;
   String imagegan;
+  String link;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
     description = widget.materi.description;
     linkVideo = widget.materi.linkVideo;
     imagegan = widget.materi.imagegan;
+    link = widget.materi.link;
   }
 
   @override
@@ -63,6 +65,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
                   linkVideo: linkVideo,
                   description: description,
                   imagegan: imagegan,
+                  link: link,
                   onChangedTitle: (title) => setState(() => this.title = title),
                   onChangedlinkVideo: (linkVideo) =>
                       setState(() => this.linkVideo = linkVideo),
@@ -70,6 +73,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
                       setState(() => this.description = description),
                   onChangedimagegan: (imagegan) =>
                       setState(() => this.imagegan = imagegan),
+                  onChangedlink: (link) => setState(() => this.link = link),
                   onSavedMateri: saveMateri,
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/model/materi.dart';
@@ -7,6 +8,7 @@ import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/materi/edit_materi.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class SeeMateriPage extends StatefulWidget {
@@ -22,6 +24,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
   String linkVideo;
   String description;
   String imagegan;
+  String link;
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     linkVideo = widget.materi.linkVideo;
     description = widget.materi.description;
     imagegan = widget.materi.imagegan;
+    link = widget.materi.link;
   }
 
   @override
@@ -102,6 +106,10 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                         fontSize: 18,
                       ),
                     ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    openLink(link),
                   ],
                 ),
               ),
@@ -110,6 +118,24 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
         ),
       ),
     );
+  }
+
+  Widget openLink(link) => Linkify(
+        onOpen: _onOpen,
+        text: link,
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
+      );
+
+  Future<void> _onOpen(LinkableElement link) async {
+    if (await canLaunch(link.url)) {
+      await launch(link.url);
+    } else {
+      throw 'Could not launch $link';
+    }
   }
 
   Widget buildYoutube() {

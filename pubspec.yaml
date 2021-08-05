@@ -54,7 +54,9 @@ dependencies:
   # just_audio: ^0.5.5
   zefyr: ^0.10.0
   quill_delta: ^1.0.0
-  html_editor_enhanced: ^2.2.0+1-dev.1
+  html_editor_enhanced: ^1.2.0+1
+  flutter_linkify: ^4.0.0
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.0"
