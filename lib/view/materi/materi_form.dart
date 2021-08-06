@@ -204,14 +204,20 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
     );
   }
 
-  Widget buildButton() => SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.black),
-          ),
-          onPressed: widget.onSavedMateri,
-          child: Text('Simpan'),
+  Widget buildButton() {
+    final provider = Provider.of<GetImageProvider>(context);
+
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+              provider.selesai == true ? Colors.black : Colors.grey),
         ),
-      );
+        onPressed: provider.selesai == true ? widget.onSavedMateri : null,
+        // onPressed: widget.onSavedMateri,
+        child: Text('Simpan'),
+      ),
+    );
+  }
 }

@@ -99,15 +99,19 @@ class _UploadPageState extends State<UploadPage> {
             final snap = snapshot.data;
             final progress = snap.bytesTransferred / snap.totalBytes;
             final percentage = (progress * 100).toStringAsFixed(2);
-            if (percentage == '100.00')
+            if (percentage == '100.00') {
+              final provider = Provider.of<GetImageProvider>(context);
+
+              provider.selesai = true;
               return Text(
                 'Upload Selesai',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               );
+            }
 
             return Text(
               '$percentage %',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             );
           } else {
             return Container();

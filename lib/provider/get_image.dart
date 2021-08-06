@@ -11,10 +11,19 @@ class GetImageProvider extends ChangeNotifier {
   bool _uploadImage;
   List _imageOperation;
   File _fileImage;
+  bool _selesai;
   GetImageProvider() {
     _getImage = '';
     _uploadImage = false;
+    _selesai = false;
     _imageOperation = ["", "", ""];
+  }
+
+  bool get selesai => _selesai;
+
+  set selesai(bool value) {
+    _selesai = value;
+    notifyListeners();
   }
 
   String get getImage => _getImage;
