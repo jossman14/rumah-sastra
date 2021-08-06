@@ -16,6 +16,28 @@ Widget appBarMain(BuildContext context) {
   );
 }
 
+munculDialogGan(context, textError) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        title: new Text("Kesalahan"),
+        content: new Text(textError),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new TextButton(
+            child: new Text("Ok"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Widget appBarMainChat(BuildContext context, username) {
   return AppBar(
     title: Text(username),

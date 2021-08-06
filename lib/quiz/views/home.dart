@@ -51,10 +51,17 @@ class _HomeState extends State<HomeQuiz> {
                           print("hehe ${temp.contains(user.id)}");
                           print(
                               "iddd ${snapshot.data.documents[index].documentID}");
+                          print("cek[0] = ${cek}");
+                          print(
+                              "cek == temp.contains(user.id) --> ${cek == temp.contains(user.id)}");
+                          print(
+                              "snapshot.data.documents[index].data()['quizKelas'] ==   user.kelas --> ${snapshot.data.documents[index].data()['quizKelas'] == user.kelas}");
+                          print(
+                              "snapshot.data.documents[index].data()['quizKelas'] ==   user.kelas --> ${snapshot.data.documents[index].data()['quizTitle']}");
                           return (snapshot.data.documents[index]
                                       .data()['quizKelas'] ==
                                   user.kelas)
-                              ? cek && temp.contains(user.id)
+                              ? cek != temp.contains(user.id)
                                   ? QuizTile(
                                       quizTime: snapshot.data.documents[index]
                                           .data()['quizTime'],
@@ -124,16 +131,21 @@ class _HomeState extends State<HomeQuiz> {
     );
   }
 
-  cekUser(user) {
+  cekUser(idDoc) {
     temp = [];
     for (var i = 0; i < utama.length; i++) {
-      if (utama[i][0] == user) {
+      if (utama[i][0] == idDoc) {
+        // temp.add(utama[i][0]);
         temp.add(utama[i][1]);
       }
     }
 
+    if (temp == []) {
+      return true;
+    }
+
     print("temp $temp");
-    return true;
+    return false;
   }
 
   Map streamUser = new Map();
