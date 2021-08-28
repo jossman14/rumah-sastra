@@ -154,7 +154,8 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
         onChanged: widget.onChangedlink,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
-          labelText: 'Link referensi (bisa lebih dari satu)',
+          labelText:
+              'Link latihan (bisa lebih dari satu, beri koma untuk memisahkan)',
         ),
       );
   Widget buildzDescription() => Linkify(
@@ -183,22 +184,30 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
   }
 
   Widget buildImage(BuildContext context) {
-    TextEditingController _imageganController = TextEditingController();
-    final provider = Provider.of<GetImageProvider>(context, listen: false);
+    // TextEditingController _imageganController = TextEditingController();
 
     // provider.getImage = urlDownload;
-    _imageganController.text = provider.getImage;
+    // _imageganController.text = provider.getImage;
     // imagegan = provider.getImage;
 
     return Visibility(
       visible: false,
+      // child: TextFormField(
+      //   maxLines: 1,
+      //   initialValue: widget.imagegan,
+      //   onChanged: widget.onChangedimagegan,
+      //   decoration: InputDecoration(
+      //     border: UnderlineInputBorder(),
+      //     labelText: 'Image',
+      //   ),
+      // ),
       child: TextFormField(
         maxLines: 1,
+        initialValue: widget.imagegan,
         onChanged: widget.onChangedimagegan,
-        controller: _imageganController,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
-          labelText: 'Image',
+          labelText: 'Gambar',
         ),
       ),
     );
@@ -214,10 +223,27 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
           backgroundColor: MaterialStateProperty.all(
               provider.selesai == true ? Colors.black : Colors.grey),
         ),
-        onPressed: provider.selesai == true ? widget.onSavedMateri : null,
+        // onPressed: provider.selesai == true ? widget.onSavedMateri : null,
+        onPressed: cekUpload(provider.selesai),
         // onPressed: widget.onSavedMateri,
         child: Text('Simpan'),
       ),
     );
+  }
+
+  cekUpload(bool sudah) {
+    final provider = Provider.of<GetImageProvider>(context);
+
+    if (widget.title != null) {
+      provider.selesai = false;
+      return widget.onSavedMateri;
+    }
+
+    if (sudah) {
+      provider.selesai = false;
+      return widget.onSavedMateri;
+    } else {
+      return null;
+    }
   }
 }

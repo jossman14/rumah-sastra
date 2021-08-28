@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rusa4/chat/widget/widget.dart';
@@ -30,13 +32,16 @@ class _EditQuestionState extends State<EditQuestion> {
   int total;
   int cekPertanyaan = 0;
 
-  getQuestionData() {
+  getQuestionData(context) {
     databaseService.getQuestionData(widget.quizId).then((value) {
       questionSnaphot = value;
 
       total = questionSnaphot.docs.length;
+      isLoading = false;
       setState(() {});
     });
+
+    return mainEditQuiz(context);
   }
 
   uploadQuizData() {
@@ -89,12 +94,15 @@ class _EditQuestionState extends State<EditQuestion> {
 
   @override
   void initState() {
-    getQuestionData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    return getQuestionData(context);
+  }
+
+  Scaffold mainEditQuiz(BuildContext context) {
     return Scaffold(
       // Ibadah jangan lupa
       backgroundColor: Colors.white, //don't forget to always be grateful
@@ -126,6 +134,7 @@ class _EditQuestionState extends State<EditQuestion> {
                             ? questionSnaphot.docs[cekPertanyaan]
                                 .data()["question"]
                             : "",
+                      maxLines: 8,
                       validator: (val) =>
                           val.isEmpty ? "Masukkan pertanyaan" : null,
                       decoration: InputDecoration(hintText: "Pertanyaan"),

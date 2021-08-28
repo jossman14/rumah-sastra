@@ -86,6 +86,8 @@ class _AddQuestionState extends State<AddQuestion> {
                       height: 60,
                     ),
                     TextFormField(
+                      maxLines: 8,
+                      // minLines: 8,
                       validator: (val) =>
                           val.isEmpty ? "Masukkan pertanyaan" : null,
                       decoration: InputDecoration(hintText: "Pertanyaan"),
@@ -160,7 +162,6 @@ class _AddQuestionState extends State<AddQuestion> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            
                             uploadQuizData();
                             Navigator.pop(context);
                           },

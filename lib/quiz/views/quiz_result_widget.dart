@@ -33,23 +33,30 @@ class QuizResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return buildQuizResult(context);
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+    Map allAkun;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        key: Key(quizResult.id),
-        secondaryActions: [
-          IconSlideAction(
-            color: Colors.red,
-            caption: 'Hapus',
-            onTap: () => deleteQuizResult(context, idResult, cekIdUser),
-            icon: Icons.delete,
+    final user = provider.akun;
+    allAkun = provider.listAkun;
+
+    return user[9] == allAkun[cekIdUser].id && user[7] == "Guru"
+        ? ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Slidable(
+              actionPane: SlidableDrawerActionPane(),
+              key: Key(quizResult.id),
+              secondaryActions: [
+                IconSlideAction(
+                  color: Colors.red,
+                  caption: 'Hapus',
+                  onTap: () => deleteQuizResult(context, idResult, cekIdUser),
+                  icon: Icons.delete,
+                )
+              ],
+              child: buildQuizResult(context),
+            ),
           )
-        ],
-        child: buildQuizResult(context),
-      ),
-    );
+        : buildQuizResult(context);
   }
 
   Widget buildQuizResult(BuildContext context) {

@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rusa4/model/feed_menulis.dart';
@@ -33,6 +35,8 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
 
   @override
   void initState() {
+    // Intl.defaultLocale = 'es';
+    initializeDateFormatting("id_ID");
     super.initState();
     setState(() {
       provider = Provider.of<EmailSignInProvider>(context, listen: false);
@@ -91,6 +95,13 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                        DateFormat("EEEE, d MMMM yyyy kk:mm", "id_ID")
+                            .format(widget.feedMenulis.createdTime),
+                        // Text(widget.feedMenulis.createdTime.day.toString(),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500)),
                     ListTile(
                       title: Text(
                         widget.feedMenulis.title,
@@ -136,7 +147,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                           SizedBox(
                             width: 8,
                           ),
-                          Text(widget.feedMenulis.writer,
+                          Text(allAkun[widget.feedMenulis.userID].username,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500)),
@@ -159,9 +170,9 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                                 listen: false);
 
                             widget.feedMenulis.isLike == false
-                                ? provider.likeFeed(widget.feedMenulis, user[3])
+                                ? provider.likeFeed(widget.feedMenulis, user[9])
                                 : provider.removeLikeFeed(
-                                    widget.feedMenulis, user[3]);
+                                    widget.feedMenulis, user[9]);
                           },
                         ),
                         Text(widget.feedMenulis.like == null

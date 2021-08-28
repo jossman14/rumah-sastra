@@ -82,6 +82,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
+                maxLines: 8,
                 validator: (val) =>
                     val.isEmpty ? "Masukkan Judul Uji Pemahaman" : null,
                 decoration: InputDecoration(hintText: "Judul Uji Pemahaman"),
@@ -104,10 +105,11 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
-                maxLines: 8,
+                maxLines: 3,
                 validator: (val) =>
                     val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
-                decoration: InputDecoration(hintText: "Durasi Soal Cerita"),
+                decoration:
+                    InputDecoration(hintText: "Durasi Soal Cerita dalam detik"),
                 onChanged: (val) {
                   quizTime = val;
                 },

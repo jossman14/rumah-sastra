@@ -96,7 +96,9 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                     SizedBox(height: 20),
                     buildYoutube(),
                     SizedBox(height: 15),
-                    Image.network(imagegan),
+                    Visibility(
+                        visible: imagegan == "" ? false : true,
+                        child: Image.network(imagegan)),
                     SizedBox(height: 20),
                     Text(
                       description,

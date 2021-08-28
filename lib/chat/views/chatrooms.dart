@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:rusa4/Utils/app_drawer.dart';
 
 import 'package:rusa4/chat/helper/constants.dart';
 import 'package:rusa4/chat/helper/helperfunctions.dart';
@@ -13,6 +16,7 @@ import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/audioGan.dart';
+import 'package:rusa4/view/auth.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -77,6 +81,35 @@ class _ChatRoomState extends State<ChatRoom> {
     allAkun = provider.listAkun;
 
     return Scaffold(
+      drawer: AppDrawer(),
+      appBar: AppBar(
+        title: Text("Rumah Sastra"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.exit_to_app_rounded),
+              onPressed: () {
+                playSound();
+                // Constants.prefs.setBool("loggedIn", false);
+                HelperFunctions.saveUserLoggedInSharedPreference(false);
+                HelperFunctions.saveUserNameSharedPreference("");
+                HelperFunctions.savesharedPreferenceUserPassword("");
+                HelperFunctions.saveUserEmailSharedPreference("");
+                FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => AuthPage()));
+                //
+              })
+        ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
+          ),
+        ),
+      ),
       body: Container(
         child: chatRoomsList(),
       ),

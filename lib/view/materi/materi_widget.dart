@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:rusa4/Utils/utils.dart';
@@ -26,7 +27,7 @@ class MateriWidget extends StatelessWidget {
     final user = provider.akun;
     allAkun = provider.listAkun;
 
-    return user[9] == allAkun[materi.userID].id
+    return user[9] == allAkun[materi.userID].id && user[7] == "Guru"
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Slidable(
@@ -75,6 +76,14 @@ class MateriWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                        DateFormat("EEEE, d MMMM yyyy", "id_ID")
+                            .add_jm()
+                            .format(materi.createdTime),
+                        // Text(widget.feedMenulis.createdTime.day.toString(),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500)),
                     ListTile(
                       title: Text(
                         materi.title,

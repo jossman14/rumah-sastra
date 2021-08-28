@@ -24,7 +24,7 @@ class _EditQuizState extends State<EditQuiz> {
   DatabaseService databaseService = new DatabaseService();
   final _formKey = GlobalKey<FormState>();
 
-  String quizImgUrl, quizTitle, quizDesc;
+  String quizImgUrl, quizTitle, quizDesc, quizTime;
 
   bool isLoading = false;
   String quizId;
@@ -47,7 +47,8 @@ class _EditQuizState extends State<EditQuiz> {
         "quizDesc": quizDesc,
         "quizAuthor": user.username,
         "quizAuthorID": user.id,
-        "quizKelas": user.kelas
+        "quizKelas": user.kelas,
+        "quizTime": quizTime,
       };
 
       databaseService.editQuizData(quizData, quizId).then((value) {
@@ -73,6 +74,7 @@ class _EditQuizState extends State<EditQuiz> {
       setState(() {
         quizTitle = snapshotQuiz.data()["quizTitle"];
         quizDesc = snapshotQuiz.data()["quizDesc"];
+        quizTime = snapshotQuiz.data()["quizTime"];
         quizId = widget.quizIdGan;
       });
     });
@@ -119,6 +121,20 @@ class _EditQuizState extends State<EditQuiz> {
                 decoration: InputDecoration(hintText: "Soal Cerita"),
                 onChanged: (val) {
                   quizDesc = val;
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              TextFormField(
+                maxLines: 3,
+                controller: TextEditingController()..text = quizTime,
+                validator: (val) =>
+                    val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                decoration:
+                    InputDecoration(hintText: "Durasi Soal Cerita dalam detik"),
+                onChanged: (val) {
+                  quizTime = val;
                 },
               ),
               Spacer(),

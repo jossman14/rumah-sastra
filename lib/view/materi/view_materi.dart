@@ -30,7 +30,7 @@ class _ViewMateriState extends State<ViewMateri> {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Text("RuSa"),
+        title: Text("Rumah Sastra"),
         actions: [
           IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
@@ -96,7 +96,7 @@ class _ViewMateriState extends State<ViewMateri> {
           },
         ),
       ),
-      floatingActionButton: user[7] == "Guru"
+      floatingActionButton: user[7] == "Guru" && user[2] == widget.kelas
           ? FloatingActionButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),

@@ -23,14 +23,14 @@ class GetImageProvider extends ChangeNotifier {
 
   set selesai(bool value) {
     _selesai = value;
-    notifyListeners();
+    // notifyListeners();
   }
 
   String get getImage => _getImage;
 
   set getImage(String value) {
     _getImage = value;
-    notifyListeners();
+    // notifyListeners();
   }
 
   File get fileImage => _fileImage;

@@ -78,7 +78,7 @@ class _HasilHomeState extends State<HasilHome> {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Text("RuSa"),
+        title: Text("Rumah Sastra"),
         actions: [
           IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
@@ -124,7 +124,7 @@ class _HasilHomeState extends State<HasilHome> {
                   return quizResults.isEmpty
                       ? Center(
                           child: Text(
-                            'TIdak ada Hasil Quiz.',
+                            'TIdak ada Hasil Penilaian.',
                             style: TextStyle(fontSize: 20),
                           ),
                         )

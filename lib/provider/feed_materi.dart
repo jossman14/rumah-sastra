@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rusa4/Utils/utils.dart';
 import 'package:rusa4/api/feed_menulis_comment_firebase_api.dart';
 import 'package:rusa4/api/feed_menulis_firebase_api.dart';
 import 'package:rusa4/model/feed_menulis.dart';
@@ -48,6 +49,7 @@ class FeedMenulisProvider extends ChangeNotifier {
       FeedMenulis feedMenulis, String title, String description) {
     feedMenulis.title = title;
     feedMenulis.description = description;
+    feedMenulis.createdTime = DateTime.now();
 
     FeedMenulisFirebaseApi.updateFeedMenulis(feedMenulis);
   }
@@ -81,6 +83,7 @@ class FeedMenulisProvider extends ChangeNotifier {
   void editCommentFeed(FeedMenulis feedMenulis, FeedMenulisComment commenter,
       String description) {
     commenter.description = description;
+    commenter.createdTime = DateTime.now();
 
     FeedMenulisCommentFirebaseApi.updateFeedMenulisComment(
         feedMenulis, commenter);

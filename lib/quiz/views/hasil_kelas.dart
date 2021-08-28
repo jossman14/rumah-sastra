@@ -62,157 +62,145 @@ class _PilihKelasState extends State<PilihKelasHasil> {
                 SizedBox(
                   height: 40,
                 ),
-                Visibility(
-                  visible: user.kelas == "VII" ? true : false,
-                  child: SizedBox(
-                    width: 300,
-                    height: 118.0,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed))
-                              return HexColor('#F55413');
-                            return HexColor(
-                                '#FF7138'); //F69A9A Use the component's default.
-                          },
-                        ),
+                SizedBox(
+                  width: 300,
+                  height: 118.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed))
+                            return HexColor('#F55413');
+                          return HexColor(
+                              '#FF7138'); //F69A9A Use the component's default.
+                        },
                       ),
-                      onPressed: () {
-                        playSound();
-                        Navigator.push(
+                    ),
+                    onPressed: () {
+                      playSound();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeQuizResult("VII"),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.supervised_user_circle,
+                          size: 36,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'VII',
+                          style: GoogleFonts.firaSans(
+                              fontSize: 18,
+                              color: HexColor('#FFFFFF'),
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 300,
+                  height: 118.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed))
+                            return HexColor('#F55413');
+                          return HexColor(
+                              '#FF7138'); //F69A9A Use the component's default.
+                        },
+                      ),
+                    ),
+                    onPressed: () {
+                      playSound();
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomeQuizResult("VII"),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.supervised_user_circle,
-                            size: 36,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'VII',
-                            style: GoogleFonts.firaSans(
-                                fontSize: 18,
-                                color: HexColor('#FFFFFF'),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
+                              builder: (context) => HomeQuizResult("VIII")));
+                      // Navigator.pushNamed(context, LoginSiswa.routeName);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.supervised_user_circle,
+                          size: 36,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'VIII',
+                          style: GoogleFonts.firaSans(
+                              fontSize: 18,
+                              color: HexColor('#FFFFFF'),
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Visibility(
-                  visible: user.kelas == "VIII" ? true : false,
-                  child: SizedBox(
-                    width: 300,
-                    height: 118.0,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed))
-                              return HexColor('#F55413');
-                            return HexColor(
-                                '#FF7138'); //F69A9A Use the component's default.
-                          },
-                        ),
-                      ),
-                      onPressed: () {
-                        playSound();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeQuizResult("VIII")));
-                        // Navigator.pushNamed(context, LoginSiswa.routeName);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.supervised_user_circle,
-                            size: 36,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'VIII',
-                            style: GoogleFonts.firaSans(
-                                fontSize: 18,
-                                color: HexColor('#FFFFFF'),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                SizedBox(
+                  width: 300,
+                  height: 118.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed))
+                            return HexColor('#F55413');
+                          return HexColor(
+                              '#FF7138'); //F69A9A Use the component's default.
+                        },
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Visibility(
-                  visible: user.kelas == "IX" ? true : false,
-                  child: SizedBox(
-                    width: 300,
-                    height: 118.0,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed))
-                              return HexColor('#F55413');
-                            return HexColor(
-                                '#FF7138'); //F69A9A Use the component's default.
-                          },
+                    onPressed: () {
+                      playSound();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeQuizResult("IX")));
+                      // Navigator.pushNamed(context, LoginSiswa.routeName);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.supervised_user_circle,
+                          size: 36,
+                          color: Colors.white,
                         ),
-                      ),
-                      onPressed: () {
-                        playSound();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeQuizResult("IX")));
-                        // Navigator.pushNamed(context, LoginSiswa.routeName);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.supervised_user_circle,
-                            size: 36,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'IX',
-                            style: GoogleFonts.firaSans(
-                                fontSize: 18,
-                                color: HexColor('#FFFFFF'),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'IX',
+                          style: GoogleFonts.firaSans(
+                              fontSize: 18,
+                              color: HexColor('#FFFFFF'),
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -229,7 +217,7 @@ class _PilihKelasState extends State<PilihKelasHasil> {
 
   AppBar appBarMain(BuildContext context) {
     return AppBar(
-      title: Text("RuSa"),
+      title: Text("Rumah Sastra"),
       actions: [
         IconButton(
             icon: Icon(Icons.exit_to_app_rounded),

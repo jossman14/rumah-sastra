@@ -22,7 +22,7 @@ class ProfileUser extends StatelessWidget {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Text("RuSa"),
+        title: Text("Rumah Sastra"),
         actions: [
           IconButton(
               icon: Icon(Icons.exit_to_app_rounded),
@@ -49,154 +49,364 @@ class ProfileUser extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Center(
-              child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('./assets/images/bgPet.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Center(
+                child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Stack(
+                    children: <Widget>[
+                      // Stroked text as border.
+                      Text(
+                        'PROFIL PENGEMBANG',
+                        style: TextStyle(
+                          fontSize: 30,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 6
+                            ..color = HexColor('#ecf0f1'),
+                        ),
+                      ),
+                      // Solid text as fill.
+                      Text(
+                        'PROFIL PENGEMBANG',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: HexColor('#d63031'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(7),
+                    width: 200.0,
+                    height: 200.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child: CircleAvatar(
+                      radius: 65,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage(
+                        './assets/images/intan.jpg',
+                      ),
                     ),
-                    Container(
-                      // margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                      // padding: EdgeInsets.all(8),
-                      color: HexColor('#FF3A00'),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Profile Pembuat Aplikasi",
-                          style: GoogleFonts.firaSans(
-                              fontSize: 25,
-                              color: HexColor('#FFFFFF'),
-                              fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(
+                                      "Nama",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#FFFFFF'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: HexColor('#FF3A00'),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 4,
+                                          blurRadius: 9,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(
+                                      "Program Studi",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#FFFFFF'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: HexColor('#FF3A00'),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 4,
+                                          blurRadius: 9,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(
+                                      "Universitas",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#FFFFFF'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: HexColor('#FF3A00'),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 4,
+                                          blurRadius: 9,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(
+                                      "Email",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#FFFFFF'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: HexColor('#FF3A00'),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 4,
+                                          blurRadius: 9,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Intan Idkhasyah Putri",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#2d3436'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      "Pendidikan Bahasa dan Sastra Indonesia",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#2d3436'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      "Universitas Negeri Yogyakarta",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#2d3436'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      "Intanput06@gmail.com",
+                                      style: GoogleFonts.firaSans(
+                                          fontSize: 16,
+                                          color: HexColor('#2d3436'),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Container(
-                      width: 200.0,
-                      height: 200.0,
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                          image: NetworkImage(
-                              'https://spesialis1.orthopaedi.fk.unair.ac.id/wp-content/uploads/2021/02/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                          padding: EdgeInsets.all(8),
-                          color: HexColor('#FF3A00'),
-                          child: Text(
-                            "Nama",
-                            style: GoogleFonts.firaSans(
-                                fontSize: 16,
-                                color: HexColor('#FFFFFF'),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          "Intan",
-                          style: GoogleFonts.firaSans(
-                              fontSize: 20,
-                              color: HexColor('#2c3e50'),
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                          padding: EdgeInsets.all(8),
-                          color: HexColor('#FF3A00'),
-                          child: Text(
-                            "Program Studi",
-                            style: GoogleFonts.firaSans(
-                                fontSize: 16,
-                                color: HexColor('#FFFFFF'),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          "Pendidikan Bahasa Indonesia",
-                          style: GoogleFonts.firaSans(
-                              fontSize: 20,
-                              color: HexColor('#2c3e50'),
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                          padding: EdgeInsets.all(8),
-                          color: HexColor('#FF3A00'),
-                          child: Text(
-                            "Universitas",
-                            style: GoogleFonts.firaSans(
-                                fontSize: 16,
-                                color: HexColor('#FFFFFF'),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Container(
-                          width: 120.0,
-                          height: 120.0,
-                          decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                              image: NetworkImage(
-                                  'https://1.bp.blogspot.com/-2rZDv4oj2es/XgQ-zfpjdZI/AAAAAAAAAtY/BO2gDBqo1SMrEYfy79Hi-UmTAIe_d7t0QCLcBGAsYHQ/s1600/27.UNY.png'),
-                              fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: <Widget>[
+                        // Stroked text as border.
+
+                        // Solid text as fill.
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: new TextSpan(
+                            // Note: Styles for TextSpans must be explicitly defined.
+                            // Child text spans will inherit styles from parent
+                            style: TextStyle(
+                              fontSize: 16,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 6
+                                ..color = HexColor('#ecf0f1'),
                             ),
+                            children: <TextSpan>[
+                              new TextSpan(
+                                text: 'Software ',
+                                style:
+                                    new TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                              new TextSpan(
+                                  text:
+                                      'ini dibuat sebagai tugas akhir yang mengunakan penelitian model '),
+                              new TextSpan(
+                                text: 'research and development',
+                                style:
+                                    new TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          "Universitas Negeri Yogyakarta",
-                          style: GoogleFonts.firaSans(
-                              fontSize: 20,
-                              color: HexColor('#2c3e50'),
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 10,
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: new TextSpan(
+                            // Note: Styles for TextSpans must be explicitly defined.
+                            // Child text spans will inherit styles from parent
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: HexColor('#c23616'),
+                            ),
+                            children: <TextSpan>[
+                              new TextSpan(
+                                text: 'Software ',
+                                style:
+                                    new TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                              new TextSpan(
+                                  text:
+                                      'ini dibuat sebagai tugas akhir yang mengunakan penelitian model '),
+                              new TextSpan(
+                                text: 'research and development',
+                                style:
+                                    new TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: <Widget>[
+                        // Stroked text as border.
+                        Text(
+                          'Intan Idkhasyah Putri @2021',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = HexColor('#ecf0f1'),
+                          ),
+                        ),
+                        // Solid text as fill.
+                        Text(
+                          'Intan Idkhasyah Putri @2021',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: HexColor('#1e272e'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: <Widget>[
+                        // Stroked text as border.
+                        Text(
+                          'Versi 1.0.0',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = HexColor('#ecf0f1'),
+                          ),
+                        ),
+                        // Solid text as fill.
+                        Text(
+                          'Versi 1.0.0',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: HexColor('#2f3542'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-          )),
+            )),
+          ),
         ),
       ),
     );

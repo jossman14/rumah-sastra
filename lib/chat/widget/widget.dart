@@ -48,7 +48,7 @@ Widget appBarMainChat(BuildContext context, username) {
 
 AppBar appBarMainGan(BuildContext context) {
   return AppBar(
-    title: Text("RuSa"),
+    title: Text("Rumah Sastra"),
     actions: [
       IconButton(
           icon: Icon(Icons.exit_to_app_rounded),

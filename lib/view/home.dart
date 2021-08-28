@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         drawer: DrawerApp(),
         appBar: AppBar(
-          title: Text("RuSa"),
+          title: Text("Rumah Sastra"),
 
           flexibleSpace: Container(
             decoration: BoxDecoration(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/feed_menulis_comment_firebase_api.dart';
 import 'package:rusa4/api/feed_menulis_firebase_api.dart';
@@ -32,6 +33,10 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
   String title;
   String description;
 
+  List tempLike;
+
+  String resultLike;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +54,27 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
 
   @override
   Widget build(BuildContext context) {
+    tempLike = [];
+
+    for (var i = 0;
+        i <
+            (widget.feedMenulis.like.length > 3
+                ? 3
+                : widget.feedMenulis.like.length);
+        i++) {
+      if (widget.feedMenulis.like[i] != user[9]) {
+        setState(() {
+          tempLike += widget.feedMenulis.like[i];
+        });
+      }
+    }
+
+    resultLike = "";
+    for (var i = 0; i < tempLike.length; i++) {
+      resultLike += tempLike[i] + ", ";
+    }
+
+    resultLike = tempLike.length > 0 ? resultLike : "";
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -127,15 +153,38 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                                 listen: false);
                             // print('hehe');
                             // print(widget.feedMenulis.isLike);
-                            widget.feedMenulis.isLike == false
-                                ? provider.likeFeed(widget.feedMenulis, user[3])
-                                : provider.removeLikeFeed(
-                                    widget.feedMenulis, user[3]);
+                            // widget.feedMenulis.isLike == false
+                            //     ? provider.likeFeed(widget.feedMenulis, user[9])
+                            //     : provider.removeLikeFeed(
+                            //         widget.feedMenulis, user[9]);
+
+                            if (widget.feedMenulis.isLike == false) {
+                              provider.likeFeed(widget.feedMenulis, user[9]);
+                              setState(() {
+                                widget.feedMenulis.isLike = true;
+                              });
+                            } else {
+                              provider.removeLikeFeed(
+                                  widget.feedMenulis, user[9]);
+
+                              setState(() {
+                                widget.feedMenulis.isLike = false;
+                              });
+                            }
                           },
                         ),
-                        Text(widget.feedMenulis.like == null
-                            ? "0"
-                            : widget.feedMenulis.like.take(3).toString()),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Text(widget.feedMenulis.like == null
+                              ? "belum ada yang menyukai, jadilah yang pertama!"
+                              : widget.feedMenulis.isLike == true
+                                  ? resultLike == ""
+                                      ? "Anda"
+                                      : "Anda, " + resultLike + " dan lainnya."
+                                  : resultLike == ""
+                                      ? "belum ada yang menyukai, jadilah yang pertama!"
+                                      : resultLike + " dan lainnya."),
+                        ),
                       ],
                     ),
                     Column(
@@ -332,6 +381,13 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                        DateFormat("EEEE, d MMMM yyyy kk:mm", "id_ID")
+                            .format(feedMenulisComment.createdTime),
+                        // Text(widget.feedMenulis.createdTime.day.toString(),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500)),
                     ListTile(
                       title: Text(
                         feedMenulisComment.description,
@@ -377,7 +433,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                           SizedBox(
                             width: 8,
                           ),
-                          Text(feedMenulisComment.writer,
+                          Text(allAkun[feedMenulisComment.userId].username,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500)),

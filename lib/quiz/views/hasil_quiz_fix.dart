@@ -161,61 +161,91 @@ class QuizTile extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            height: 150,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                children: [
-                  Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                    width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                height: 150,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                      Container(
+                        color: Colors.black26,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  title,
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    color: Colors.black26,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              allAkun[authorId].username,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                color: Colors.orange,
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          allAkun[authorId].username,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Container(
+                          color: Colors.deepOrange,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
                               kelas,
                               style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/provider/audio_provider.dart';
 
@@ -10,7 +13,8 @@ import 'package:rusa4/provider/get_image.dart';
 import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/provider/user_new.dart';
-import 'package:rusa4/view/auth.dart';
+import 'package:rusa4/view/SplashGan.dart';
+import 'package:rusa4/view/homeMenu.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 Future main() async {
@@ -59,25 +63,32 @@ class SplashGan extends StatefulWidget {
 class _SplashGanState extends State<SplashGan> {
   @override
   Widget build(BuildContext context) {
-    return new SplashScreen(
-        seconds: 5,
-        navigateAfterSeconds: new AuthPage(),
-        title: new Text(
-          'Selamat Datang di Aplikasi Rumah Sastra',
-          style: new TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18.0,
+    return Scaffold(
+      body: new SplashScreen(
+          seconds: 3,
+          // navigateAfterSeconds: new AuthPage(),
+          navigateAfterSeconds: new SplashNewGan(),
+          gradientBackground: LinearGradient(
+              colors: [HexColor('#373B44'), HexColor('#4286f4')],
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomRight),
+          title: new Text(
+            'Selamat Datang di Aplikasi Rumah Sastra',
+            style: new TextStyle(
+              color: HexColor('#dff9fb'),
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+            ),
           ),
-        ),
-        image: new Image.asset(
-          './assets/images/Logo.png',
-          width: MediaQuery.of(context).size.width / 2,
-          height: MediaQuery.of(context).size.height / 2,
-        ),
-        backgroundColor: Colors.white,
-        styleTextUnderTheLoader: new TextStyle(),
-        photoSize: 100.0,
-        onClick: () => print("Rumah Sastra"),
-        loaderColor: Colors.orange);
+          image: new Image.asset(
+            './assets/images/Logo.png',
+            width: MediaQuery.of(context).size.width / 2,
+            height: MediaQuery.of(context).size.height / 2,
+          ),
+          styleTextUnderTheLoader: new TextStyle(),
+          photoSize: 100.0,
+          onClick: () => print("Rumah Sastra"),
+          loaderColor: HexColor('#dff9fb')),
+    );
   }
 }

@@ -11,6 +11,7 @@ import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rusa4/view/homeMenu.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key key}) : super(key: key);
@@ -973,7 +974,7 @@ class _AuthPageState extends State<AuthPage> {
           userFinal = user;
           provider.daftarEmailGuru = user;
 
-          return HomePage(selectedPage: 1);
+          return MainTileMenu();
 
           // return Container();
         });

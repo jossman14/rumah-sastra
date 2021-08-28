@@ -70,7 +70,7 @@ class _UserSettingState extends State<UserSetting> {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Text("RuSa"),
+        title: Text("Rumah Sastra"),
         actions: [
           IconButton(
               icon: Icon(Icons.exit_to_app_rounded),
