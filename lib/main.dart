@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/provider/audio_provider.dart';
 
@@ -20,8 +21,7 @@ import 'package:splashscreen/splashscreen.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  runApp(MyApp());
+  await initializeDateFormatting('id_ID', null).then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -73,7 +73,7 @@ class _SplashGanState extends State<SplashGan> {
               begin: FractionalOffset.topLeft,
               end: FractionalOffset.bottomRight),
           title: new Text(
-            'Selamat Datang di Aplikasi Rumah Sastra',
+            'Selamat Datang di Rumah Sastra',
             style: new TextStyle(
               color: HexColor('#dff9fb'),
               fontWeight: FontWeight.bold,

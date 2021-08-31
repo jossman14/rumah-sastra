@@ -42,6 +42,10 @@ class MateriFormWidget extends StatefulWidget {
 class _MateriFormWidgetState extends State<MateriFormWidget> {
   @override
   Widget build(BuildContext context) {
+    final providerImage = Provider.of<GetImageProvider>(context, listen: false);
+    providerImage.selesai = false;
+    providerImage.getImage = "";
+
     print("hasil widget.link ${widget.title}");
 
     return SingleChildScrollView(
@@ -57,7 +61,9 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
           SizedBox(height: 8),
           widget.imagegan.length > 2 && widget.imagegan[8] == "f"
               ? showImage(context, widget.imagegan)
-              : Container(),
+              : Container(
+                  child: Text("tidak ada gambar"),
+                ),
           SizedBox(height: 16),
           buildDescription(),
           SizedBox(height: 16),
@@ -205,6 +211,12 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
         maxLines: 1,
         initialValue: widget.imagegan,
         onChanged: widget.onChangedimagegan,
+        validator: (imagegan) {
+          if (imagegan.isEmpty) {
+            return 'Link video tidak boleh kosong';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
           labelText: 'Gambar',
@@ -221,7 +233,9 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
-              provider.selesai == true ? Colors.black : Colors.grey),
+              (provider.selesai == true) || widget.title.length > 0
+                  ? Colors.black
+                  : Colors.grey),
         ),
         // onPressed: provider.selesai == true ? widget.onSavedMateri : null,
         onPressed: cekUpload(provider.selesai),
@@ -234,12 +248,12 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
   cekUpload(bool sudah) {
     final provider = Provider.of<GetImageProvider>(context);
 
-    if (widget.title != null) {
-      provider.selesai = false;
-      return widget.onSavedMateri;
-    }
+    // if (sudah || widget.title != null) {
+    //   provider.selesai = false;
+    //   return widget.onSavedMateri;
+    // }
 
-    if (sudah) {
+    if ((sudah == true) || widget.title.length > 0) {
       provider.selesai = false;
       return widget.onSavedMateri;
     } else {

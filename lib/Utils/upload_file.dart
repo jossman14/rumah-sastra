@@ -89,7 +89,10 @@ class _UploadPageState extends State<UploadPage> {
     print('Download-Link: $urlDownload');
     final provider = Provider.of<GetImageProvider>(context, listen: false);
 
+    setState(() {
     provider.getImage = urlDownload;
+      
+    });
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

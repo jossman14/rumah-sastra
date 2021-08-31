@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -58,13 +57,12 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        _controller.play();
+        _controller.pause();
         return true;
       },
       child: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) {
         if (orientation == Orientation.landscape) {
-          SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
           return mainSeeMateriLandscape(user, context);
         } else {
           return mainSeeMateri(user, context);

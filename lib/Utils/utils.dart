@@ -2,12 +2,26 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Utils {
   static DateTime toDateTime(Timestamp value) {
     if (value == null) return null;
 
     return value.toDate();
+  }
+
+  static cekIdYT(linkVideo) {
+    try {
+      String videoID = YoutubePlayer.convertUrlToId(linkVideo);
+      return videoID;
+    } on Exception catch (exception) {
+      print(exception);
+      return null;
+    } catch (error) {
+      print(error);
+      return null;
+    }
   }
 
   static dynamic fromDateTimeToJson(DateTime date) {

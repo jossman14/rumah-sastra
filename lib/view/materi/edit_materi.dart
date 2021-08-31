@@ -42,13 +42,11 @@ class _EditMateriPageState extends State<EditMateriPage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GetImageProvider>(context, listen: false);
+    // final provider = Provider.of<GetImageProvider>(context, listen: false);
 
-    imageganNew = provider.getImage == "" || provider.getImage == null
-        ? imagegan
-        : provider.getImage;
+    // imagegan = provider.getImage;
 
-    print("provider get image ${provider.getImage}");
+    // print("provider get image ${provider.getImage}");
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Materi'),
@@ -85,7 +83,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
                 onChangedDescription: (description) =>
                     setState(() => this.description = description),
                 onChangedimagegan: (imagegan) =>
-                    setState(() => this.imagegan = imageganNew),
+                    setState(() => this.imagegan = imagegan),
                 onChangedlink: (link) => setState(() => this.link = link),
                 onSavedMateri: saveMateri,
               ),
@@ -99,6 +97,10 @@ class _EditMateriPageState extends State<EditMateriPage> {
   void saveMateri() {
     final isValid = _formKey.currentState.validate();
 
+    final providerImage = Provider.of<GetImageProvider>(context, listen: false);
+
+    imagegan = providerImage.getImage;
+
     if (!isValid) {
       return;
     } else {
@@ -110,6 +112,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
       //     : provider.addMateri(widget.materi);
 
       // Navigator.of(context).pop();
+
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
