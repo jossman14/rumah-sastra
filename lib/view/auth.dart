@@ -646,6 +646,8 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Column registerSiswaHome(BuildContext context) {
+    // user = ["Loading.."];
+
     return Column(
       children: [
         TextFormField(
@@ -668,7 +670,7 @@ class _AuthPageState extends State<AuthPage> {
           child: Text("Pilih Guru"),
         ),
         DropdownButton(
-          hint: Text("pilih Guru"),
+          // hint: Text("pilih Guru"),
           value: _pilihGuru == null ? userFinal[0] : _pilihGuru,
           onChanged: (value) {
             setState(() {
@@ -905,7 +907,7 @@ class _AuthPageState extends State<AuthPage> {
 
   cekAkunEmailGuru(context) {
     user != null ? user.clear() : user = [];
-
+    user = ["Loading.."];
     return FutureBuilder(
         future: FirebaseFirestore.instance.collection("Users").get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -919,6 +921,7 @@ class _AuthPageState extends State<AuthPage> {
                 QuerySnapshot documents = snapshot.data;
                 List<DocumentSnapshot> docs = documents.docs;
                 user != null ? user.clear() : user = [];
+
                 docs.forEach((data) {
                   if (data.get('jenisAkun') == "Guru") {
                     user.add(data.get('emailGuru'));
@@ -934,7 +937,7 @@ class _AuthPageState extends State<AuthPage> {
           print(user);
 
           userFinal = user;
-          _pilihGuru = userFinal[0];
+          // _pilihGuru = userFinal[0];
 
           // return null;
           return registerSiswa(context);

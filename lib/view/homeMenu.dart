@@ -36,11 +36,11 @@ class _MainTileMenuState extends State<MainTileMenu> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('./assets/images/bgMenu.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
+            gradient: LinearGradient(
+          colors: [HexColor('#ffbe76'), HexColor('#f6e58d')],
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+        )),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -386,8 +386,8 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 4,
+                                      width: MediaQuery.of(context).size.width /
+                                          2.8,
                                       child: ElevatedButton(
                                         onPressed: () {
                                           playSound();
