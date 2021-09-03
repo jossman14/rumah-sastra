@@ -39,12 +39,23 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
   }
 
   @override
+  void dispose() {
+    // Set portrait orientation
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
 
     String videoID = cekIdYT();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: videoID == null ? 'OqP2eWmOsw0' : videoID,
@@ -59,6 +70,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     return WillPopScope(
       onWillPop: () async {
         _controller.play();
+
         return true;
       },
       child: OrientationBuilder(
@@ -67,6 +79,8 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
           SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
           return mainSeeMateriLandscape(user, context);
         } else {
+          SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
           return mainSeeMateri(user, context);
         }
       }),

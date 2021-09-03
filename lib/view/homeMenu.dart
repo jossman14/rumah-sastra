@@ -431,6 +431,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                               ),
                                               Text(
                                                 "Hasil Penilaian",
+                                                textAlign: TextAlign.center,
                                                 style: TextStyle(fontSize: 14),
                                               )
                                             ],

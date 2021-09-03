@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
@@ -22,10 +23,17 @@ class ViewMateri extends StatefulWidget {
 
 class _ViewMateriState extends State<ViewMateri> {
   @override
+  void initState() {
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return Scaffold(
       drawer: AppDrawer(),

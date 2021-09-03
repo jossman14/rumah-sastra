@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -15,12 +16,15 @@ import 'package:rusa4/provider/materi_provider.dart';
 import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/provider/user_new.dart';
 import 'package:rusa4/view/SplashGan.dart';
+// import 'package:rusa4/view/bgm.dart';
 import 'package:rusa4/view/homeMenu.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // BGM.attachWidgetBindingListener();
+  // await BGM.add('assets/audio/bggan.mp3');
   await initializeDateFormatting('id_ID', null).then((_) => runApp(MyApp()));
 }
 
@@ -29,6 +33,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // BGM.attachWidgetBindingListener();
+
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => EmailSignInProvider()),
@@ -63,6 +71,8 @@ class SplashGan extends StatefulWidget {
 class _SplashGanState extends State<SplashGan> {
   @override
   Widget build(BuildContext context) {
+    // BGM.play(0);
+
     return Scaffold(
       body: new SplashScreen(
           seconds: 3,

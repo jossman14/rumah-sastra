@@ -32,6 +32,8 @@ class _EditQuizState extends State<EditQuiz> {
   UserRusa user;
   DocumentSnapshot snapshotQuiz;
 
+  var futureGan;
+
   EditQuiz() {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
     user = provider.akunRusa;
@@ -82,7 +84,8 @@ class _EditQuizState extends State<EditQuiz> {
 
   @override
   void initState() {
-    getQuizDataGan(widget.quizIdGan);
+    // getQuizDataGan(widget.quizIdGan);
+    futureGan = databaseService.getQuizDataSingle(widget.quizIdGan);
     super.initState();
   }
 
@@ -90,20 +93,94 @@ class _EditQuizState extends State<EditQuiz> {
   Widget build(BuildContext context) {
     print("hasil quizTitle $quizTitle");
     print("hasil quizDesc $quizDesc");
+    return FutureBuilder(
+        future: futureGan,
+        builder: (ctx, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return halamanLoading(context);
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                DocumentSnapshot documents = snapshot.data;
+                // List<DocumentSnapshot> docs = documents.docs;
+
+                quizTitle = documents.data()["quizTitle"];
+                quizDesc = documents.data()["quizDesc"];
+                quizTime = documents.data()["quizTime"];
+                quizId = widget.quizIdGan;
+                return mainQuizGan(context);
+              } else {
+                print('data tidak ditemukan');
+              }
+          }
+          return null;
+        });
+
+    // FutureBuilder(
+    // future: FirebaseFirestore.instance.collection("Users").get(),
+    // builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //   switch (snapshot.connectionState) {
+    //     case ConnectionState.none:
+    //     case ConnectionState.active:
+    //     case ConnectionState.waiting:
+    //       return halamanLoading(context);
+
+    //     case ConnectionState.done:
+    //       if (snapshot.hasData) {
+    //         QuerySnapshot documents = snapshot.data;
+    //         List<DocumentSnapshot> docs = documents.docs;
+
+    //         docs.forEach((data) {
+    //           cekUser = UserRusa(
+    //               jenisAkun: data.get('jenisAkun'),
+    //               pic: data.get('pic'),
+    //               id: data.get('id'),
+    //               akunDibuat: data.get('akunDibuat').toDate(),
+    //               emailSiswa: data.get('emailSiswa'),
+    //               password: data.get('password'),
+    //               emailGuru: data.get('emailGuru'),
+    //               kelas: data.get('kelas'),
+    //               passwordConfirm: data.get('passwordConfirm'),
+    //               username: data.get('username'));
+
+    //           listAkunLocal[data.get('id')] = cekUser;
+    //           cekUser = null;
+    //         });
+    //       } else {
+    //         print('data tidak ditemukan');
+    //       }
+    //   }
+
+    //   provider.listAkun = listAkunLocal;
+
+    //   // return Container();
+    //   return cekEmailGuru(context);
+    // });
+  }
+
+  Scaffold mainQuizGan(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBarMainGan(context),
       body: Form(
         key: _formKey,
         child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height + 32,
           padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
+          child: ListView(
             children: [
               SizedBox(
                 height: 5,
               ),
               TextFormField(
-                controller: TextEditingController()..text = quizTitle,
+                controller: TextEditingController()
+                  ..text = quizTitle
+                  ..selection = TextSelection.fromPosition(
+                      TextPosition(offset: quizTitle.length)),
+                maxLines: 2,
                 validator: (val) =>
                     val.isEmpty ? "Masukkan Judul Uji Pemahaman" : null,
                 decoration: InputDecoration(hintText: "Judul Uji Pemahaman"),
@@ -116,7 +193,10 @@ class _EditQuizState extends State<EditQuiz> {
               ),
               TextFormField(
                 maxLines: 8,
-                controller: TextEditingController()..text = quizDesc,
+                controller: TextEditingController()
+                  ..text = quizDesc
+                  ..selection = TextSelection.fromPosition(
+                      TextPosition(offset: quizDesc.length)),
                 validator: (val) => val.isEmpty ? "Masukkan Soal Cerita" : null,
                 decoration: InputDecoration(hintText: "Soal Cerita"),
                 onChanged: (val) {
@@ -128,7 +208,10 @@ class _EditQuizState extends State<EditQuiz> {
               ),
               TextFormField(
                 maxLines: 3,
-                controller: TextEditingController()..text = quizTime,
+                controller: TextEditingController()
+                  ..text = quizTime
+                  ..selection = TextSelection.fromPosition(
+                      TextPosition(offset: quizTime.length)),
                 validator: (val) =>
                     val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
                 decoration:
@@ -137,7 +220,8 @@ class _EditQuizState extends State<EditQuiz> {
                   quizTime = val;
                 },
               ),
-              Spacer(),
+              // Spacer(),
+              SizedBox(height: 5),
               GestureDetector(
                 onTap: () {
                   EditQuiz();
