@@ -26,12 +26,17 @@ class AudioProvider extends ChangeNotifier {
     _cekSoalProvider = _cekSoalProvider + value;
     print("hasil tambah ceksoal $_cekSoalProvider");
 
-    notifyListeners();
+    Future.delayed(Duration.zero, () async {
+      notifyListeners();
+    });
   }
 
   set resetSoalProvider(int value) {
     _cekSoalProvider = value;
-    notifyListeners();
+
+    Future.delayed(Duration.zero, () async {
+      notifyListeners();
+    });
   }
 
   List _jawaban = [];
@@ -42,6 +47,7 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _jawaban.add(value);
     print("hasil tambah jawaban $_jawaban");
+
     // notifyListeners();
   }
 
@@ -49,7 +55,9 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _jawaban = [];
     print("hasil tambah jawaban $_jawaban");
-    notifyListeners();
+    Future.delayed(Duration.zero, () async {
+      notifyListeners();
+    });
   }
 
   List _optionSelected = [];
@@ -60,6 +68,7 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _optionSelected.add(value);
     print("hasil tambah optionSelected $_optionSelected");
+
     // notifyListeners();
   }
 
@@ -67,7 +76,9 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _optionSelected = [];
     print("hasil tambah optionSelected $_optionSelected");
-    notifyListeners();
+    Future.delayed(Duration.zero, () async {
+      notifyListeners();
+    });
   }
 
   List _correctAnswer = [];
@@ -78,6 +89,7 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _correctAnswer.add(value);
     print("hasil tambah correctAnswer $_correctAnswer");
+
     // notifyListeners();
   }
 
@@ -85,6 +97,8 @@ class AudioProvider extends ChangeNotifier {
     print("hasil tambah value $value");
     _correctAnswer = [];
     print("hasil tambah correctAnswer $_correctAnswer");
-    notifyListeners();
+    Future.delayed(Duration.zero, () async {
+      notifyListeners();
+    });
   }
 }

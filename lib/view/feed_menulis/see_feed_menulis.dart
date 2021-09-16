@@ -37,6 +37,8 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
 
   String resultLike;
 
+  List hasil;
+
   @override
   void initState() {
     super.initState();
@@ -55,26 +57,31 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
   @override
   Widget build(BuildContext context) {
     tempLike = [];
-
     for (var i = 0;
         i <
-            (widget.feedMenulis.like.length > 3
-                ? 3
+            (widget.feedMenulis.like.length > 2
+                ? 2
                 : widget.feedMenulis.like.length);
         i++) {
       if (widget.feedMenulis.like[i] != user[9]) {
         setState(() {
-          tempLike += widget.feedMenulis.like[i];
+          tempLike.add(widget.feedMenulis.like[i]);
         });
       }
     }
 
     resultLike = "";
     for (var i = 0; i < tempLike.length; i++) {
-      resultLike += tempLike[i] + ", ";
+      if (i != tempLike.length - 1) {
+        resultLike += allAkun[tempLike[i]].username + ", ";
+      } else {
+        resultLike += allAkun[tempLike[i]].username;
+      }
     }
 
     resultLike = tempLike.length > 0 ? resultLike : "";
+    hasil = widget.feedMenulis.like;
+    // hasil.remove(user[9]);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -177,13 +184,31 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                           width: MediaQuery.of(context).size.width / 1.5,
                           child: Text(widget.feedMenulis.like == null
                               ? "belum ada yang menyukai, jadilah yang pertama!"
-                              : widget.feedMenulis.isLike == true
-                                  ? resultLike == ""
-                                      ? "Anda"
-                                      : "Anda, " + resultLike + " dan lainnya."
-                                  : resultLike == ""
-                                      ? "belum ada yang menyukai, jadilah yang pertama!"
-                                      : resultLike + " dan lainnya."),
+                              : widget.feedMenulis.like.length == 0
+                                  ? "belum ada yang menyukai, jadilah yang pertama!"
+                                  : widget.feedMenulis.like.length <= 3
+                                      ? widget.feedMenulis.like
+                                              .contains(user[9])
+                                          ? widget.feedMenulis.like.length <= 1
+                                              ? "Anda"
+                                              : "Anda, " + resultLike
+                                          : resultLike
+                                      : widget.feedMenulis.like
+                                              .contains(user[9])
+                                          ? "Anda" +
+                                              resultLike +
+                                              " dan lainnya."
+                                          : resultLike + " dan lainnya."),
+
+                          // child: Text(widget.feedMenulis.like == null
+                          //     ? "belum ada yang menyukai, jadilah yang pertama!"
+                          //     : widget.feedMenulis.isLike == true
+                          //         ? resultLike == ""
+                          //             ? "Anda"
+                          //             : "Anda, " + resultLike + " dan lainnya."
+                          //         : resultLike == ""
+                          //             ? "belum ada yang menyukai, jadilah yang pertama!"
+                          //             : resultLike + " dan lainnya."),
                         ),
                       ],
                     ),
@@ -195,9 +220,10 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                           children: [
                             IconButton(
                               icon: Icon(Icons.comment_outlined),
-                              color: widget.feedMenulis.isComment == true
-                                  ? Colors.blue
-                                  : Colors.black,
+                              color:
+                                  widget.feedMenulis.comment.contains(user[9])
+                                      ? Colors.blue
+                                      : Colors.black,
                               onPressed: () {
                                 playSound();
                                 buildAlertDialog();
@@ -408,15 +434,19 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                               child: allAkun[feedMenulisComment.userId]
                                           .pic[8] !=
                                       "f"
-                                  ? SvgPicture.network(
-                                      allAkun[feedMenulisComment.userId].pic,
-                                      semanticsLabel: 'Profil Pic',
-                                      placeholderBuilder:
-                                          (BuildContext context) => Container(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child:
-                                                  const CircularProgressIndicator()),
+                                  ? Container(
+                                      width: 30,
+                                      height: 30,
+                                      child: SvgPicture.network(
+                                        allAkun[feedMenulisComment.userId].pic,
+                                        semanticsLabel: 'Profil Pic',
+                                        placeholderBuilder:
+                                            (BuildContext context) => Container(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child:
+                                                    const CircularProgressIndicator()),
+                                      ),
                                     )
                                   : Container(
                                       width: 30,
@@ -456,7 +486,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
     provider.removeCommentFeed(widget.feedMenulis, feedMenulisComment);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Komentar Feed Menulis dihapus')),
+      SnackBar(content: Text('Komentar konten dihapus')),
     );
   }
 

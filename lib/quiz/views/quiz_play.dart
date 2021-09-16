@@ -360,6 +360,13 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
         _start = int.parse(widget.waktuList[widget.index]);
         cek = 0;
       });
+
+      setState(() {
+        optionSelected = "Tidak di jawab";
+        widget.questionModel.answered = true;
+        _incorrect = _incorrect + 1;
+        _notAttempted = _notAttempted - 1;
+      });
     });
 
     return mainQuizGan(providerCekSoal);
@@ -377,7 +384,14 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
   @override
   void dispose() {
+    
     _timer.cancel();
+    // final providerCekSoal = Provider.of<AudioProvider>(context, listen: false);
+
+    // providerCekSoal.resetJawaban = true;
+    // providerCekSoal.resetSoalProvider = 0;
+    // providerCekSoal.resetcorrectAnswer = "reset";
+    // providerCekSoal.resetoptionSelected = "reset";
     super.dispose();
   }
 

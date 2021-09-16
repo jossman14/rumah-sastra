@@ -163,7 +163,7 @@ class _FeedMenulisCommentWidgetState extends State<FeedMenulisCommentWidget> {
     provider.removeCommentFeed(widget.feedMenulis, feedMenulisComment);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Komentar Feed Menulis dihapus')),
+      SnackBar(content: Text('Komentar konten dihapus')),
     );
   }
 

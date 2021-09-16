@@ -17,6 +17,7 @@ class EmailSignInProvider extends ChangeNotifier {
   UserRusa _akunRusa;
   Map _listAkun;
   List _daftarEmailGuru;
+  Map _quizList;
 
   EmailSignInProvider() {
     _id = '';
@@ -96,6 +97,13 @@ class EmailSignInProvider extends ChangeNotifier {
 
   set daftarEmailGuru(List value) {
     _daftarEmailGuru = value;
+    // notifyListeners();
+  }
+ 
+  Map get quizList => _quizList;
+
+  set quizList(Map value) {
+    _quizList = value;
     // notifyListeners();
   }
 

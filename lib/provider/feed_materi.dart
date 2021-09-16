@@ -72,7 +72,7 @@ class FeedMenulisProvider extends ChangeNotifier {
   }
 
   void commentFeed(FeedMenulis feedMenulis, FeedMenulisComment commenter) {
-    feedMenulis.comment.add(commenter.writer);
+    feedMenulis.comment.add(commenter.userId);
     feedMenulis.isComment = true;
     FeedMenulisFirebaseApi.updateFeedMenulis(feedMenulis);
 
@@ -95,7 +95,7 @@ class FeedMenulisProvider extends ChangeNotifier {
     feedMenulis.comment == null
         ? feedMenulis.comment = []
         : feedMenulis.comment = feedMenulis.comment;
-    feedMenulis.comment.remove(commenter.writer);
+    feedMenulis.comment.remove(commenter.userId);
     feedMenulis.isComment = false;
 
     FeedMenulisCommentFirebaseApi.deleteFeedMenulisComment(

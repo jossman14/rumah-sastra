@@ -27,6 +27,8 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
   String imagegan;
   String link;
 
+  Map allAkun;
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +55,7 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
+    allAkun = provider.listAkun;
 
     String videoID = cekIdYT();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -103,33 +106,34 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        actions: user[7] == "Guru"
-            ? [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    playSound();
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditMateriPage(materi: widget.materi),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    playSound();
-                    final provider =
-                        Provider.of<MateriProvider>(context, listen: false);
-                    provider.removeMateri(widget.materi);
+        actions:
+            user[9] == allAkun[widget.materi.userID].id && user[7] == "Guru"
+                ? [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        playSound();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                EditMateriPage(materi: widget.materi),
+                          ),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        playSound();
+                        final provider =
+                            Provider.of<MateriProvider>(context, listen: false);
+                        provider.removeMateri(widget.materi);
 
-                    Navigator.of(context).pop();
-                  },
-                )
-              ]
-            : null,
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]
+                : null,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

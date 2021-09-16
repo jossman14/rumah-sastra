@@ -21,12 +21,14 @@ class QuizResultWidget extends StatelessWidget {
   final QuizResult quizResult;
   final bool hidden;
   final String idResult, cekIdUser;
+  final String cekIdQuiz;
 
   const QuizResultWidget({
     @required this.quizResult,
     @required this.hidden,
     @required this.idResult,
     @required this.cekIdUser,
+    @required this.cekIdQuiz,
     Key key,
   }) : super(key: key);
 
@@ -39,7 +41,7 @@ class QuizResultWidget extends StatelessWidget {
     final user = provider.akun;
     allAkun = provider.listAkun;
 
-    return user[9] == allAkun[cekIdUser].id && user[7] == "Guru"
+    return user[7] == "Guru"
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Slidable(
@@ -49,7 +51,7 @@ class QuizResultWidget extends StatelessWidget {
                 IconSlideAction(
                   color: Colors.red,
                   caption: 'Hapus',
-                  onTap: () => deleteQuizResult(context, idResult, cekIdUser),
+                  onTap: () => deleteQuizResult(context, idResult, cekIdQuiz),
                   icon: Icons.delete,
                 )
               ],
@@ -60,12 +62,24 @@ class QuizResultWidget extends StatelessWidget {
   }
 
   Widget buildQuizResult(BuildContext context) {
+    var allAkun;
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
+    allAkun = provider.listAkun;
+
+    final allQuiz = provider.quizList;
+
+    print("allQuiz  ${allQuiz[quizResult.quizId]['authorId']}");
     final user = provider.akun;
     final userRusa = provider.akunRusa;
     return Visibility(
-      visible: hidden,
+      visible: hidden &&
+                  allAkun[allQuiz[quizResult.quizId]['authorId']].emailGuru ==
+                      userRusa.emailGuru ||
+              allQuiz[quizResult.quizId]['authorId'] ==
+                  'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
+          ? true
+          : false,
       child: GestureDetector(
         // onTap: () => seeQuizResult(context, quizResult),
         onTap: () {
@@ -98,6 +112,7 @@ class QuizResultWidget extends StatelessWidget {
                           padding: const EdgeInsets.all(12.0),
                           child: Text(
                             quizResult.quizName,
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.firaSans(
                                 fontSize: 18,
                                 color: HexColor('#ecf0f1'),
@@ -109,7 +124,7 @@ class QuizResultWidget extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        quizResult.username,
+                        allAkun[quizResult.userId].username,
                         style: GoogleFonts.firaSans(
                             fontSize: 18,
                             color: HexColor('#2C3E50'),
@@ -124,7 +139,7 @@ class QuizResultWidget extends StatelessWidget {
                           children: <Widget>[
                             // Stroked text as border.
                             Text(
-                              "${quizResult.result}",
+                              "${quizResult.result.toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontSize: 45,
                                 foreground: Paint()
@@ -137,7 +152,7 @@ class QuizResultWidget extends StatelessWidget {
                             ),
                             // Solid text as fill.
                             Text(
-                              "${quizResult.result}",
+                              "${quizResult.result.toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontSize: 45,
                                 color: quizResult.result > 60.0
@@ -214,15 +229,15 @@ class QuizResultWidget extends StatelessWidget {
   //     ],
   //   ),
   // ),
-  void deleteQuizResult(BuildContext context, idResult, cekIdUser) {
+  void deleteQuizResult(BuildContext context, idResult, cekIdQuiz) {
     DatabaseService databaseService = new DatabaseService();
 
     final provider = Provider.of<QuizResultProvider>(context, listen: false);
     provider.removeQuizResult(idResult);
 
-    databaseService.deleteUser(cekIdUser);
+    databaseService.deleteUser(cekIdQuiz);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('quizResult dihapus')),
+      SnackBar(content: Text('Hasil uji pemahaman dihapus')),
     );
   }
 

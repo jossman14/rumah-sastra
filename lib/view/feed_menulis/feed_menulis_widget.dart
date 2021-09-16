@@ -122,15 +122,19 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                               child: allAkun[widget.feedMenulis.userID]
                                           .pic[8] !=
                                       "f"
-                                  ? SvgPicture.network(
-                                      allAkun[widget.feedMenulis.userID].pic,
-                                      semanticsLabel: 'Profil Pic',
-                                      placeholderBuilder:
-                                          (BuildContext context) => Container(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child:
-                                                  const CircularProgressIndicator()),
+                                  ? Container(
+                                      width: 30,
+                                      height: 30,
+                                      child: SvgPicture.network(
+                                        allAkun[widget.feedMenulis.userID].pic,
+                                        semanticsLabel: 'Profil Pic',
+                                        placeholderBuilder:
+                                            (BuildContext context) => Container(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child:
+                                                    const CircularProgressIndicator()),
+                                      ),
                                     )
                                   : Container(
                                       width: 30,
@@ -160,7 +164,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                       children: [
                         IconButton(
                           icon: Icon(Icons.thumb_up_outlined),
-                          color: widget.feedMenulis.isLike == true
+                          color: widget.feedMenulis.like.contains(user[9])
                               ? Colors.blue
                               : Colors.black,
                           onPressed: () {
@@ -169,7 +173,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                                 context,
                                 listen: false);
 
-                            widget.feedMenulis.isLike == false
+                            !widget.feedMenulis.like.contains(user[9])
                                 ? provider.likeFeed(widget.feedMenulis, user[9])
                                 : provider.removeLikeFeed(
                                     widget.feedMenulis, user[9]);
@@ -180,7 +184,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
                             : widget.feedMenulis.like.length.toString()),
                         IconButton(
                           icon: Icon(Icons.comment_outlined),
-                          color: widget.feedMenulis.isComment == true
+                          color: widget.feedMenulis.comment.contains(user[9])
                               ? Colors.blue
                               : Colors.black,
                           onPressed: () {
@@ -230,7 +234,7 @@ class _FeedMenulisWidgetState extends State<FeedMenulisWidget> {
     provider.removeFeedMenulis(feedMenulis);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Feed Menulis dihapus')),
+      SnackBar(content: Text('Konten dihapus')),
     );
   }
 

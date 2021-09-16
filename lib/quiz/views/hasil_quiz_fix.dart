@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
+import 'package:rusa4/model/user.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/cerita_page.dart';
@@ -31,45 +32,46 @@ class _HomeQuizResultState extends State<HomeQuizResult> {
             StreamBuilder(
               stream: quizStream,
               builder: (context, snapshot) {
+                var cekKelas = 0;
+                List listKelas = [];
+                for (var item in snapshot.data.documents) {
+                  if (item.data()['quizKelas'] == widget.kelas) {
+                    cekKelas += 1;
+                    listKelas.add(item);
+                  }
+                }
                 return snapshot.data == null
                     ? Container()
                     : ListView.builder(
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
-                        itemCount: snapshot.data.documents.length,
+                        itemCount: cekKelas,
                         itemBuilder: (context, index) {
-                          return snapshot.data.documents[index]
-                                      .data()['quizKelas'] ==
+                          return listKelas[index].data()['quizKelas'] ==
                                   widget.kelas
                               ? QuizTile(
-                                  noOfQuestions: snapshot.data.documents.length,
-                                  imageUrl: snapshot.data.documents[index]
-                                      .data()['quizImgUrl'],
-                                  title: snapshot.data.documents[index]
-                                      .data()['quizTitle'],
-                                  description: snapshot.data.documents[index]
-                                      .data()['quizDesc'],
-                                  authorId: snapshot.data.documents[index]
-                                      .data()['quizAuthorID'],
-                                  kelas: snapshot.data.documents[index]
-                                      .data()['quizKelas'],
-                                  id: snapshot.data.documents[index].documentID,
+                                  imageUrl:
+                                      listKelas[index].data()['quizImgUrl'],
+                                  title: listKelas[index].data()['quizTitle'],
+                                  description:
+                                      listKelas[index].data()['quizDesc'],
+                                  authorId:
+                                      listKelas[index].data()['quizAuthorID'],
+                                  kelas: listKelas[index].data()['quizKelas'],
+                                  id: listKelas[index].documentID,
                                   hidden: true,
                                   kelasPilih: widget.kelas,
                                 )
                               : QuizTile(
-                                  noOfQuestions: snapshot.data.documents.length,
-                                  imageUrl: snapshot.data.documents[index]
-                                      .data()['quizImgUrl'],
-                                  title: snapshot.data.documents[index]
-                                      .data()['quizTitle'],
-                                  description: snapshot.data.documents[index]
-                                      .data()['quizDesc'],
-                                  authorId: snapshot.data.documents[index]
-                                      .data()['quizAuthorID'],
-                                  kelas: snapshot.data.documents[index]
-                                      .data()['quizKelas'],
-                                  id: snapshot.data.documents[index].documentID,
+                                  imageUrl:
+                                      listKelas[index].data()['quizImgUrl'],
+                                  title: listKelas[index].data()['quizTitle'],
+                                  description:
+                                      listKelas[index].data()['quizDesc'],
+                                  authorId:
+                                      listKelas[index].data()['quizAuthorID'],
+                                  kelas: listKelas[index].data()['quizKelas'],
+                                  id: listKelas[index].documentID,
                                   hidden: false,
                                   kelasPilih: widget.kelas,
                                 );
@@ -112,11 +114,12 @@ class _HomeQuizResultState extends State<HomeQuizResult> {
 class QuizTile extends StatelessWidget {
   final String imageUrl, title, id, description, authorId, kelas, kelasPilih;
   final bool hidden;
-  final int noOfQuestions;
 
   Map allAkun;
 
   List user;
+
+  UserRusa userRusa;
 
   QuizTile({
     @required this.title,
@@ -125,7 +128,6 @@ class QuizTile extends StatelessWidget {
     @required this.id,
     @required this.authorId,
     @required this.kelas,
-    @required this.noOfQuestions,
     @required this.hidden,
     @required this.kelasPilih,
   });
@@ -142,13 +144,17 @@ class QuizTile extends StatelessWidget {
 
     allAkun = provider.listAkun;
     user = provider.akun;
+    userRusa = provider.akunRusa;
     print("quizHome $id");
     return mainQuiz(context);
   }
 
   Visibility mainQuiz(BuildContext context) {
     return Visibility(
-      visible: hidden,
+      visible: hidden && allAkun[authorId].emailGuru == userRusa.emailGuru ||
+              authorId == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
+          ? true
+          : false,
       child: GestureDetector(
         onTap: () {
           Navigator.push(

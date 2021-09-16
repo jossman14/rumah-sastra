@@ -91,6 +91,8 @@ flutter:
     - assets/images/
     - assets/
     - assets/audio/
+    - assets/audio/bgm/bggan.mp3
+    
     
     
 

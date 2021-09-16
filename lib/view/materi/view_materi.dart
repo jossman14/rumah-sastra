@@ -83,7 +83,7 @@ class _ViewMateriState extends State<ViewMateri> {
                   return materis.isEmpty
                       ? Center(
                           child: Text(
-                            'Tidak ada Materi',
+                            'Tidak ada materi',
                             style: TextStyle(fontSize: 20),
                           ),
                         )

@@ -21,7 +21,7 @@ class _AddFeedMenulisDialogWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambah Feed Menulis'),
+        title: Text('Tambah konten'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

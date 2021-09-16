@@ -114,7 +114,9 @@ class _CreateQuizState extends State<CreateQuiz> {
                   quizTime = val;
                 },
               ),
-              Spacer(),
+              SizedBox(
+                height: 20,
+              ),
               GestureDetector(
                 onTap: () {
                   createQuiz();

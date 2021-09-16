@@ -25,8 +25,15 @@ class DatabaseMethods {
   searchByName(String searchField) {
     return FirebaseFirestore.instance
         .collection("Users")
-        .where('username', arrayContains: searchField)
+        .orderBy("username")
+        .where("username", isGreaterThanOrEqualTo: searchField)
+        .where("username", isLessThanOrEqualTo: searchField)
         .get();
+    // searchByName(String searchField) {
+    //   return FirebaseFirestore.instance
+    //       .collection("Users")
+    //       .where('username', arrayContains: searchField)
+    //       .get();
   }
 
   searchAllName(String id) {

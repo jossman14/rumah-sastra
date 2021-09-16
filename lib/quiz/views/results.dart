@@ -9,6 +9,7 @@ import 'package:rusa4/quiz/services/save_result.dart';
 import 'package:rusa4/quiz/views/home.dart';
 import 'package:rusa4/quiz/views/quiz_play.dart';
 import 'package:rusa4/view/home.dart';
+import 'package:rusa4/view/homeMenu.dart';
 
 class Results extends StatefulWidget {
   final int total, correct, incorrect, notattempted;
@@ -103,7 +104,7 @@ class _ResultsState extends State<Results> {
                   children: <Widget>[
                     // Stroked text as border.
                     Text(
-                      "${(widget.correct / widget.total) * 100}",
+                      "${((widget.correct / widget.total) * 100).toStringAsFixed(2)}",
                       style: TextStyle(
                         fontSize: 45,
                         foreground: Paint()
@@ -114,7 +115,7 @@ class _ResultsState extends State<Results> {
                     ),
                     // Solid text as fill.
                     Text(
-                      "${(widget.correct / widget.total) * 100}",
+                      "${((widget.correct / widget.total) * 100).toStringAsFixed(2)}",
                       style: TextStyle(
                         fontSize: 45,
                         color: Colors.grey[300],
@@ -134,7 +135,7 @@ class _ResultsState extends State<Results> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomePage(selectedPage: 1),
+                      builder: (context) => MainTileMenu(),
                     ),
                   );
                 },

@@ -59,13 +59,42 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
 
     print("hasil widget.link ${widget.title}");
 
+    return WillPopScope(
+      onWillPop: () async {
+        return true;
+      },
+      child: OrientationBuilder(
+          builder: (BuildContext context, Orientation orientation) {
+        if (orientation == Orientation.landscape) {
+          return mainMateriFormLandscape(context);
+        } else {
+          return mainMateriForm(context);
+        }
+      }),
+    );
+  }
+
+  youtubeHierarchy() {
+    return Container(
+      child: Align(
+        alignment: Alignment.center,
+        child: FittedBox(fit: BoxFit.fill, child: showYT()),
+      ),
+    );
+  }
+
+  Scaffold mainMateriFormLandscape(BuildContext context) {
+    return Scaffold(body: youtubeHierarchy());
+  }
+
+  SingleChildScrollView mainMateriForm(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           buildTitle(),
           SizedBox(height: 8),
-          buildYoutube(),
+          youtubeHierarchy(),
           SizedBox(height: 8),
           UploadPage(),
           buildImage(context),
@@ -88,7 +117,11 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
 
   Widget buildTitle() => TextFormField(
         maxLines: 1,
-        initialValue: widget.title,
+        // initialValue: widget.title,
+        controller: TextEditingController()
+          ..text = widget.title
+          ..selection = TextSelection.fromPosition(
+              TextPosition(offset: widget.title.length)),
         onChanged: widget.onChangedTitle,
         validator: (title) {
           if (title.isEmpty) {
@@ -103,13 +136,15 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
       );
 
   Widget buildYoutube() {
-    String videoID = cekIdYT();
-    bool cekVideoID = videoID != null ? true : false;
     return Column(
       children: [
         TextFormField(
           maxLines: 1,
-          initialValue: widget.linkVideo,
+          // initialValue: widget.linkVideo,
+          controller: TextEditingController()
+            ..text = widget.linkVideo
+            ..selection = TextSelection.fromPosition(
+                TextPosition(offset: widget.linkVideo.length)),
           onChanged: widget.onChangedlinkVideo,
           validator: (title) {
             if (title.isEmpty) {
@@ -123,23 +158,29 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
           ),
         ),
         SizedBox(height: 8),
-        Visibility(
-          visible: cekVideoID,
-          child: YoutubePlayer(
-            controller: YoutubePlayerController(
-              initialVideoId: videoID == null ? 'OqP2eWmOsw0' : videoID,
-              flags: YoutubePlayerFlags(
-                hideControls: false,
-                controlsVisibleAtStart: true,
-                autoPlay: false,
-                mute: false,
-              ),
-            ),
-            showVideoProgressIndicator: true,
-            progressIndicatorColor: HexColor('#d35400'),
+        youtubeHierarchy(),
+      ],
+    );
+  }
+
+  Visibility showYT() {
+    String videoID = cekIdYT();
+    bool cekVideoID = videoID != null ? true : false;
+    return Visibility(
+      visible: cekVideoID,
+      child: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoID == null ? 'OqP2eWmOsw0' : videoID,
+          flags: YoutubePlayerFlags(
+            hideControls: false,
+            controlsVisibleAtStart: true,
+            autoPlay: false,
+            mute: false,
           ),
         ),
-      ],
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: HexColor('#d35400'),
+      ),
     );
   }
 
@@ -158,7 +199,11 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
 
   Widget buildDescription() => TextFormField(
         maxLines: 20,
-        initialValue: widget.description,
+        // initialValue: widget.description,
+        controller: TextEditingController()
+          ..text = widget.description
+          ..selection = TextSelection.fromPosition(
+              TextPosition(offset: widget.description.length)),
         onChanged: widget.onChangedDescription,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -167,7 +212,11 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
       );
   Widget buildLink() => TextFormField(
         maxLines: 8,
-        initialValue: widget.link,
+        // initialValue: widget.link,
+        controller: TextEditingController()
+          ..text = widget.link
+          ..selection = TextSelection.fromPosition(
+              TextPosition(offset: widget.link.length)),
         onChanged: widget.onChangedlink,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),

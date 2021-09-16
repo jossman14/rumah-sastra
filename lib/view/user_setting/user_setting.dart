@@ -108,6 +108,7 @@ class _UserSettingState extends State<UserSetting> {
     userGuru = providerAkun.daftarEmailGuru;
     user = ["Pilih Guru"];
     user.addAll(userGuru);
+    user = userGuru;
     _emailGuru = TextEditingController(text: penggunaLocal[1]);
     _emailSiswa = TextEditingController(text: penggunaLocal[0]);
     // _penggunaname = TextEditingController(text: penggunaLocal[3]);
@@ -764,7 +765,7 @@ class _UserSettingState extends State<UserSetting> {
   DropdownButton widgetGuru() {
     return DropdownButton(
       // Not necessary for Option 1
-      value: _pilihGuru == null ? user[0] : _pilihGuru,
+      value: _pilihGuru == null ? _emailGuru.text : _pilihGuru,
       onChanged: isEdit
           ? (value) {
               _pilihGuru = value;
@@ -787,7 +788,7 @@ class _UserSettingState extends State<UserSetting> {
   emailGuru() {
     return TextFormField(
       // initialValue: formEmailSiswa,
-      enabled: isEdit,
+      enabled: false,
       controller: _emailGuru,
       decoration: InputDecoration(
         hintText: penggunaLocal[1] == '' ? '-' : penggunaLocal[1],

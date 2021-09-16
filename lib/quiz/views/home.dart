@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -5,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:rusa4/Utils/app_drawer.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/model/user.dart';
+import 'package:rusa4/provider/audio_provider.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/cerita_page.dart';
@@ -26,12 +29,23 @@ class _HomeState extends State<HomeQuiz> {
   // Map allAkun;
   UserRusa user;
 
+  // Map quizListGan;
+  // Map quizLocal;
+
   List temp;
+
   Widget quizList() {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     user = provider.akunRusa;
 
+    final providerCekSoal = Provider.of<AudioProvider>(context);
+
+    providerCekSoal.resetJawaban = true;
+    providerCekSoal.resetSoalProvider = 0;
+    providerCekSoal.resetcorrectAnswer = "reset";
+    providerCekSoal.resetoptionSelected = "reset";
+    var quizListGan = new Map();
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -39,90 +53,110 @@ class _HomeState extends State<HomeQuiz> {
             StreamBuilder(
               stream: quizStream,
               builder: (context, snapshot) {
-                return snapshot.data == null
-                    ? Container()
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        itemCount: snapshot.data.documents.length,
-                        itemBuilder: (context, index) {
-                          var cek = cekUser(
-                              snapshot.data.documents[index].documentID);
-                          print("hehe ${temp.contains(user.id)}");
-                          print(
-                              "iddd ${snapshot.data.documents[index].documentID}");
-                          print("cek[0] = ${cek}");
-                          print(
-                              "cek == temp.contains(user.id) --> ${cek == temp.contains(user.id)}");
-                          print(
-                              "snapshot.data.documents[index].data()['quizKelas'] ==   user.kelas --> ${snapshot.data.documents[index].data()['quizKelas'] == user.kelas}");
-                          print(
-                              "snapshot.data.documents[index].data()['quizKelas'] ==   user.kelas --> ${snapshot.data.documents[index].data()['quizTitle']}");
-                          return (snapshot.data.documents[index]
-                                      .data()['quizKelas'] ==
-                                  user.kelas)
-                              ? cek != temp.contains(user.id)
-                                  ? QuizTile(
-                                      quizTime: snapshot.data.documents[index]
-                                          .data()['quizTime'],
-                                      noOfQuestions:
-                                          snapshot.data.documents.length,
-                                      imageUrl: snapshot.data.documents[index]
-                                          .data()['quizImgUrl'],
-                                      title: snapshot.data.documents[index]
-                                          .data()['quizTitle'],
-                                      description: snapshot
-                                          .data.documents[index]
-                                          .data()['quizDesc'],
-                                      authorId: snapshot.data.documents[index]
-                                          .data()['quizAuthorID'],
-                                      kelas: snapshot.data.documents[index]
-                                          .data()['quizKelas'],
-                                      id: snapshot
-                                          .data.documents[index].documentID,
-                                      hidden: false,
-                                      kelasPilih: user.kelas,
-                                    )
-                                  : QuizTile(
-                                      quizTime: snapshot.data.documents[index]
-                                          .data()['quizTime'],
-                                      noOfQuestions:
-                                          snapshot.data.documents.length,
-                                      imageUrl: snapshot.data.documents[index]
-                                          .data()['quizImgUrl'],
-                                      title: snapshot.data.documents[index]
-                                          .data()['quizTitle'],
-                                      description: snapshot
-                                          .data.documents[index]
-                                          .data()['quizDesc'],
-                                      authorId: snapshot.data.documents[index]
-                                          .data()['quizAuthorID'],
-                                      kelas: snapshot.data.documents[index]
-                                          .data()['quizKelas'],
-                                      id: snapshot
-                                          .data.documents[index].documentID,
-                                      hidden: true,
-                                      kelasPilih: user.kelas,
-                                    )
-                              : QuizTile(
-                                  quizTime: snapshot.data.documents[index]
-                                      .data()['quizTime'],
-                                  noOfQuestions: snapshot.data.documents.length,
-                                  imageUrl: snapshot.data.documents[index]
-                                      .data()['quizImgUrl'],
-                                  title: snapshot.data.documents[index]
-                                      .data()['quizTitle'],
-                                  description: snapshot.data.documents[index]
-                                      .data()['quizDesc'],
-                                  authorId: snapshot.data.documents[index]
-                                      .data()['quizAuthorID'],
-                                  kelas: snapshot.data.documents[index]
-                                      .data()['quizKelas'],
-                                  id: snapshot.data.documents[index].documentID,
-                                  hidden: false,
-                                  kelasPilih: user.kelas,
-                                );
-                        });
+                if (snapshot.hasData) {
+                  snapshot.data.documents.forEach((data) {
+                    quizListGan[data.documentID] = {
+                      "kelas": data.data()['quizKelas'],
+                      "quizTime": data.data()['quizTime'],
+                      "imageUrl": data.data()['quizImgUrl'],
+                      "title": data.data()['quizTitle'],
+                      "authorId": data.data()['quizAuthorID'],
+                      "description": data.data()['quizDesc'],
+                      "id": data.documentID,
+                    };
+                  });
+
+                  provider.quizList = quizListGan;
+                  // print("quizListGan ${quizListGan.length}");
+                  List cekKelas = [];
+
+                  for (var item in snapshot.data.documents) {
+                    if (item.data()['quizKelas'] == user.kelas) {
+                      cekKelas.add(item);
+                    }
+                  }
+                  // print("cek jumlah kelas ${cekKelas.length}");
+                  return snapshot.data == null
+                      ? Container()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: cekKelas.length,
+                          itemBuilder: (context, index) {
+                            var cek = cekUser(cekKelas[index].documentID);
+                            // print("hehe ${temp}");
+                            // print("iddd ${cekKelas[index].documentID}");
+                            // print("cek[0] = ${cek}");
+                            // print(
+                            //     "cek == temp.contains(user.id) --> ${cek == temp.contains(user.id)}");
+                            // print(
+                            //     "cekKelas[index].data()['quizKelas'] ==   user.kelas --> ${cekKelas[index].data()['quizKelas'] == user.kelas}");
+                            // print(
+                            //     "cekKelas[index].data()['quizKelas'] ==   user.kelas --> ${cekKelas[index].data()['quizTitle']}");
+                            return (cekKelas[index].data()['quizKelas'] ==
+                                    user.kelas)
+                                ? temp.contains(user.id)
+                                    ? QuizTile(
+                                        quizTime:
+                                            cekKelas[index].data()['quizTime'],
+                                        noOfQuestions: cekKelas.length,
+                                        imageUrl: cekKelas[index]
+                                            .data()['quizImgUrl'],
+                                        title:
+                                            cekKelas[index].data()['quizTitle'],
+                                        description:
+                                            cekKelas[index].data()['quizDesc'],
+                                        authorId: cekKelas[index]
+                                            .data()['quizAuthorID'],
+                                        kelas:
+                                            cekKelas[index].data()['quizKelas'],
+                                        id: cekKelas[index].documentID,
+                                        hidden: false,
+                                        kelasPilih: user.kelas,
+                                      )
+                                    : QuizTile(
+                                        quizTime:
+                                            cekKelas[index].data()['quizTime'],
+                                        noOfQuestions: cekKelas.length,
+                                        imageUrl: cekKelas[index]
+                                            .data()['quizImgUrl'],
+                                        title:
+                                            cekKelas[index].data()['quizTitle'],
+                                        description:
+                                            cekKelas[index].data()['quizDesc'],
+                                        authorId: cekKelas[index]
+                                            .data()['quizAuthorID'],
+                                        kelas:
+                                            cekKelas[index].data()['quizKelas'],
+                                        id: cekKelas[index].documentID,
+                                        hidden: true,
+                                        kelasPilih: user.kelas,
+                                      )
+                                : QuizTile(
+                                    quizTime:
+                                        cekKelas[index].data()['quizTime'],
+                                    noOfQuestions: cekKelas.length,
+                                    imageUrl:
+                                        cekKelas[index].data()['quizImgUrl'],
+                                    title: cekKelas[index].data()['quizTitle'],
+                                    description:
+                                        cekKelas[index].data()['quizDesc'],
+                                    authorId:
+                                        cekKelas[index].data()['quizAuthorID'],
+                                    kelas: cekKelas[index].data()['quizKelas'],
+                                    id: cekKelas[index].documentID,
+                                    hidden: true,
+                                    kelasPilih: user.kelas,
+                                  );
+                          });
+                } else {
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
               },
             )
           ],
@@ -183,14 +217,16 @@ class _HomeState extends State<HomeQuiz> {
       backgroundColor: Colors.white,
       appBar: appBarMainGan(context),
       body: quizList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          playSound();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CreateQuiz()));
-        },
-      ),
+      floatingActionButton: user.jenisAkun == "Guru"
+          ? FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                playSound();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CreateQuiz()));
+              },
+            )
+          : null,
     );
   }
 }
@@ -210,6 +246,7 @@ class QuizTile extends StatelessWidget {
   Map allAkun;
 
   List user;
+  var userRusa;
 
   QuizTile({
     @required this.title,
@@ -236,6 +273,7 @@ class QuizTile extends StatelessWidget {
 
     allAkun = provider.listAkun;
     user = provider.akun;
+    userRusa = provider.akunRusa;
     print("quizHome $id");
     return user[9] == authorId
         ? Padding(
@@ -276,7 +314,10 @@ class QuizTile extends StatelessWidget {
 
   Visibility mainQuiz(BuildContext context) {
     return Visibility(
-      visible: hidden,
+      visible: hidden && allAkun[authorId].emailGuru == userRusa.emailGuru ||
+              authorId == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
+          ? true
+          : false,
       child: GestureDetector(
         onTap: () {
           Navigator.pushReplacement(

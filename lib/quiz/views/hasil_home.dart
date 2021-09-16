@@ -33,6 +33,8 @@ class _HasilHomeState extends State<HasilHome> {
   DatabaseService databaseService = new DatabaseService();
   List temp = [];
 
+  var cekIdQuiz;
+
   cekUser(user) {
     for (var i = 0; i < utama.length; i++) {
       if (utama[i][0] == user) {
@@ -116,15 +118,24 @@ class _HasilHomeState extends State<HasilHome> {
                       'Ada yang error, mohon dicoba lagi nanti ya');
                 } else {
                   final quizResults = snapshot.data;
-                  print(quizResults);
 
                   final provider = Provider.of<QuizResultProvider>(context);
                   provider.setQuizResults(quizResults);
+                  List cekHasilQuiz = [];
 
-                  return quizResults.isEmpty
+                  for (var item in quizResults) {
+                    if (item.quizId == widget.idQuiz) {
+                      cekHasilQuiz.add(item);
+                    }
+                  }
+
+                  // print("hasilCekQuiz ${cekHasilQuiz[0].id}");
+                  return cekHasilQuiz.isEmpty ||
+                          cekHasilQuiz == null ||
+                          cekHasilQuiz.length == 0
                       ? Center(
                           child: Text(
-                            'TIdak ada Hasil Penilaian.',
+                            'TIdak ada hasil penilaian.',
                             style: TextStyle(fontSize: 20),
                           ),
                         )
@@ -133,9 +144,9 @@ class _HasilHomeState extends State<HasilHome> {
                           padding: EdgeInsets.all(16),
                           separatorBuilder: (context, index) =>
                               Container(height: 8),
-                          itemCount: quizResults.length,
+                          itemCount: cekHasilQuiz.length,
                           itemBuilder: (context, index) {
-                            final quizResult = quizResults[index];
+                            final quizResult = cekHasilQuiz[index];
                             var cekIdUser = "d";
                             // for (var item in quizStreamUser.docs) {
                             //   if (quizResult.userId == item.data()["user"]) {
@@ -146,24 +157,26 @@ class _HasilHomeState extends State<HasilHome> {
 
                             for (var i = 0; i < utama.length; i++) {
                               if (utama[i][2] == quizResult.userId) {
-                                cekIdUser = utama[i][0];
+                                cekIdUser = utama[i][2];
+                                cekIdQuiz = utama[i][0];
                               }
                             }
-                            // print("cek hasil cekiduser $cekIdUser");
-                            // print(
-                            //     "cek hasil idResult ${quizResults[index].id}");
+                            print("cek hasil cekiduser $cekIdUser");
+                            print("cek hasil idResult ${quizResult}");
                             return quizResult.quizId == widget.idQuiz
                                 ? QuizResultWidget(
                                     quizResult: quizResult,
                                     hidden: true,
-                                    idResult: quizResults[index].id,
+                                    idResult: quizResult.id,
                                     cekIdUser: cekIdUser,
+                                    cekIdQuiz: cekIdQuiz,
                                   )
                                 : QuizResultWidget(
                                     quizResult: quizResult,
                                     hidden: false,
-                                    idResult: quizResults[index].id,
+                                    idResult: quizResult.id,
                                     cekIdUser: cekIdUser,
+                                    cekIdQuiz: cekIdQuiz,
                                   );
                           },
                         );

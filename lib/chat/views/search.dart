@@ -38,9 +38,9 @@ class _SearchState extends State<Search> {
       await databaseMethods
           .searchByName(searchEditingController.text)
           .then((snapshot) {
-        searchResultSnapshot = snapshot;
         print("$searchResultSnapshot");
         setState(() {
+          searchResultSnapshot = snapshot;
           isLoading = false;
           haveUserSearched = true;
         });
@@ -187,50 +187,53 @@ class _SearchState extends State<Search> {
               ),
             )
           : Container(
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                    color: Color(0x54FFFFFF),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: searchEditingController,
-                            style: simpleTextStyle(),
-                            decoration: InputDecoration(
-                                hintText: "cari nama pengguna ...",
-                                hintStyle: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
-                                ),
-                                border: InputBorder.none),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                      color: Color(0x54FFFFFF),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: searchEditingController,
+                              style: simpleTextStyle(),
+                              decoration: InputDecoration(
+                                  hintText: "cari nama pengguna ...",
+                                  hintStyle: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16,
+                                  ),
+                                  border: InputBorder.none),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            initiateSearch();
-                          },
-                          child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        const Color(0x36FFFFFF),
-                                        const Color(0x0FFFFFFF)
-                                      ],
-                                      begin: FractionalOffset.topLeft,
-                                      end: FractionalOffset.bottomRight),
-                                  borderRadius: BorderRadius.circular(40)),
-                              padding: EdgeInsets.all(12),
-                              child: Icon(FontAwesomeIcons.search)),
-                        )
-                      ],
+                          GestureDetector(
+                            onTap: () {
+                              initiateSearch();
+                            },
+                            child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          const Color(0x36FFFFFF),
+                                          const Color(0x0FFFFFFF)
+                                        ],
+                                        begin: FractionalOffset.topLeft,
+                                        end: FractionalOffset.bottomRight),
+                                    borderRadius: BorderRadius.circular(40)),
+                                padding: EdgeInsets.all(12),
+                                child: Icon(FontAwesomeIcons.search)),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  userList()
-                ],
+                    userList()
+                  ],
+                ),
               ),
             ),
     );

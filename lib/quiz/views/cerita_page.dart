@@ -19,6 +19,8 @@ class _CeritaPageState extends State<CeritaPage> {
   Timer _timer;
   int _start = 5;
 
+  AudioProvider providerCekSoal;
+
   startTimer() {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
@@ -55,12 +57,18 @@ class _CeritaPageState extends State<CeritaPage> {
   void dispose() {
     _timer.cancel();
     _start = 0;
+    // final providerCekSoal = Provider.of<AudioProvider>(context);
+
+    // providerCekSoal.resetJawaban = true;
+    // providerCekSoal.resetSoalProvider = 0;
+    // providerCekSoal.resetcorrectAnswer = "reset";
+    // providerCekSoal.resetoptionSelected = "reset";
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final providerCekSoal = Provider.of<AudioProvider>(context);
+    providerCekSoal = Provider.of<AudioProvider>(context);
 
     return _start <= 0
         ? pindahHalaman(providerCekSoal, context)
@@ -169,15 +177,16 @@ class _CeritaPageState extends State<CeritaPage> {
   pindahHalaman(AudioProvider providerCekSoal, BuildContext context) {
     // Timer.run(() {
     // _timer.cancel();
-    providerCekSoal.resetJawaban = true;
-    providerCekSoal.resetSoalProvider = 0;
-    providerCekSoal.resetcorrectAnswer = "reset";
-    providerCekSoal.resetoptionSelected = "reset";
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                QuizPlay(widget.quizId, widget.quizName, widget.description)));
-    // });
+    // providerCekSoal.resetJawaban = true;
+    // providerCekSoal.resetSoalProvider = 0;
+    // providerCekSoal.resetcorrectAnswer = "reset";
+    // providerCekSoal.resetoptionSelected = "reset";
+    Future.delayed(Duration.zero, () async {
+      return Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => QuizPlay(
+                  widget.quizId, widget.quizName, widget.description)));
+    });
   }
 }

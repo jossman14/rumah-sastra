@@ -13,7 +13,7 @@ class _SplashNewGanState extends State<SplashNewGan> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
+        Duration(seconds: 5),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => AuthPage())));
   }
@@ -22,7 +22,7 @@ class _SplashNewGanState extends State<SplashNewGan> {
   Widget build(BuildContext context) {
     return Scaffold(
         // By defaut, Scaffold background is white
-        // Set its value to transparent 
+        // Set its value to transparent
         body: Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -88,7 +88,7 @@ class _SplashNewGanState extends State<SplashNewGan> {
                         ),
                         new TextSpan(
                             text:
-                                ' yang dibuat dengan tujuan untuk memberikan materi pelajaran mengenai teks sastra kepada siswa'),
+                                ' yang dibuat dengan tujuan untuk memberikan materi pelajaran mengenai teks sastra kepada siswa.'),
                       ],
                     ),
                   ),
@@ -111,7 +111,7 @@ class _SplashNewGanState extends State<SplashNewGan> {
                         ),
                         new TextSpan(
                             text:
-                                ' yang dibuat dengan tujuan untuk memberikan materi pelajaran mengenai teks sastra kepada siswa'),
+                                ' yang dibuat dengan tujuan untuk memberikan materi pelajaran mengenai teks sastra kepada siswa.'),
                       ],
                     ),
                   ),

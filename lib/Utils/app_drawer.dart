@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:rusa4/api/flutter_firebase_api.dart';
+import 'package:rusa4/chat/views/chatrooms.dart';
 import 'package:rusa4/chat/widget/widget.dart';
 import 'package:rusa4/provider/email_sign_in.dart';
 import 'package:rusa4/view/auth.dart';
+import 'package:rusa4/view/feed_menulis/view_feed_menulis.dart';
 import 'package:rusa4/view/home.dart';
+import 'package:rusa4/view/homeMenu.dart';
+import 'package:rusa4/view/pilih_kelas.dart';
 import 'package:rusa4/view/profileUser.dart';
 import 'package:rusa4/view/user_setting/user_setting.dart';
 
@@ -87,7 +91,7 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(selectedPage: 0),
+                  builder: (context) => ViewFeedMenulis(),
                 ),
               );
             },
@@ -99,7 +103,7 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(selectedPage: 1),
+                  builder: (context) => PilihKelas(),
                 ),
               );
             },
@@ -111,7 +115,7 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(selectedPage: 2),
+                  builder: (context) => ChatRoom(),
                 ),
               );
             },
