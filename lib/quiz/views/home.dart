@@ -86,7 +86,8 @@ class _HomeState extends State<HomeQuiz> {
                             var cek = cekUser(cekKelas[index].documentID);
                             // print("hehe ${temp}");
                             // print("iddd ${cekKelas[index].documentID}");
-                            // print("cek[0] = ${cek}");
+                            // print(
+                            //     "temp.contains(user.id) = ${temp.contains(user.id)}");
                             // print(
                             //     "cek == temp.contains(user.id) --> ${cek == temp.contains(user.id)}");
                             // print(
@@ -94,44 +95,24 @@ class _HomeState extends State<HomeQuiz> {
                             // print(
                             //     "cekKelas[index].data()['quizKelas'] ==   user.kelas --> ${cekKelas[index].data()['quizTitle']}");
                             return (cekKelas[index].data()['quizKelas'] ==
-                                    user.kelas)
-                                ? temp.contains(user.id)
-                                    ? QuizTile(
-                                        quizTime:
-                                            cekKelas[index].data()['quizTime'],
-                                        noOfQuestions: cekKelas.length,
-                                        imageUrl: cekKelas[index]
-                                            .data()['quizImgUrl'],
-                                        title:
-                                            cekKelas[index].data()['quizTitle'],
-                                        description:
-                                            cekKelas[index].data()['quizDesc'],
-                                        authorId: cekKelas[index]
-                                            .data()['quizAuthorID'],
-                                        kelas:
-                                            cekKelas[index].data()['quizKelas'],
-                                        id: cekKelas[index].documentID,
-                                        hidden: false,
-                                        kelasPilih: user.kelas,
-                                      )
-                                    : QuizTile(
-                                        quizTime:
-                                            cekKelas[index].data()['quizTime'],
-                                        noOfQuestions: cekKelas.length,
-                                        imageUrl: cekKelas[index]
-                                            .data()['quizImgUrl'],
-                                        title:
-                                            cekKelas[index].data()['quizTitle'],
-                                        description:
-                                            cekKelas[index].data()['quizDesc'],
-                                        authorId: cekKelas[index]
-                                            .data()['quizAuthorID'],
-                                        kelas:
-                                            cekKelas[index].data()['quizKelas'],
-                                        id: cekKelas[index].documentID,
-                                        hidden: true,
-                                        kelasPilih: user.kelas,
-                                      )
+                                        user.kelas) &&
+                                    temp.contains(user.id)
+                                ? QuizTile(
+                                    quizTime:
+                                        cekKelas[index].data()['quizTime'],
+                                    noOfQuestions: cekKelas.length,
+                                    imageUrl:
+                                        cekKelas[index].data()['quizImgUrl'],
+                                    title: cekKelas[index].data()['quizTitle'],
+                                    description:
+                                        cekKelas[index].data()['quizDesc'],
+                                    authorId:
+                                        cekKelas[index].data()['quizAuthorID'],
+                                    kelas: cekKelas[index].data()['quizKelas'],
+                                    id: cekKelas[index].documentID,
+                                    hidden: false,
+                                    kelasPilih: user.kelas,
+                                  )
                                 : QuizTile(
                                     quizTime:
                                         cekKelas[index].data()['quizTime'],
@@ -314,10 +295,7 @@ class QuizTile extends StatelessWidget {
 
   Visibility mainQuiz(BuildContext context) {
     return Visibility(
-      visible: hidden && allAkun[authorId].emailGuru == userRusa.emailGuru ||
-              authorId == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
-          ? true
-          : false,
+      visible: cekGuru(hidden, allAkun, userRusa),
       child: GestureDetector(
         onTap: () {
           Navigator.pushReplacement(
@@ -395,7 +373,7 @@ class QuizTile extends StatelessWidget {
                           height: 4,
                         ),
                         Container(
-                          color: Colors.deepOrange,
+                          color: Colors.blue,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -417,5 +395,21 @@ class QuizTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  cekGuru(hidden, allAkun, userRusa) {
+    if (userRusa.id == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3' && hidden) {
+      return true;
+    } else {
+      if (hidden && allAkun[authorId].emailGuru == userRusa.emailGuru ||
+          (authorId == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3' && hidden)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // userRusa.emailGuru == allAkun[materi.userID].emailGuru ||
+    //           materi.userID == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
   }
 }

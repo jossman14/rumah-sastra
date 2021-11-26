@@ -34,6 +34,8 @@ class _EditQuestionState extends State<EditQuestion> {
   int total;
   int cekPertanyaan = 0;
 
+  var quizDesc;
+
   getQuestionData() {
     databaseService.getQuestionData(widget.quizId).then((value) {
       questionSnaphot = value;
@@ -88,6 +90,15 @@ class _EditQuestionState extends State<EditQuestion> {
         if (cekPertanyaan >= total) {
           Navigator.pop(context);
         }
+
+        setState(() {
+          question = "";
+          option1 = "";
+          option2 = "";
+          option3 = "";
+          option4 = "";
+          waktu = "";
+        });
       }).catchError((e) {
         print(e);
       });
@@ -99,6 +110,7 @@ class _EditQuestionState extends State<EditQuestion> {
   @override
   void initState() {
     getQuestionData();
+    cekPertanyaan = 0;
     super.initState();
   }
 
@@ -118,6 +130,9 @@ class _EditQuestionState extends State<EditQuestion> {
           key: _formKey,
           child: ListView(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 widget.quizDesc,
                 textAlign: TextAlign.justify,
@@ -132,13 +147,14 @@ class _EditQuestionState extends State<EditQuestion> {
               TextFormField(
                 controller: TextEditingController()
                   ..text = cekPertanyaan < total
-                      ? pertanyaanGan[cekPertanyaan].data()["question"]
+                      ? questionSnaphot.docs[cekPertanyaan].data()["question"]
                       : ""
                   ..selection = TextSelection.fromPosition(TextPosition(
-                      offset: pertanyaanGan[cekPertanyaan]
+                      offset: questionSnaphot.docs[cekPertanyaan]
                           .data()["question"]
                           .length)),
-                maxLines: 8,
+                maxLines: 10,
+                minLines: 2,
                 validator: (val) => val.isEmpty ? "Masukkan pertanyaan" : null,
                 decoration: InputDecoration(hintText: "Pertanyaan"),
                 onChanged: (val) {
@@ -158,6 +174,8 @@ class _EditQuestionState extends State<EditQuestion> {
                           .data()["option1"]
                           .length)),
                 validator: (val) => val.isEmpty ? "Pilihan jawaban 1 " : null,
+                maxLines: 10,
+                minLines: 2,
                 decoration: InputDecoration(
                     hintText: "Pilihan jawaban 1 (jawaban yang benar)"),
                 onChanged: (val) {
@@ -177,6 +195,8 @@ class _EditQuestionState extends State<EditQuestion> {
                           .data()["option2"]
                           .length)),
                 validator: (val) => val.isEmpty ? "Pilihan jawaban 2" : null,
+                maxLines: 10,
+                minLines: 2,
                 decoration: InputDecoration(hintText: "Pilihan jawaban 2"),
                 onChanged: (val) {
                   option2 = val;
@@ -195,6 +215,8 @@ class _EditQuestionState extends State<EditQuestion> {
                           .data()["option3"]
                           .length)),
                 validator: (val) => val.isEmpty ? "Pilihan jawaban 3" : null,
+                maxLines: 10,
+                minLines: 2,
                 decoration: InputDecoration(hintText: "Pilihan jawaban 3"),
                 onChanged: (val) {
                   option3 = val;
@@ -213,6 +235,8 @@ class _EditQuestionState extends State<EditQuestion> {
                           .data()["option4"]
                           .length)),
                 validator: (val) => val.isEmpty ? "Pilihan jawaban 4" : null,
+                maxLines: 10,
+                minLines: 2,
                 decoration: InputDecoration(hintText: "Pilihan jawaban 4"),
                 onChanged: (val) {
                   option4 = val;
@@ -226,8 +250,17 @@ class _EditQuestionState extends State<EditQuestion> {
                   ..text = cekPertanyaan < total
                       ? questionSnaphot.docs[cekPertanyaan].data()["waktu"]
                       : 0,
-                validator: (val) =>
-                    val.isEmpty ? "Masukkan durasi waktu" : null,
+                validator: (val) {
+                  final pattern = r'(^\d+$)';
+                  final regExp = RegExp(pattern);
+
+                  if (!regExp.hasMatch(val)) {
+                    return 'pilihan waktu anda tidak valid';
+                  } else {
+                    return null;
+                  }
+                  // val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                },
                 decoration: InputDecoration(hintText: "Masukkan durasi waktu"),
                 onChanged: (val) {
                   waktu = val;

@@ -27,7 +27,8 @@ class MateriWidget extends StatelessWidget {
     final user = provider.akun;
     allAkun = provider.listAkun;
 
-    return user[9] == allAkun[materi.userID].id && user[7] == "Guru"
+    return user[9] == allAkun[materi.userID].id && user[7] == "Guru" ||
+            user[9] == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
         ? ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Slidable(
@@ -66,10 +67,7 @@ class MateriWidget extends StatelessWidget {
 
     allAkun = provider.listAkun;
     return Visibility(
-      visible: userRusa.emailGuru == allAkun[materi.userID].emailGuru ||
-              materi.userID == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
-          ? true
-          : false,
+      visible: cekGuru(userRusa, materi, allAkun),
       child: GestureDetector(
         onTap: () => seeMateri(context, materi),
         child: Card(
@@ -176,4 +174,20 @@ class MateriWidget extends StatelessWidget {
           builder: (context) => SeeMateriPage(materi: materi),
         ),
       );
+
+  cekGuru(userRusa, materi, allAkun) {
+    if (userRusa.id == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3') {
+      return true;
+    } else {
+      if (userRusa.emailGuru == allAkun[materi.userID].emailGuru ||
+          materi.userID == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // userRusa.emailGuru == allAkun[materi.userID].emailGuru ||
+    //           materi.userID == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
+  }
 }

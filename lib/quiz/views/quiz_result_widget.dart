@@ -14,13 +14,14 @@ import 'package:rusa4/provider/quiz_result_provider.dart';
 import 'package:rusa4/quiz/models/result_model.dart';
 import 'package:rusa4/quiz/services/database.dart';
 import 'package:rusa4/quiz/views/quiz_play%20copy.dart';
+import 'package:rusa4/quiz/views/quiz_play_hasil.dart';
 import 'package:rusa4/view/materi/edit_materi.dart';
 import 'package:rusa4/view/materi/see_materi.dart';
 
 class QuizResultWidget extends StatelessWidget {
   final QuizResult quizResult;
   final bool hidden;
-  final String idResult, cekIdUser;
+  final String idResult, cekIdUser, cekQuizGuru;
   final String cekIdQuiz;
 
   const QuizResultWidget({
@@ -29,6 +30,7 @@ class QuizResultWidget extends StatelessWidget {
     @required this.idResult,
     @required this.cekIdUser,
     @required this.cekIdQuiz,
+    @required this.cekQuizGuru,
     Key key,
   }) : super(key: key);
 
@@ -62,6 +64,7 @@ class QuizResultWidget extends StatelessWidget {
   }
 
   Widget buildQuizResult(BuildContext context) {
+    Map quizListGan;
     var allAkun;
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
@@ -69,24 +72,25 @@ class QuizResultWidget extends StatelessWidget {
 
     final allQuiz = provider.quizList;
 
-    print("allQuiz  ${allQuiz[quizResult.quizId]['authorId']}");
+    // print("allQuiz  ${allQuiz[quizResult.quizId]['authorId']}");
+    print("check quiz hehehe ${quizResult.correct}");
     final user = provider.akun;
     final userRusa = provider.akunRusa;
+    quizListGan = provider.quizList;
+
     return Visibility(
-      visible: hidden &&
-                  allAkun[allQuiz[quizResult.quizId]['authorId']].emailGuru ==
-                      userRusa.emailGuru ||
-              allQuiz[quizResult.quizId]['authorId'] ==
-                  'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
-          ? true
-          : false,
+      visible: cekGuru(hidden, allAkun, allQuiz, userRusa, quizListGan,
+          cekQuizGuru, quizResult),
       child: GestureDetector(
         // onTap: () => seeQuizResult(context, quizResult),
         onTap: () {
+          final provider =
+              Provider.of<EmailSignInProvider>(context, listen: false);
+          provider.quizResult = quizResult;
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => QuizPlayFull(
+                  builder: (context) => QuizPlayFullHasil(
                         quizResult.quizId,
                         quizResult.quizName,
                         quizResult.description,
@@ -127,7 +131,7 @@ class QuizResultWidget extends StatelessWidget {
                         allAkun[quizResult.userId].username,
                         style: GoogleFonts.firaSans(
                             fontSize: 18,
-                            color: HexColor('#2C3E50'),
+                            color: Colors.blue,
                             fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
@@ -253,4 +257,21 @@ class QuizResultWidget extends StatelessWidget {
   //         builder: (context) => SeeQuizResultPage(quizResult: quizResult),
   //       ),
   //     );
+
+  cekGuru(hidden, allAkun, allQuiz, userRusa, quizListGan, cekQuizGuru,
+      quizResult) {
+    if (userRusa.id == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3') {
+      return true;
+    } else {
+      print("cekQuizGuru ${quizResult.quizGuru}");
+      if (hidden && quizResult.quizGuru == userRusa.emailGuru) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // userRusa.emailGuru == allAkun[materi.userID].emailGuru ||
+    //           materi.userID == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
+  }
 }

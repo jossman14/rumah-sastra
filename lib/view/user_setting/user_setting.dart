@@ -92,7 +92,7 @@ class _UserSettingState extends State<UserSetting> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+              colors: [HexColor('#2980b9'), HexColor('#d35400')],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             ),
@@ -391,7 +391,7 @@ class _UserSettingState extends State<UserSetting> {
                                       "Ganti Kata Sandi",
                                       style: GoogleFonts.firaSans(
                                           fontSize: 18,
-                                          color: HexColor('#2C3E50'),
+                                          color: Colors.blue,
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ),
@@ -755,9 +755,7 @@ class _UserSettingState extends State<UserSetting> {
       child: Text(
         "PROFIL PENGGUNA",
         style: GoogleFonts.firaSans(
-            fontSize: 30,
-            color: HexColor('#2C3E50'),
-            fontWeight: FontWeight.w500),
+            fontSize: 30, color: Colors.blue, fontWeight: FontWeight.w500),
       ),
     );
   }

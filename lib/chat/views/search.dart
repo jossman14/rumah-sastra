@@ -46,6 +46,7 @@ class _SearchState extends State<Search> {
         });
       });
     }
+    searchEditingController.text = '';
   }
 
   initiateSearchAllUsername() async {
@@ -61,37 +62,44 @@ class _SearchState extends State<Search> {
 
   Widget userList() {
     return haveUserSearched
-        ? ListView.builder(
-            shrinkWrap: true,
-            itemCount: searchResultSnapshot.docs.length,
-            itemBuilder: (context, index) {
-              return userTile(
-                searchResultSnapshot.docs[index].data()["username"],
-                searchResultSnapshot.docs[index].data()[
-                    searchResultSnapshot.docs[index].data()["jenisAkun"] ==
-                            "Guru"
-                        ? "emailGuru"
-                        : "emailSiswa"],
-                searchResultSnapshot.docs[index].data()["id"],
-              );
-            })
-        : searchResultSnapshotAllUserName != null
-            ? ListView.builder(
+        ? Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: searchResultSnapshotAllUserName.docs.length,
+                itemCount: searchResultSnapshot.docs.length,
                 itemBuilder: (context, index) {
                   return userTile(
-                    searchResultSnapshotAllUserName.docs[index]
-                        .data()["username"],
-                    searchResultSnapshotAllUserName.docs[index].data()[
-                        searchResultSnapshotAllUserName.docs[index]
-                                    .data()["jenisAkun"] ==
+                    searchResultSnapshot.docs[index].data()["username"],
+                    searchResultSnapshot.docs[index].data()[
+                        searchResultSnapshot.docs[index].data()["jenisAkun"] ==
                                 "Guru"
                             ? "emailGuru"
                             : "emailSiswa"],
-                    searchResultSnapshotAllUserName.docs[index].data()["id"],
+                    searchResultSnapshot.docs[index].data()["id"],
                   );
-                })
+                }),
+          )
+        : searchResultSnapshotAllUserName != null
+            ? Container(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: searchResultSnapshotAllUserName.docs.length,
+                    itemBuilder: (context, index) {
+                      return userTile(
+                        searchResultSnapshotAllUserName.docs[index]
+                            .data()["username"],
+                        searchResultSnapshotAllUserName.docs[index].data()[
+                            searchResultSnapshotAllUserName.docs[index]
+                                        .data()["jenisAkun"] ==
+                                    "Guru"
+                                ? "emailGuru"
+                                : "emailSiswa"],
+                        searchResultSnapshotAllUserName.docs[index]
+                            .data()["id"],
+                      );
+                    }),
+              )
             : halamanLoadingKecil(context);
   }
 
@@ -187,6 +195,7 @@ class _SearchState extends State<Search> {
               ),
             )
           : Container(
+              height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 child: Column(
                   children: [

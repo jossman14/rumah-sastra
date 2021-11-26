@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Rumah Sastra",
         theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
+          primarySwatch: Colors.blue,
           scaffoldBackgroundColor: Color(0xFFf6f5ee),
           textTheme: GoogleFonts.firaSansTextTheme(
             Theme.of(context).textTheme,

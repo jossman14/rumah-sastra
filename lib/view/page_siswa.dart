@@ -27,7 +27,7 @@ class PageSiswa extends StatelessWidget {
               "Menu Data Siswa",
               style: GoogleFonts.firaSans(
                   fontSize: 30,
-                  color: HexColor('#2C3E50'),
+                  color: Colors.blue,
                   fontWeight: FontWeight.w500),
             ),
             SizedBox(
@@ -41,7 +41,7 @@ class PageSiswa extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.pressed))
-                        return HexColor('#F55413');
+                        return HexColor('#2980b9');
                       return HexColor(
                           '#FF7138'); //F69A9A Use the component's default.
                     },
@@ -87,7 +87,7 @@ class PageSiswa extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.pressed))
-                        return HexColor('#F55413');
+                        return HexColor('#2980b9');
                       return HexColor(
                           '#FF7138'); //F69A9A Use the component's default.
                     },
@@ -133,7 +133,7 @@ class PageSiswa extends StatelessWidget {
             //       backgroundColor: MaterialStateProperty.resolveWith<Color>(
             //         (Set<MaterialState> states) {
             //           if (states.contains(MaterialState.pressed))
-            //             return HexColor('#F55413');
+            //             return HexColor('#2980b9');
             //           return HexColor(
             //               '#FF7138'); //F69A9A Use the component's default.
             //         },

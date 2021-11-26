@@ -107,7 +107,8 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
       appBar: AppBar(
         title: Text(title),
         actions:
-            user[9] == allAkun[widget.materi.userID].id && user[7] == "Guru"
+            user[9] == allAkun[widget.materi.userID].id && user[7] == "Guru" ||
+                    user[9] == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
                 ? [
                     IconButton(
                       icon: Icon(Icons.edit),

@@ -37,7 +37,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          colors: [HexColor('#ffbe76'), HexColor('#f6e58d')],
+          colors: [HexColor('#74b9ff'), HexColor('#fdcb6e ')],
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
         )),

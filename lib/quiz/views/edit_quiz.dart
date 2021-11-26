@@ -57,10 +57,11 @@ class _EditQuizState extends State<EditQuiz> {
         setState(() {
           isLoading = false;
         });
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EditQuestion(quizId, quizDesc)));
+
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return EditQuestion(quizId, quizDesc);
+        }));
       });
     }
   }
@@ -180,7 +181,8 @@ class _EditQuizState extends State<EditQuiz> {
                   ..text = quizTitle
                   ..selection = TextSelection.fromPosition(
                       TextPosition(offset: quizTitle.length)),
-                maxLines: 2,
+                maxLines: 10,
+                minLines: 2,
                 validator: (val) =>
                     val.isEmpty ? "Masukkan Judul Uji Pemahaman" : null,
                 decoration: InputDecoration(hintText: "Judul Uji Pemahaman"),
@@ -192,7 +194,8 @@ class _EditQuizState extends State<EditQuiz> {
                 height: 5,
               ),
               TextFormField(
-                maxLines: 8,
+                maxLines: 10,
+                minLines: 2,
                 controller: TextEditingController()
                   ..text = quizDesc
                   ..selection = TextSelection.fromPosition(
@@ -207,13 +210,23 @@ class _EditQuizState extends State<EditQuiz> {
                 height: 5,
               ),
               TextFormField(
-                maxLines: 3,
+                maxLines: 10,
+                minLines: 2,
                 controller: TextEditingController()
                   ..text = quizTime
                   ..selection = TextSelection.fromPosition(
                       TextPosition(offset: quizTime.length)),
-                validator: (val) =>
-                    val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                validator: (val) {
+                  final pattern = r'(^\d+$)';
+                  final regExp = RegExp(pattern);
+
+                  if (!regExp.hasMatch(val) || val.isEmpty) {
+                    return 'pilihan waktu anda tidak valid';
+                  } else {
+                    return null;
+                  }
+                  // val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                },
                 decoration:
                     InputDecoration(hintText: "Durasi Soal Cerita dalam detik"),
                 onChanged: (val) {

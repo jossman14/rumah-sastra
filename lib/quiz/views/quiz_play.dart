@@ -198,6 +198,7 @@ class _QuizPlayState extends State<QuizPlay> {
         incorrect: _incorrect,
         total: total,
         description: widget.description,
+        quizGuru: user.emailGuru,
       );
     });
 
@@ -206,6 +207,7 @@ class _QuizPlayState extends State<QuizPlay> {
     Map<String, String> quizDataUser = {
       "quizId": widget.quizId,
       "user": user.id,
+      "quizGuru": user.emailGuru,
     };
 
     databaseService.addUser(quizDataUser);
@@ -384,7 +386,6 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
 
   @override
   void dispose() {
-    
     _timer.cancel();
     // final providerCekSoal = Provider.of<AudioProvider>(context, listen: false);
 
@@ -425,7 +426,7 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  color: Colors.deepOrange,
+                  color: Colors.blue,
                   height: 15,
                   width: 10.0 * _start,
                 ),

@@ -82,7 +82,8 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
-                maxLines: 8,
+                maxLines: 10,
+                minLines: 2,
                 validator: (val) =>
                     val.isEmpty ? "Masukkan Judul Uji Pemahaman" : null,
                 decoration: InputDecoration(hintText: "Judul Uji Pemahaman"),
@@ -94,7 +95,8 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
-                maxLines: 8,
+                maxLines: 10,
+                minLines: 2,
                 validator: (val) => val.isEmpty ? "Masukkan Soal Cerita" : null,
                 decoration: InputDecoration(hintText: "Soal Cerita"),
                 onChanged: (val) {
@@ -105,9 +107,19 @@ class _CreateQuizState extends State<CreateQuiz> {
                 height: 5,
               ),
               TextFormField(
-                maxLines: 3,
-                validator: (val) =>
-                    val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                maxLines: 10,
+                minLines: 2,
+                validator: (val) {
+                  final pattern = r'(^\d+$)';
+                  final regExp = RegExp(pattern);
+
+                  if (!regExp.hasMatch(val) || val.isEmpty) {
+                    return 'pilihan waktu anda tidak valid';
+                  } else {
+                    return null;
+                  }
+                  // val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                },
                 decoration:
                     InputDecoration(hintText: "Durasi Soal Cerita dalam detik"),
                 onChanged: (val) {

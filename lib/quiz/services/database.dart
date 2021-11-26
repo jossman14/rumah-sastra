@@ -113,4 +113,8 @@ class DatabaseService {
   getUserData() async {
     return await FirebaseFirestore.instance.collection("Quiz User").get();
   }
+
+  getUserQuizResult() async {
+    return await FirebaseFirestore.instance.collection("QuizResult Quiz").get();
+  }
 }

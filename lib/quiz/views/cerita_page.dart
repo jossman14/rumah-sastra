@@ -92,7 +92,7 @@ class _CeritaPageState extends State<CeritaPage> {
                       children: [
                         Flexible(
                           child: Container(
-                            color: Colors.deepOrange,
+                            color: Colors.blue,
                             height: 15,
                             width: 10.0 * _start,
                           ),

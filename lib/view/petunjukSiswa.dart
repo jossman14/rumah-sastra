@@ -40,7 +40,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+              colors: [HexColor('#2980b9'), HexColor('#d35400')],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             ),
@@ -60,6 +60,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 20,
@@ -94,6 +95,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
                           height: 20,
@@ -133,15 +135,24 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Daftar Akun: Menu tersebut digunakan untuk mendaftarkan akun yang akan digunakan dalam 'RUSA'",
+                                    "Daftar Akun",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk mendaftarkan akun yang akan digunakan dalam 'RUSA'",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -212,15 +223,24 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Login Siswa: Menu tersebut digunakan untuk masuk pada 'RUSA'",
+                                    "Login Siswa",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk masuk pada 'RUSA'",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -289,13 +309,53 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
-                              child: Text(
-                                "Menu Materi Pelajaran: Menu tersebut digunakan untuk mempelajari materi pembelajaran yang berisi video dan tulisan",
-                                textAlign: TextAlign.justify,
-                                style: GoogleFonts.firaSans(
-                                    fontSize: 16,
-                                    color: HexColor('#2d3436'),
-                                    fontWeight: FontWeight.w500),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Menu Materi Pelajaran",
+                                    textAlign: TextAlign.justify,
+                                    style: GoogleFonts.firaSans(
+                                        fontSize: 18,
+                                        color: HexColor('#2d3436'),
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk mempelajari materi pembelajaran yang berisi video dan tulisan",
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title: Text("Klik menu materi,"),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title:
+                                        Text("Klik kelas yang ingin dimasuki,"),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title:
+                                        Text("Klik materi yang akan dibaca."),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -338,22 +398,30 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Menu Uji Pemahaman: Menu tersebut digunakan untuk menguji pemahaman siswa",
+                                    "Menu Uji Pemahaman",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk menguji pemahaman siswa",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   ListTile(
                                     leading: Icon(Icons.book),
-                                    title: Text(
-                                        "Klik pada judul teks sesuai materi yang telah dipelajari"),
+                                    title: Text("Klik menu uji pemahaman,"),
                                     onTap: () {},
                                   ),
                                   SizedBox(
@@ -362,7 +430,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                   ListTile(
                                     leading: Icon(Icons.book),
                                     title: Text(
-                                        "Bacalah teks sesuai waktu yang telah ditentukan"),
+                                        "Klik judul teks yang akan dibaca dan dikerjakan soalnya sesuai materi yang telah dipelajari,"),
                                     onTap: () {},
                                   ),
                                   SizedBox(
@@ -371,7 +439,16 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                   ListTile(
                                     leading: Icon(Icons.book),
                                     title: Text(
-                                        "Klik “mulai mengerjakan” untuk mengerjakan soal yang telah disediakan"),
+                                        "Klik mulai mengerjakan jika telah selesai membaca teks cerita,"),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title: Text(
+                                        "Klik jawaban yang dipilih dalam mengerjakan soal."),
                                     onTap: () {},
                                   ),
                                 ],
@@ -417,15 +494,44 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Menu Konten: Menu tersebut digunakan untuk menulis karya sastra dari siswa dan guru",
+                                    "Menu Konten",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+
+                                  Text(
+                                      "Menu tersebut digunakan untuk menulis karya sastra dari siswa dan guru",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Menulis karya:",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title: Text("Klik menu konten,"),
+                                    onTap: () {},
+                                  ),
+
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -437,7 +543,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                         // Note: Styles for TextSpans must be explicitly defined.
                                         // Child text spans will inherit styles from parent
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           color: HexColor('#1e2934'),
                                         ),
                                         children: [
@@ -459,13 +565,29 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.book),
+                                    title: Text("Klik simpan."),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Menyukai dan menambahkan komentar pada konten:",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                  ///////////////////
+                                  ListTile(
+                                    leading: Icon(Icons.book),
                                     title: RichText(
                                       textAlign: TextAlign.justify,
                                       text: new TextSpan(
                                         // Note: Styles for TextSpans must be explicitly defined.
                                         // Child text spans will inherit styles from parent
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           color: HexColor('#1e2934'),
                                         ),
                                         children: [
@@ -496,7 +618,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                         // Note: Styles for TextSpans must be explicitly defined.
                                         // Child text spans will inherit styles from parent
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           color: HexColor('#1e2934'),
                                         ),
                                         children: [
@@ -515,6 +637,16 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                       ),
                                     ),
                                     onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Menghapus dan mengubah konten:",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.underline),
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.book),
@@ -571,14 +703,31 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Menu Pesan: Menu tersebut digunakan untuk bertukar pesan",
+                                    "Menu Pesan",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk bertukar pesan",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title: Text("Klik menu chat,"),
+                                    onTap: () {},
                                   ),
                                   SizedBox(
                                     height: 5,
@@ -591,7 +740,7 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                                         // Note: Styles for TextSpans must be explicitly defined.
                                         // Child text spans will inherit styles from parent
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           color: HexColor('#1e2934'),
                                         ),
                                         children: [
@@ -654,45 +803,52 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Menu Pengaturan Profil: Menu tersebut digunakan untuk mengatur profil pengguna, kelas yang akan dimasuki oleh siswa dapat disesuaikan dengan mengubah kelas dalam menu pengaturan profil",
+                                    "Menu Pengaturan Profil",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk mengatur profil pengguna, kelas yang akan dimasuki oleh siswa dapat disesuaikan dengan mengubah kelas dalam menu pengaturan profil.",
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   ListTile(
                                     leading: Icon(Icons.book),
-                                    title: RichText(
-                                      textAlign: TextAlign.justify,
-                                      text: new TextSpan(
-                                        // Note: Styles for TextSpans must be explicitly defined.
-                                        // Child text spans will inherit styles from parent
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: HexColor('#1e2934'),
-                                        ),
-                                        children: [
-                                          new TextSpan(
-                                              text: 'Klik pada simbol '),
-                                          WidgetSpan(
-                                            child: Icon(
-                                              Icons.menu,
-                                              size: 18,
-                                            ),
-                                          ),
-                                          new TextSpan(
-                                              text:
-                                                  ' lalu klik “pengaturan profil” untuk melakukan pengaturan profil pengguna'),
-                                        ],
-                                      ),
-                                    ),
+                                    title: Text("Klik menu pengaturan profil,"),
                                     onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title: Text(
+                                        "Klik ‘ubah’ untuk melakukan pengaturan profil pengguna,"),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.book),
+                                    title: Text("Klik ‘simpan’."),
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                 ],
                               ),
@@ -737,14 +893,23 @@ class _PetunjukSiswaState extends State<PetunjukSiswa> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Menu Keluar: Menu tersebut digunakan untuk keluar dari aplikasi RUSA",
+                                    "Menu Keluar",
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.firaSans(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: HexColor('#2d3436'),
                                         fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                      "Menu tersebut digunakan untuk keluar dari aplikasi RUSA",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                 ],
                               ),

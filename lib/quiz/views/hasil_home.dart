@@ -34,6 +34,7 @@ class _HasilHomeState extends State<HasilHome> {
   List temp = [];
 
   var cekIdQuiz;
+  var cekQuizGuru;
 
   cekUser(user) {
     for (var i = 0; i < utama.length; i++) {
@@ -58,6 +59,7 @@ class _HasilHomeState extends State<HasilHome> {
         streamGan.add(item.id);
         streamGan.add(item.data()["quizId"]);
         streamGan.add(item.data()["user"]);
+        streamGan.add(item.data()["quizGuru"]);
         // streamUser["${item.data()["quizId"]}"] = item.data()["user"];
 
         utama.add(streamGan);
@@ -98,7 +100,7 @@ class _HasilHomeState extends State<HasilHome> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+              colors: [HexColor('#2980b9'), HexColor('#d35400')],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             ),
@@ -159,6 +161,7 @@ class _HasilHomeState extends State<HasilHome> {
                               if (utama[i][2] == quizResult.userId) {
                                 cekIdUser = utama[i][2];
                                 cekIdQuiz = utama[i][0];
+                                cekQuizGuru = utama[i][3];
                               }
                             }
                             print("cek hasil cekiduser $cekIdUser");
@@ -170,6 +173,7 @@ class _HasilHomeState extends State<HasilHome> {
                                     idResult: quizResult.id,
                                     cekIdUser: cekIdUser,
                                     cekIdQuiz: cekIdQuiz,
+                                    cekQuizGuru: cekQuizGuru,
                                   )
                                 : QuizResultWidget(
                                     quizResult: quizResult,
@@ -177,6 +181,7 @@ class _HasilHomeState extends State<HasilHome> {
                                     idResult: quizResult.id,
                                     cekIdUser: cekIdUser,
                                     cekIdQuiz: cekIdQuiz,
+                                    cekQuizGuru: cekQuizGuru,
                                   );
                           },
                         );

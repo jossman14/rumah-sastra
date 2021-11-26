@@ -179,7 +179,7 @@ class MessageTile extends StatelessWidget {
             gradient: LinearGradient(
               colors: sendByMe
                   ? [const Color(0xff007EF4), const Color(0xff2A75BC)]
-                  : [HexColor('#2c3e50'), HexColor('#34495e')],
+                  : [Colors.blue, HexColor('#34495e')],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             )),

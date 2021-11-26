@@ -65,7 +65,7 @@ class _ViewFeedMenulisState extends State<ViewFeedMenulis> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+              colors: [HexColor('#2980b9'), HexColor('#d35400')],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             ),

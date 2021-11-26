@@ -25,6 +25,10 @@ class _HomeQuizResultState extends State<HomeQuizResult> {
   DatabaseService databaseService = new DatabaseService();
 
   Widget quizList() {
+    final provider = Provider.of<EmailSignInProvider>(context, listen: false);
+
+    var quizListGan = new Map();
+
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -32,50 +36,73 @@ class _HomeQuizResultState extends State<HomeQuizResult> {
             StreamBuilder(
               stream: quizStream,
               builder: (context, snapshot) {
-                var cekKelas = 0;
-                List listKelas = [];
-                for (var item in snapshot.data.documents) {
-                  if (item.data()['quizKelas'] == widget.kelas) {
-                    cekKelas += 1;
-                    listKelas.add(item);
+                if (snapshot.hasData) {
+                  snapshot.data.documents.forEach((data) {
+                    quizListGan[data.documentID] = {
+                      "kelas": data.data()['quizKelas'],
+                      "quizTime": data.data()['quizTime'],
+                      "imageUrl": data.data()['quizImgUrl'],
+                      "title": data.data()['quizTitle'],
+                      "authorId": data.data()['quizAuthorID'],
+                      "description": data.data()['quizDesc'],
+                      "id": data.documentID,
+                    };
+                  });
+
+                  provider.quizList = quizListGan;
+
+                  var cekKelas = 0;
+                  List listKelas = [];
+                  for (var item in snapshot.data.documents) {
+                    if (item.data()['quizKelas'] == widget.kelas) {
+                      cekKelas += 1;
+                      listKelas.add(item);
+                    }
                   }
+                  return snapshot.data == null
+                      ? Container()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: cekKelas,
+                          itemBuilder: (context, index) {
+                            return listKelas[index].data()['quizKelas'] ==
+                                    widget.kelas
+                                ? QuizTile(
+                                    imageUrl:
+                                        listKelas[index].data()['quizImgUrl'],
+                                    title: listKelas[index].data()['quizTitle'],
+                                    description:
+                                        listKelas[index].data()['quizDesc'],
+                                    authorId:
+                                        listKelas[index].data()['quizAuthorID'],
+                                    kelas: listKelas[index].data()['quizKelas'],
+                                    id: listKelas[index].documentID,
+                                    hidden: true,
+                                    kelasPilih: widget.kelas,
+                                  )
+                                : QuizTile(
+                                    imageUrl:
+                                        listKelas[index].data()['quizImgUrl'],
+                                    title: listKelas[index].data()['quizTitle'],
+                                    description:
+                                        listKelas[index].data()['quizDesc'],
+                                    authorId:
+                                        listKelas[index].data()['quizAuthorID'],
+                                    kelas: listKelas[index].data()['quizKelas'],
+                                    id: listKelas[index].documentID,
+                                    hidden: false,
+                                    kelasPilih: widget.kelas,
+                                  );
+                          });
+                } else {
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 }
-                return snapshot.data == null
-                    ? Container()
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        itemCount: cekKelas,
-                        itemBuilder: (context, index) {
-                          return listKelas[index].data()['quizKelas'] ==
-                                  widget.kelas
-                              ? QuizTile(
-                                  imageUrl:
-                                      listKelas[index].data()['quizImgUrl'],
-                                  title: listKelas[index].data()['quizTitle'],
-                                  description:
-                                      listKelas[index].data()['quizDesc'],
-                                  authorId:
-                                      listKelas[index].data()['quizAuthorID'],
-                                  kelas: listKelas[index].data()['quizKelas'],
-                                  id: listKelas[index].documentID,
-                                  hidden: true,
-                                  kelasPilih: widget.kelas,
-                                )
-                              : QuizTile(
-                                  imageUrl:
-                                      listKelas[index].data()['quizImgUrl'],
-                                  title: listKelas[index].data()['quizTitle'],
-                                  description:
-                                      listKelas[index].data()['quizDesc'],
-                                  authorId:
-                                      listKelas[index].data()['quizAuthorID'],
-                                  kelas: listKelas[index].data()['quizKelas'],
-                                  id: listKelas[index].documentID,
-                                  hidden: false,
-                                  kelasPilih: widget.kelas,
-                                );
-                        });
               },
             )
           ],
@@ -151,10 +178,7 @@ class QuizTile extends StatelessWidget {
 
   Visibility mainQuiz(BuildContext context) {
     return Visibility(
-      visible: hidden && allAkun[authorId].emailGuru == userRusa.emailGuru ||
-              authorId == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
-          ? true
-          : false,
+      visible: cekGuru(hidden, allAkun, userRusa, authorId),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -234,7 +258,7 @@ class QuizTile extends StatelessWidget {
                           height: 4,
                         ),
                         Container(
-                          color: Colors.deepOrange,
+                          color: Colors.blue,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -256,5 +280,21 @@ class QuizTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  cekGuru(hidden, allAkun, userRusa, authorId) {
+    if (userRusa.id == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3') {
+      return true;
+    } else {
+      if (hidden && allAkun[authorId].emailGuru == userRusa.emailGuru ||
+          authorId == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // userRusa.emailGuru == allAkun[materi.userID].emailGuru ||
+    //           materi.userID == 'k1zCQTqC9KO2HMcH53b9j2HTc9E3'
   }
 }

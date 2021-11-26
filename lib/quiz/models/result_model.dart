@@ -12,7 +12,7 @@ class QuizResult {
   String userId;
   String quizId;
   String quizName;
-  String id;
+  String id, quizGuru;
   List cekJawaban;
   List optionSelected;
   List correctAnswer;
@@ -29,6 +29,7 @@ class QuizResult {
     @required this.quizId,
     @required this.quizName,
     @required this.id,
+    @required this.quizGuru,
     @required this.cekJawaban,
     @required this.optionSelected,
     @required this.correctAnswer,
@@ -53,6 +54,7 @@ class QuizResult {
         incorrect: json['incorrect'],
         total: json['total'],
         description: json['description'],
+        quizGuru: json['quizGuru'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -70,5 +72,6 @@ class QuizResult {
         "incorrect": incorrect,
         "total": total,
         "description": description,
+        "quizGuru": quizGuru,
       };
 }

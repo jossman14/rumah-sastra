@@ -195,7 +195,7 @@ class _SeeFeedMenulisPageState extends State<SeeFeedMenulisPage> {
                                           : resultLike
                                       : widget.feedMenulis.like
                                               .contains(user[9])
-                                          ? "Anda" +
+                                          ? "Anda, " +
                                               resultLike +
                                               " dan lainnya."
                                           : resultLike + " dan lainnya."),

@@ -27,7 +27,7 @@ class DatabaseMethods {
         .collection("Users")
         .orderBy("username")
         .where("username", isGreaterThanOrEqualTo: searchField)
-        .where("username", isLessThanOrEqualTo: searchField)
+        // .where("username", isLessThanOrEqualTo: searchField)
         .get();
     // searchByName(String searchField) {
     //   return FirebaseFirestore.instance

@@ -74,6 +74,9 @@ class _AddQuestionState extends State<AddQuestion> {
                 key: _formKey,
                 child: ListView(
                   children: [
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
                       widget.quizDesc,
                       textAlign: TextAlign.justify,
@@ -86,7 +89,8 @@ class _AddQuestionState extends State<AddQuestion> {
                       height: 60,
                     ),
                     TextFormField(
-                      maxLines: 8,
+                      maxLines: 10,
+                      minLines: 2,
                       // minLines: 8,
                       validator: (val) =>
                           val.isEmpty ? "Masukkan pertanyaan" : null,
@@ -101,6 +105,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) =>
                           val.isEmpty ? "Pilihan jawaban 1 " : null,
+                      maxLines: 10,
+                      minLines: 1,
                       decoration: InputDecoration(
                           hintText: "Pilihan jawaban 1 (jawaban yang benar)"),
                       onChanged: (val) {
@@ -113,6 +119,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) =>
                           val.isEmpty ? "Pilihan jawaban 2" : null,
+                      maxLines: 10,
+                      minLines: 1,
                       decoration:
                           InputDecoration(hintText: "Pilihan jawaban 2"),
                       onChanged: (val) {
@@ -125,6 +133,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) =>
                           val.isEmpty ? "Pilihan jawaban 3" : null,
+                      maxLines: 10,
+                      minLines: 1,
                       decoration:
                           InputDecoration(hintText: "Pilihan jawaban 3"),
                       onChanged: (val) {
@@ -137,6 +147,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     TextFormField(
                       validator: (val) =>
                           val.isEmpty ? "Pilihan jawaban 4" : null,
+                      maxLines: 10,
+                      minLines: 1,
                       decoration:
                           InputDecoration(hintText: "Pilihan jawaban 4"),
                       onChanged: (val) {
@@ -147,8 +159,17 @@ class _AddQuestionState extends State<AddQuestion> {
                       height: 8,
                     ),
                     TextFormField(
-                      validator: (val) =>
-                          val.isEmpty ? "Masukkan durasi waktu" : null,
+                      validator: (val) {
+                        final pattern = r'(^\d+$)';
+                        final regExp = RegExp(pattern);
+
+                        if (!regExp.hasMatch(val)) {
+                          return 'pilihan waktu anda tidak valid';
+                        } else {
+                          return null;
+                        }
+                        // val.isEmpty ? "Masukkan Durasi Soal Cerita" : null,
+                      },
                       decoration:
                           InputDecoration(hintText: "masukkan durasi waktu"),
                       onChanged: (val) {

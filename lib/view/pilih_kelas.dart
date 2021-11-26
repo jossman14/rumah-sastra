@@ -55,7 +55,7 @@ class _PilihKelasState extends State<PilihKelas> {
                   "Pilih Kelas",
                   style: GoogleFonts.firaSans(
                       fontSize: 30,
-                      color: HexColor('#2C3E50'),
+                      color: Colors.blue,
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -69,11 +69,15 @@ class _PilihKelasState extends State<PilihKelas> {
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed))
-                            return HexColor('#F55413');
-                          return HexColor(
-                              '#FF7138'); //F69A9A Use the component's default.
+                            return HexColor('#2980b9');
+                          return Colors
+                              .blue; //F69A9A Use the component's default.
                         },
                       ),
+                      //  if (states.contains(MaterialState.pressed))
+                      //       return Colors.blue;
+                      //     return HexColor(
+                      //         '#2980b9');
                     ),
                     onPressed: () {
                       playSound();
@@ -118,9 +122,9 @@ class _PilihKelasState extends State<PilihKelas> {
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed))
-                            return HexColor('#F55413');
-                          return HexColor(
-                              '#FF7138'); //F69A9A Use the component's default.
+                            return HexColor('#2980b9');
+                          return Colors
+                              .blue; //F69A9A Use the component's default.
                         },
                       ),
                     ),
@@ -166,9 +170,9 @@ class _PilihKelasState extends State<PilihKelas> {
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed))
-                            return HexColor('#F55413');
-                          return HexColor(
-                              '#FF7138'); //F69A9A Use the component's default.
+                            return HexColor('#2980b9');
+                          return Colors
+                              .blue; //F69A9A Use the component's default.
                         },
                       ),
                     ),
@@ -233,7 +237,7 @@ class _PilihKelasState extends State<PilihKelas> {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [HexColor('#FF3A00'), HexColor('#FBE27E')],
+            colors: [HexColor('#2980b9'), HexColor('#d35400')],
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
           ),

@@ -42,12 +42,12 @@ class _DrawerAppState extends State<DrawerApp> {
             ),
             margin: EdgeInsets.all(0),
             accountName: Container(
-              color: Colors.deepOrange,
+              color: Colors.blue,
               padding: EdgeInsets.all(4.0),
               child: Text(user[3]),
             ),
             accountEmail: Container(
-              color: Colors.deepOrange,
+              color: Colors.blue,
               padding: EdgeInsets.all(4.0),
               child: Text(user[7] == 'Guru' ? user[1] : user[0]),
             ),
