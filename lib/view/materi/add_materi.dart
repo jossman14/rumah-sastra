@@ -45,7 +45,6 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
                 description: description,
                 imagegan: imagegan,
                 link: link,
-
                 onChangedTitle: (title) => setState(() => this.title = title),
                 onChangedlinkVideo: (linkVideo) =>
                     setState(() => this.linkVideo = linkVideo),
@@ -54,6 +53,8 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
                 onChangedimagegan: (imagegan) =>
                     setState(() => this.imagegan = imagegan),
                 onChangedlink: (link) => setState(() => this.link = link),
+                onChangeddeskripsiMarkdownForm: (descriptionMarkdown) =>
+                    setState(() => this.description = descriptionMarkdown),
                 onSavedMateri: addMateri,
               ),
             ),
@@ -64,12 +65,14 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
   }
 
   void addMateri() {
+    final providerImage = Provider.of<GetImageProvider>(context, listen: false);
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
     final user = provider.akun;
 
     final isValid = _formKey.currentState.validate();
-
+    String textEdit = providerImage.textBerubah;
+    print("textEdit ${textEdit}");
     if (!isValid) {
       return;
     } else {
@@ -77,7 +80,7 @@ class _AddMateriDialogWidgetState extends State<AddMateriDialogWidget> {
         id: DateTime.now().toString(),
         linkVideo: linkVideo,
         title: title,
-        description: description,
+        description: textEdit,
         createdTime: DateTime.now(),
         modifTime: DateTime.now(),
         writer: user[3],

@@ -12,11 +12,13 @@ class GetImageProvider extends ChangeNotifier {
   List _imageOperation;
   File _fileImage;
   bool _selesai;
+  String _textBerubah;
   GetImageProvider() {
     _getImage = '';
     _uploadImage = false;
     _selesai = false;
     _imageOperation = ["", "", ""];
+    _textBerubah = "";
   }
 
   bool get selesai => _selesai;
@@ -30,6 +32,13 @@ class GetImageProvider extends ChangeNotifier {
 
   set getImage(String value) {
     _getImage = value;
+    // notifyListeners();
+  }
+
+  String get textBerubah => _textBerubah;
+
+  set textBerubah(String value) {
+    _textBerubah = value;
     // notifyListeners();
   }
 

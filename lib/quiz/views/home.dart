@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -350,7 +350,7 @@ class QuizTile extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
-                color: Colors.orange,
+                color: Colors.blueGrey,
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),

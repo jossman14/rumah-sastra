@@ -41,7 +41,7 @@ class QuizResult {
 
   static QuizResult fromJson(Map<String, dynamic> json) => QuizResult(
         createdTime: Utils.toDateTime(json['createdTime']),
-        result: json['result'],
+        result: json['result'].toDouble(),
         username: json['username'],
         userId: json['userId'],
         quizId: json['quizId'],

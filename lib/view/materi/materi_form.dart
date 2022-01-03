@@ -7,6 +7,9 @@ import 'package:rusa4/Utils/upload_file.dart';
 import 'package:rusa4/provider/get_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown_editable_textinput/format_markdown.dart';
+import 'package:markdown_editable_textinput/markdown_text_input.dart';
 
 class MateriFormWidget extends StatefulWidget {
   final String title;
@@ -14,11 +17,13 @@ class MateriFormWidget extends StatefulWidget {
   final String description;
   final String imagegan;
   final String link;
+  final String deskripsiMarkdownForm;
   final ValueChanged<String> onChangedTitle;
   final ValueChanged<String> onChangedlinkVideo;
   final ValueChanged<String> onChangedDescription;
   final ValueChanged<String> onChangedimagegan;
   final ValueChanged<String> onChangedlink;
+  final ValueChanged<String> onChangeddeskripsiMarkdownForm;
   final VoidCallback onSavedMateri;
 
   const MateriFormWidget({
@@ -28,12 +33,14 @@ class MateriFormWidget extends StatefulWidget {
     this.description = '',
     this.imagegan = '',
     this.link = '',
+    this.deskripsiMarkdownForm = '',
     @required this.onChangedTitle,
     @required this.onChangedlinkVideo,
     @required this.onChangedDescription,
     @required this.onChangedimagegan,
     @required this.onChangedlink,
     @required this.onSavedMateri,
+    @required this.onChangeddeskripsiMarkdownForm,
   }) : super(key: key);
 
   @override
@@ -42,8 +49,16 @@ class MateriFormWidget extends StatefulWidget {
 
 class _MateriFormWidgetState extends State<MateriFormWidget> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    descriptionMarkdown = widget.description;
+  }
+
+  @override
   void dispose() {
     // Set portrait orientation
+    deskripsiController.dispose();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
@@ -51,11 +66,16 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
     super.dispose();
   }
 
+  TextEditingController deskripsiController;
+  String descriptionMarkdown;
+
   @override
   Widget build(BuildContext context) {
     final providerImage = Provider.of<GetImageProvider>(context, listen: false);
     providerImage.selesai = false;
     providerImage.getImage = "";
+    // descriptionMarkdown = "";
+    deskripsiController = TextEditingController();
 
     print("hasil widget.link ${widget.title}");
 
@@ -156,15 +176,98 @@ class _MateriFormWidgetState extends State<MateriFormWidget> {
     }
   }
 
-  Widget buildDescription() => TextFormField(
-        maxLines: 20,
-        initialValue: widget.description,
-        onChanged: widget.onChangedDescription,
-        decoration: InputDecoration(
-          border: UnderlineInputBorder(),
-          labelText: 'Deskripsi',
+  Widget buildDescription() {
+    // deskripsiController.text =;
+    // widget.deskripsiMarkdownForm = descriptionMarkdown.description;
+    // deskripsiController.text = descriptionMarkdown;
+    final provider = Provider.of<GetImageProvider>(context);
+
+    return Column(
+      children: [
+        Visibility(
+          visible: true,
+          child: MarkdownTextInput(
+            (String value) => setState(() => descriptionMarkdown = value),
+            descriptionMarkdown,
+            label: 'Deskripsi',
+            actions: MarkdownType.values,
+            maxLines: 20,
+            validators: (val) {
+              if (val.isEmpty) {
+                return "Mohon Isi Deskripsi";
+              } else {
+                provider.textBerubah = descriptionMarkdown;
+                return null;
+              }
+            },
+          ),
         ),
-      );
+        Visibility(
+          visible: false,
+          child: TextFormField(
+            maxLines: 20,
+
+            // initialValue: widget.description,
+            // initialValue: descriptionMarkdown,
+            // onChanged: widget.description,
+            onChanged: widget.onChangedDescription,
+            // controller: deskripsiController,
+            decoration: InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Deskripsi',
+            ),
+            validator: (val) {
+              if (val.isEmpty) {
+                // val = 'hehe dr widget form';
+                print("empty vall ${val}");
+                val = 'hehe dr widget form';
+                // return "Mohon Isi Deskripsi";
+                return null;
+              } else {
+                // print("isi vall ${val}");
+                // val = 'hehe dr widget form';
+                // print("isi vall 2${val}");
+
+                return null;
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildDescriptionMarkdown() {
+    return Visibility(
+      visible: false,
+      child: MarkdownTextInput(
+        (String value) => setState(() => descriptionMarkdown = value),
+        descriptionMarkdown,
+        label: 'Deskripsi',
+        actions: MarkdownType.values,
+        maxLines: 20,
+        validators: (val) {
+          if (val.isEmpty) {
+            return "Mohon Isi Deskripsi";
+          } else {
+            // deskripsiController.clear();
+
+            setState(() {
+              final _newValue = "New value";
+              deskripsiController.value = TextEditingValue(
+                text: _newValue,
+                selection: TextSelection.fromPosition(
+                  TextPosition(offset: _newValue.length),
+                ),
+              );
+            });
+            return null;
+          }
+        },
+      ),
+    );
+  }
+
   Widget buildLink() => TextFormField(
         maxLines: 8,
         initialValue: widget.link,

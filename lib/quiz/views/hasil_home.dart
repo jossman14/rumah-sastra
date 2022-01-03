@@ -74,6 +74,30 @@ class _HasilHomeState extends State<HasilHome> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    // databaseService.getUserData().then((value) {
+    //   quizStreamUser = value;
+
+    //   for (var item in quizStreamUser.docs) {
+    //     streamGan.add(item.id);
+    //     streamGan.add(item.data()["quizId"]);
+    //     streamGan.add(item.data()["user"]);
+    //     streamGan.add(item.data()["quizGuru"]);
+    //     // streamUser["${item.data()["quizId"]}"] = item.data()["user"];
+
+    //     utama.add(streamGan);
+    //     streamGan = [];
+    //   }
+
+    //   print("hasill map dispose $utama");
+    //   print("hasill list dispose  $streamGan");
+    //   setState(() {});
+    // });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EmailSignInProvider>(context, listen: false);
 
@@ -115,6 +139,7 @@ class _HasilHomeState extends State<HasilHome> {
               case ConnectionState.waiting:
                 return Center(child: CircularProgressIndicator());
               default:
+                print("errrorr quizzzz ${snapshot}");
                 if (snapshot.hasError) {
                   return buildText(
                       'Ada yang error, mohon dicoba lagi nanti ya');

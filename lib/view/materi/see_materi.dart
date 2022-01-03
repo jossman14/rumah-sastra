@@ -11,6 +11,9 @@ import 'package:rusa4/view/audioGan.dart';
 import 'package:rusa4/view/materi/edit_materi.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:markdown_editable_textinput/format_markdown.dart';
+import 'package:markdown_editable_textinput/markdown_text_input.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class SeeMateriPage extends StatefulWidget {
   final Materi materi;
@@ -163,13 +166,9 @@ class _SeeMateriPageState extends State<SeeMateriPage> {
                         visible: imagegan == "" ? false : true,
                         child: Image.network(imagegan)),
                     SizedBox(height: 20),
-                    Text(
-                      description,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
+                    MarkdownBody(
+                      data: description,
+                      shrinkWrap: true,
                     ),
                     SizedBox(
                       height: 8,

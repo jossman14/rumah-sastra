@@ -17,6 +17,7 @@ class Materi {
   String writer;
   String kelas;
   String userID;
+  String deskripsiMarkdownForm;
 
   Materi({
     @required this.createdTime,

@@ -235,7 +235,7 @@ class QuizTile extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
-                color: Colors.orange,
+                color: Colors.blueGrey,
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),

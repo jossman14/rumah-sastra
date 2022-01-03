@@ -201,7 +201,7 @@ class _AuthPageState extends State<AuthPage> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(color: Colors.orange),
+              decoration: BoxDecoration(color: Colors.blue[800]),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

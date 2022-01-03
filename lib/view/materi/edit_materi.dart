@@ -25,7 +25,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
   String description;
   String imagegan;
   String link;
-
+  String deskripsiMarkdownForm;
   String imageganNew;
 
   @override
@@ -38,6 +38,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
     imagegan = widget.materi.imagegan;
 
     link = widget.materi.link;
+    deskripsiMarkdownForm = widget.materi.deskripsiMarkdownForm;
     imageganNew = "";
   }
 
@@ -86,6 +87,8 @@ class _EditMateriPageState extends State<EditMateriPage> {
                 onChangedimagegan: (imagegan) =>
                     setState(() => this.imagegan = imagegan),
                 onChangedlink: (link) => setState(() => this.link = link),
+                onChangeddeskripsiMarkdownForm: (descriptionMarkdown) =>
+                    setState(() => this.description = descriptionMarkdown),
                 onSavedMateri: saveMateri,
               ),
             ),
@@ -99,7 +102,11 @@ class _EditMateriPageState extends State<EditMateriPage> {
     final isValid = _formKey.currentState.validate();
 
     final providerImage = Provider.of<GetImageProvider>(context, listen: false);
-
+    // setState(() {
+    //   description = deskripsiMarkdownForm;
+    // });
+    String textEdit = providerImage.textBerubah;
+    print("textEdit ${textEdit}");
     imagegan = providerImage.getImage;
 
     if (!isValid) {
@@ -107,7 +114,7 @@ class _EditMateriPageState extends State<EditMateriPage> {
     } else {
       final provider = Provider.of<MateriProvider>(context, listen: false);
       provider.updateMateri(
-          widget.materi, title, description, imagegan, linkVideo, link);
+          widget.materi, title, textEdit, imagegan, linkVideo, link);
       // ubah == "edit"
       //     ? provider.updateMateri(widget.materi, title, description)
       //     : provider.addMateri(widget.materi);
