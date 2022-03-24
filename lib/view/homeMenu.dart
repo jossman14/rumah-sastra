@@ -108,6 +108,66 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                       onPressed: () {
                                         playSound();
                                         Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    user.jenisAkun == "Guru"
+                                                        ? PetunjukGuru()
+                                                        : PetunjukSiswa())));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#74b258"),
+                                        // onPrimary: HexColor("#beed8f"),
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(30.0),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  8,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(16.0),
+                                                child: new Image.asset(
+                                                  './assets/images/question.png',
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "Petunjuk",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 14),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.8,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        playSound();
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (_) => PilihKelas(),
@@ -115,6 +175,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#a3a943"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
@@ -171,6 +232,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                     ViewFeedMenulis())));
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#9c6e2e"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
@@ -227,6 +289,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                     ChatRoom())));
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#92321d"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
@@ -283,6 +346,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                     HomeQuiz())));
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#a52a2a"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
@@ -339,6 +403,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                     ProfileUser())));
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#7a0645"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
@@ -399,6 +464,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                       PilihKelasHasil())));
                                         },
                                         style: ElevatedButton.styleFrom(
+                                          primary: HexColor("#4c006a"),
                                           shape: new RoundedRectangleBorder(
                                             borderRadius:
                                                 new BorderRadius.circular(30.0),
@@ -456,6 +522,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                     UserSetting())));
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#1a005a"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
@@ -505,64 +572,6 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                     child: ElevatedButton(
                                       onPressed: () {
                                         playSound();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    user.jenisAkun == "Guru"
-                                                        ? PetunjukGuru()
-                                                        : PetunjukSiswa())));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(30.0),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  8,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(16.0),
-                                                child: new Image.asset(
-                                                  './assets/images/question.png',
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "Petunjuk",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 14),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.8,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        playSound();
                                         notSet();
                                         FirebaseAuth.instance.signOut();
                                         Navigator.pushReplacement(
@@ -572,6 +581,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                                     AuthPage()));
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        primary: HexColor("#000e46"),
                                         shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(30.0),
