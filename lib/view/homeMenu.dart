@@ -17,6 +17,11 @@ import 'package:rusa4/view/pilih_kelas.dart';
 import 'package:rusa4/view/profileUser.dart';
 import 'package:rusa4/view/user_setting/user_setting.dart';
 
+import 'hasilSplash.dart';
+import 'kontenSplash.dart';
+import 'latihanSplash.dart';
+import 'materiSplash.dart';
+
 class MainTileMenu extends StatefulWidget {
   // const MainTileMenu({Key key}) : super(key: key);
 
@@ -170,7 +175,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (_) => PilihKelas(),
+                                            builder: (_) => MateriSplash(),
                                           ),
                                         );
                                       },
@@ -229,7 +234,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: ((context) =>
-                                                    ViewFeedMenulis())));
+                                                    KontenSplash())));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         primary: HexColor("#9c6e2e"),
@@ -343,7 +348,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: ((context) =>
-                                                    HomeQuiz())));
+                                                    LatihanSplash())));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         primary: HexColor("#a52a2a"),
@@ -461,7 +466,7 @@ class _MainTileMenuState extends State<MainTileMenu> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: ((context) =>
-                                                      PilihKelasHasil())));
+                                                      HasilSplash())));
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: HexColor("#4c006a"),
